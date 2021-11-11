@@ -2,10 +2,15 @@ package edu.upc.dsa.models;
 
 import edu.upc.dsa.util.RandomUtils;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class User {
     String id;
     String name;
     String psw;
+
+    public List<Object> objectList = new ArrayList<>();
 
     public User() {
         this.id = RandomUtils.getId();
@@ -15,6 +20,14 @@ public class User {
         this();
         this.psw=psw;
         this.name=name;
+    }
+
+    public void addObjectToList(Object object){
+        objectList.add(object);
+    }
+
+    public List<Object> getObjectList(){
+        return objectList;
     }
 
     public String getId() {

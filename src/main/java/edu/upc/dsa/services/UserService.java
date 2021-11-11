@@ -24,7 +24,8 @@ public class UserService {
         if(manager.userListsize()==0){
             this.manager.addUser("Joel","Pasword");
             this.manager.addUser("Maria","CaraDura");
-            this.manager.addUser("Esther","Estresada");
+            this.manager.addUser("Miguel","1234");
+            this.manager.addUser("Sergi","5678");
         }
         if(manager.objectListsize()==0){
             this.manager.addObject("Ulleres de visió nocturna","Ulleres que et permeten veure quan no hi ha llum");
@@ -96,7 +97,7 @@ public class UserService {
     })
     @Path("/{name}")
     @Produces(MediaType.APPLICATION_JSON)
-    public Response getTrack(@PathParam("name") String name) {
+    public Response getUser(@PathParam("name") String name) {
         User user = this.manager.getUser(name);
         if (user == null){
             return Response.status(404).build();
@@ -113,8 +114,7 @@ public class UserService {
     })
     @Path("/")
     @Produces(MediaType.APPLICATION_JSON)
-    public Response getUsers() {
-
+    public Response getAllUsers() {
         List<User> users = this.manager.getAllUsers();
         GenericEntity<List<User>> entity = new GenericEntity<List<User>>(users) {};
         return Response.status(201).entity(entity).build()  ;
@@ -129,8 +129,7 @@ public class UserService {
     })
     @Path("/")
     @Produces(MediaType.APPLICATION_JSON)
-    public Response getObject() {
-
+    public Response getAllObject() {
         List<Object> objects = this.manager.getAllObjects();
         GenericEntity<List<Object>> entity = new GenericEntity<List<Object>>(objects) {};
         return Response.status(201).entity(entity).build()  ;
@@ -173,5 +172,21 @@ public class UserService {
             this.manager.deleteUser(name);
             return Response.status(201).build();
         }
+    }
+
+    //Donam la llista d'objectes d'un usuari
+    @GET
+    @ApiOperation(value = "Get the objectList of an User", notes = "Get Objects")
+    @ApiResponses(value = {
+            @ApiResponse(code = 201, message = "Successful", response = Object.class, responseContainer="List"),
+    })
+    @Path("/")
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response getObjectListByName(@PathParam("name") String name) {
+
+        List<Object> objects = this.manager.getObjectListUser(name);
+        GenericEntity<List<Object>> entity = new GenericEntity<List<Object>>(objects) {};
+        return Response.status(201).entity(entity).build()  ;
+
     }
 }

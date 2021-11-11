@@ -128,6 +128,18 @@ public class UserManagerImpl implements UserManager{
         return this.objectList.size();
     }
 
+    @Override
+    public List<Object> getObjectListUser(String name) {
+        User user = this.getUser(name);
+        if(user == null){
+            logger.info("Llista d'Objectes de "+name);
+            List<Object> list = user.getObjectList();
+            return list;
+        }else{
+            logger.info("List not Found");
+            return null;
+        }
+    }
 
     @Override
     public int userListsize() {

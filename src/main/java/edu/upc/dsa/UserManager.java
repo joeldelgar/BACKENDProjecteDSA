@@ -30,4 +30,6 @@ public interface UserManager {
     public void deleteObject(String name);
     public int objectListsize();
 
+    public List<Object> getObjectListUser(String name);
+
 }
