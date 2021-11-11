@@ -52,25 +52,6 @@ public class UserService {
         return Response.status(201).entity(u).build();
     }
 
-    //Add Objecte
-    @POST
-    @ApiOperation(value = "Create a new Object", notes = "Name and Description")
-    @ApiResponses(value = {
-            @ApiResponse(code = 201, message = "Successful", response= Object.class),
-            @ApiResponse(code = 500, message = "Validation Error")
-
-    })
-
-    @Path("/")
-    @Consumes(MediaType.APPLICATION_JSON)
-    public Response newObject(Object o) {
-        if (o.getName()==null || o.getDescription()==null){
-            return Response.status(500).entity(o).build();
-        }
-        this.manager.addObject(o);
-        return Response.status(201).entity(o).build();
-    }
-
     //Update User
     @PUT
     @ApiOperation(value = "Update a User", notes = "Update a User")
@@ -121,21 +102,6 @@ public class UserService {
 
     }
 
-    //Get All Objects
-    @GET
-    @ApiOperation(value = "Get All Object", notes = "Get All Object")
-    @ApiResponses(value = {
-            @ApiResponse(code = 201, message = "Successful", response = Object.class, responseContainer="List"),
-    })
-    @Path("/")
-    @Produces(MediaType.APPLICATION_JSON)
-    public Response getAllObject() {
-        List<Object> objects = this.manager.getAllObjects();
-        GenericEntity<List<Object>> entity = new GenericEntity<List<Object>>(objects) {};
-        return Response.status(201).entity(entity).build()  ;
-
-    }
-
     //Delete User
     @DELETE
     @ApiOperation(value = "Delete an User", notes = "Delete an User By Name")
@@ -147,25 +113,6 @@ public class UserService {
     public Response deleteUser(@PathParam("name") String name) {
         User user = this.manager.getUser(name);
         if (user == null){
-            return Response.status(404).build();
-        }
-        else{
-            this.manager.deleteUser(name);
-            return Response.status(201).build();
-        }
-    }
-
-    //Delete Object
-    @DELETE
-    @ApiOperation(value = "Delete an Object", notes = "Delete an Object By Name")
-    @ApiResponses(value = {
-            @ApiResponse(code = 201, message = "Successful"),
-            @ApiResponse(code = 404, message = "Object not found")
-    })
-    @Path("/{name}")
-    public Response deleteObject(@PathParam("name") String name) {
-        Object object = this.manager.getObject(name);
-        if (object == null){
             return Response.status(404).build();
         }
         else{

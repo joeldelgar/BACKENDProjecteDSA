@@ -22,10 +22,6 @@ public class User {
         this.name=name;
     }
 
-    public void addObjectToList(Object object){
-        objectList.add(object);
-    }
-
     public List<Object> getObjectList(){
         return objectList;
     }

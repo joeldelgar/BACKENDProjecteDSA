@@ -25,9 +25,6 @@ public interface UserManager {
     public Object addObject(Object object);
     //Afegir un item
     public Object getObject(String name);
-    //Veure Objecte
-    public List<Object> getAllObjects();
-    public void deleteObject(String name);
     public int objectListsize();
 
     public List<Object> getObjectListUser(String name);

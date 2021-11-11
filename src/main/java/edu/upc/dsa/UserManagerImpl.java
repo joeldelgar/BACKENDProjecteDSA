@@ -95,10 +95,6 @@ public class UserManagerImpl implements UserManager{
         return this.userList;
     }
 
-    @Override
-    public List<Object> getAllObjects() {
-        return this.objectList;
-    }
 
 
     @Override
@@ -112,16 +108,6 @@ public class UserManagerImpl implements UserManager{
         }
     }
 
-    @Override
-    public void deleteObject(String name) {
-        Object object = this.getObject(name);
-        if(object==null){
-            logger.info("Object Not Found");
-        }else{
-            this.objectList.remove(object);
-            logger.info("Object "+object+" Deleted");
-        }
-    }
 
     @Override
     public int objectListsize() {
