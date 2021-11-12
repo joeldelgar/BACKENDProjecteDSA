@@ -28,6 +28,9 @@ public interface UserManager {
     public Objecte getObject(String name);
     public int objectListsize();
 
+    //Login
+    public void logUser(String name, String password);
+
     public List<Objecte> getObjectListUser(String name);
 
 }

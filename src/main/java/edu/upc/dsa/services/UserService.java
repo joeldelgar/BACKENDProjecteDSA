@@ -22,7 +22,7 @@ public class UserService {
     public UserService(){
         this.manager= UserManagerImpl.getInstance();
         if(manager.userListsize()==0){
-            this.manager.addUser("Joel","Pasword");
+            this.manager.addUser("Joel","Password");
             this.manager.addUser("Maria","CaraDura");
             this.manager.addUser("Miguel","1234");
             this.manager.addUser("Sergi","5678");
@@ -137,5 +137,32 @@ public class UserService {
         }else{
             return Response.status(201).entity(entity).build();
         }
+    }
+
+    //Login
+
+    @POST
+    @ApiOperation(value = "Login user", notes = "Password")
+    @ApiResponses(value = {
+            @ApiResponse(code = 201, message = "Successful", response= User.class),
+            @ApiResponse(code = 500, message = "Validation Error"),
+            @ApiResponse(code = 404, message = "User not found")
+
+    })
+
+    @Path("/User/{name}/{password}")
+    @Consumes(MediaType.APPLICATION_JSON)
+    public Response logUser(@PathParam("name") String name, @PathParam("password") String password) {
+        User u = this.manager.getUser(name);
+
+        if (u == null){
+            return Response.status(404).build();
+        }
+        else if (u.getPsw().equals(password)) {
+            this.manager.logUser(name, password);
+            return Response.status(201).entity(u).build();
+        }
+        else
+            return Response.status(500).build();
     }
 }

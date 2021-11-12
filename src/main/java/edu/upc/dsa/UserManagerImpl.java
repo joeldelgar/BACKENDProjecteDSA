@@ -108,10 +108,26 @@ public class UserManagerImpl implements UserManager{
         }
     }
 
-
     @Override
     public int objectListsize() {
         return this.objectList.size();
+    }
+
+    @Override
+    public void logUser(String name, String password) {
+        User u = this.getUser(name);
+        if (u==null) {
+            logger.info("User does not exist");
+            //return null;
+        }
+        else if (u.getPsw().equals(password)){
+            logger.info("User "+name+" logged successfully");
+            //return u;
+        }
+        else {
+            logger.info("Wrong password");
+            //return null;
+        }
     }
 
     @Override
