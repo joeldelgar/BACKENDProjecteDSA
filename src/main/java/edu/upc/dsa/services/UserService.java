@@ -2,7 +2,7 @@ package edu.upc.dsa.services;
 
 import edu.upc.dsa.UserManager;
 import edu.upc.dsa.UserManagerImpl;
-import edu.upc.dsa.models.Object;
+import edu.upc.dsa.models.Objecte;
 import edu.upc.dsa.models.User;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -43,7 +43,7 @@ public class UserService {
 
     })
 
-    @Path("/")
+    @Path("/User")
     @Consumes(MediaType.APPLICATION_JSON)
     public Response newUser(User u) {
 
@@ -59,7 +59,7 @@ public class UserService {
             @ApiResponse(code = 201, message = "Successful"),
             @ApiResponse(code = 404, message = "User not found")
     })
-    @Path("/")
+    @Path("/User/{name}")
     public Response updateUser(User u) {
         User user = this.manager.updateUser(u);
         if (user == null){
@@ -109,7 +109,7 @@ public class UserService {
             @ApiResponse(code = 201, message = "Successful"),
             @ApiResponse(code = 404, message = "User not found")
     })
-    @Path("/{name}")
+    @Path("/User/{name}")
     public Response deleteUser(@PathParam("name") String name) {
         User user = this.manager.getUser(name);
         if (user == null){
@@ -125,15 +125,17 @@ public class UserService {
     @GET
     @ApiOperation(value = "Get the objectList of an User", notes = "Get Objects")
     @ApiResponses(value = {
-            @ApiResponse(code = 201, message = "Successful", response = Object.class, responseContainer="List"),
+            @ApiResponse(code = 201, message = "Successful", response = Objecte.class, responseContainer="List"),
     })
-    @Path("/")
+    @Path("/User/{name}")
     @Produces(MediaType.APPLICATION_JSON)
     public Response getObjectListByName(@PathParam("name") String name) {
-
-        List<Object> objects = this.manager.getObjectListUser(name);
-        GenericEntity<List<Object>> entity = new GenericEntity<List<Object>>(objects) {};
-        return Response.status(201).entity(entity).build()  ;
-
+        List<Objecte> objects = this.manager.getObjectListUser(name);
+        GenericEntity<List<Objecte>> entity = new GenericEntity<List<Objecte>>(objects) {};
+        if (objects == null){
+            return Response.status(404).build();
+        }else{
+            return Response.status(201).entity(entity).build();
+        }
     }
 }

@@ -10,7 +10,7 @@ public class User {
     String name;
     String psw;
 
-    public List<Object> objectList = new ArrayList<>();
+    public List<Objecte> objectList = new ArrayList<>();
 
     public User() {
         this.id = RandomUtils.getId();
@@ -22,7 +22,7 @@ public class User {
         this.name=name;
     }
 
-    public List<Object> getObjectList(){
+    public List<Objecte> getObjectList(){
         return objectList;
     }
 
@@ -45,7 +45,6 @@ public class User {
     public String getPsw() {
         return psw;
     }
-
     public void setPsw(String psw) {
         this.psw = psw;
     }

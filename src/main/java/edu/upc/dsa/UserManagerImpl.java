@@ -1,6 +1,6 @@
 package edu.upc.dsa;
 
-import edu.upc.dsa.models.Object;
+import edu.upc.dsa.models.Objecte;
 import edu.upc.dsa.models.User;
 import org.apache.log4j.Logger;
 import java.util.LinkedList;
@@ -9,7 +9,7 @@ import java.util.List;
 public class UserManagerImpl implements UserManager{
     private static UserManager manager;
     protected List<User> userList;
-    protected List<Object> objectList;
+    protected List<Objecte> objectList;
     final static Logger logger = Logger.getLogger(UserManagerImpl.class);
 
     private UserManagerImpl(){
@@ -32,8 +32,8 @@ public class UserManagerImpl implements UserManager{
     }
 
     @Override
-    public Object addObject(String name, String description) {
-        return this.addObject(new Object(name,description));
+    public Objecte addObject(String name, String description) {
+        return this.addObject(new Objecte(name,description));
     }
 
     @Override
@@ -45,7 +45,7 @@ public class UserManagerImpl implements UserManager{
     }
 
     @Override
-    public Object addObject(Object object) {
+    public Objecte addObject(Objecte object) {
         logger.info("New Object: "+object.toString());
         this.objectList.add(object);
         logger.info("New Object Added: "+object);
@@ -79,8 +79,8 @@ public class UserManagerImpl implements UserManager{
     }
 
     @Override
-    public Object getObject(String name) {
-        for(Object object: this.objectList){
+    public Objecte getObject(String name) {
+        for(Objecte object: this.objectList){
             if(object.getName().equals(name)){
                 logger.info("Object "+name+" Found");
                 return object;
@@ -115,11 +115,11 @@ public class UserManagerImpl implements UserManager{
     }
 
     @Override
-    public List<Object> getObjectListUser(String name) {
+    public List<Objecte> getObjectListUser(String name) {
         User user = this.getUser(name);
         if(user == null){
             logger.info("Llista d'Objectes de "+name);
-            List<Object> list = user.getObjectList();
+            List<Objecte> list = user.getObjectList();
             return list;
         }else{
             logger.info("List not Found");

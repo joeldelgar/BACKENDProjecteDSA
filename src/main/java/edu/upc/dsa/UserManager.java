@@ -1,6 +1,7 @@
 package edu.upc.dsa;
 
-import edu.upc.dsa.models.Object;
+import edu.upc.dsa.models.Objecte;
+import edu.upc.dsa.models.Objecte;
 import edu.upc.dsa.models.User;
 
 import java.util.List;
@@ -20,13 +21,13 @@ public interface UserManager {
     //Eliminar Usuari
     public int userListsize();
 
-    //Funcions referides només a Object
-    public Object addObject(String name, String description);
-    public Object addObject(Object object);
+    //Funcions referides només a Objecte
+    public Objecte addObject(String name, String description);
+    public Objecte addObject(Objecte object);
     //Afegir un item
-    public Object getObject(String name);
+    public Objecte getObject(String name);
     public int objectListsize();
 
-    public List<Object> getObjectListUser(String name);
+    public List<Objecte> getObjectListUser(String name);
 
 }
