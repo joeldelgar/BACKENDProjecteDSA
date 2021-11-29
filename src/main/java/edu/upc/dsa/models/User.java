@@ -25,7 +25,13 @@ public class User {
     public List<Objecte> getObjectList(){
         return objectList;
     }
+/*
+    public List<user> getFriendList(){
+        return objectList;
+    }
 
+
+ */
     public String getId() {
         return id;
     }

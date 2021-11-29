@@ -109,6 +109,11 @@ public class UserManagerImpl implements UserManager{
     }
 
     @Override
+    public int userListsize() {
+        return this.userList.size();
+    }
+
+    @Override
     public int objectListsize() {
         return this.objectList.size();
     }
@@ -129,6 +134,21 @@ public class UserManagerImpl implements UserManager{
             //return null;
         }
     }
+/*
+    @Override
+    public List<User> getFriend(String name) {
+        User user = this.getUser(name);
+        if(user == null){
+            logger.info("Llista d'Amics de "+name);
+            List<User> list = user.getFriendList();
+            return list;
+        }else{
+            logger.info("List not Found");
+            return null;
+        }
+    }
+
+ */
 
     @Override
     public List<Objecte> getObjectListUser(String name) {
@@ -142,10 +162,4 @@ public class UserManagerImpl implements UserManager{
             return null;
         }
     }
-
-    @Override
-    public int userListsize() {
-        return this.userList.size();
-    }
-
 }

@@ -1,7 +1,6 @@
 package edu.upc.dsa;
 
 import edu.upc.dsa.models.Objecte;
-import edu.upc.dsa.models.Objecte;
 import edu.upc.dsa.models.User;
 
 import java.util.List;
@@ -30,6 +29,9 @@ public interface UserManager {
 
     //Login
     public void logUser(String name, String password);
+
+    //Veure Amics
+    //public List<User> getFriend(String name);
 
     public List<Objecte> getObjectListUser(String name);
 

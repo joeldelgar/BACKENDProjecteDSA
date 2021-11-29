@@ -138,7 +138,27 @@ public class UserService {
             return Response.status(201).entity(entity).build();
         }
     }
+/*
+    //Get the Friend List of a User
+    @GET
+    @ApiOperation(value = "Get the friendList of a User", notes = "Get Friends")
+    @ApiResponses(value = {
+            @ApiResponse(code = 201, message = "Successful", response = Objecte.class, responseContainer="List"),
+    })
+    @Path("/User/{name}")
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response getFriendListByName(@PathParam("name") String name) {
+        List<User> users = this.manager.getFriend(name);
+        GenericEntity<List<User>> entity = new GenericEntity<List<User>>(users) {};
+        if (users == null){
+            return Response.status(404).build();
+        }else{
+            return Response.status(201).entity(entity).build();
+        }
+    }
 
+
+ */
     //Login
 
     @POST
