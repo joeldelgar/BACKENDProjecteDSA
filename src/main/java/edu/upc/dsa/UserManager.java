@@ -35,4 +35,5 @@ public interface UserManager {
 
     public List<Objecte> getObjectListUser(String name);
 
+    public List<User> getRanquingObjectes();
 }

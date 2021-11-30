@@ -3,6 +3,9 @@ package edu.upc.dsa;
 import edu.upc.dsa.models.Objecte;
 import edu.upc.dsa.models.User;
 import org.apache.log4j.Logger;
+
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -161,5 +164,15 @@ public class UserManagerImpl implements UserManager{
             logger.info("List not Found");
             return null;
         }
+    }
+
+    @Override
+    public List<User> getRanquingObjectes(){
+        Collections.sort(userList, new Comparator<User>() {
+            public int compare(User list1, User list2) {
+                return Integer.valueOf(list1.objectList.size()).compareTo(Integer.valueOf(list2.objectList.size()));
+            }
+        });
+        return null;
     }
 }

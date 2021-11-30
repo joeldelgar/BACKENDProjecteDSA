@@ -12,6 +12,8 @@ import javax.ws.rs.*;
 import javax.ws.rs.core.GenericEntity;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 
 @Api(value = "/game", description = "Endpoint to User Service")
@@ -184,5 +186,26 @@ public class UserService {
         }
         else
             return Response.status(500).build();
+    }
+
+
+    //Lista de usuarios por objeto
+
+
+    @GET
+    @ApiOperation(value = "Get the UserList by ObjectList size", notes = "Order users by objects")
+    @ApiResponses(value = {
+            @ApiResponse(code = 201, message = "Successful"),
+            @ApiResponse(code = 404, message = "Error")
+    })
+    @Path("/")
+    public Response getRanquingObjectes(){
+        List<User> users = this.manager.getRanquingObjectes();
+        GenericEntity<List<User>> entity = new GenericEntity<List<User>>(users) {};
+        if (users == null){
+            return Response.status(404).build();
+        }else{
+            return Response.status(201).entity(entity).build();
+        }
     }
 }
