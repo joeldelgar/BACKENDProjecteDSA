@@ -19,13 +19,19 @@ public interface GameManager {
     public Enemy getEnemy(String type);
 
     //Get Object data
-    public Object getObject(String type);
+    public Objecte getObjecte(String type);
 
     //Get Level
     public Level getLevel(int levelId);
 
     //Add Object to the Object list
     public Objecte addObjectToPlayerList(Objecte object);
+
+
+    public int gameListSize();
+    public void addObject (int id, Objecte o);
+    public void addEnemy (int id, Enemy e);
+    public void addLevel (int id, Level l);
 
 
 }

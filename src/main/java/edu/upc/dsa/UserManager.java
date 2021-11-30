@@ -20,10 +20,10 @@ public interface UserManager {
     public int userListsize();
 
     //Funcions referides només a Objecte
-    public Objecte addObject(String name, String description, int value);
-    public Objecte addObject(Objecte object);
+    public Objecte addObjecte(String name, String description, int value);
+    public Objecte addObjecte(Objecte object);
     //Afegir un item
-    public Objecte getObject(String name);
+    public Objecte getObjecte(String name);
     public int objectListsize();
 
     //Login

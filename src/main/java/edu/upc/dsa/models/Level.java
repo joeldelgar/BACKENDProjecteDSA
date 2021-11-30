@@ -11,10 +11,6 @@ public class Level {
         this.layout = layout;
     }
 
-    public int getLevelId() {
-        return levelId;
-    }
-
     public String getLayout() {
         return layout;
     }

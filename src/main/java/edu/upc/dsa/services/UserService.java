@@ -1,7 +1,7 @@
 package edu.upc.dsa.services;
-
 import edu.upc.dsa.UserManager;
 import edu.upc.dsa.UserManagerImpl;
+import edu.upc.dsa.models.Credentials;
 import edu.upc.dsa.models.User;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -32,30 +32,35 @@ public class UserService {
             this.manager.addUser(u3);
             this.manager.addUser(u4);
         }
-        if(manager.objectListsize()==0){
-            this.manager.addObject("Ulleres de visió nocturna","Ulleres que et permeten veure quan no hi ha llum", 0);
-            this.manager.addObject("Ganzua","Eïna que et permet obrir panys", 0);
-            this.manager.addObject("Botes","Botes supersilencioses", 0);
-        }
     }
 
     //Add User
-    @POST
+    /*@POST
     @ApiOperation(value = "Add a new User", notes = "Name and Password")
     @ApiResponses(value = {
             @ApiResponse(code = 201, message = "Successful", response= User.class),
             @ApiResponse(code = 500, message = "Validation Error")
     })
 
-    @Path("/{name}/{psw}")
+    @Path("/add")
     @Consumes(MediaType.APPLICATION_JSON)
-    public Response newUser(@PathParam("name") String name, @PathParam("psw") String psw) {
-        User user = new User(name, psw);
+    public Response newUser(Credentials credentials) {
+        User user = new User(credentials.getName(), credentials.getPassword());
         if (user.getName()==null || user.getPsw()==null)
             return Response.status(500).build();
         this.manager.addUser(user);
         return Response.status(201).entity(user).build();
-    }
+    }*/
+
+    //@Path("/{name}/{psw}")
+    //    @Consumes(MediaType.APPLICATION_JSON)
+    //    public Response newUser(@PathParam("name") String name, @PathParam("psw") String psw) {
+    //        User user = new User(name, psw);
+    //        if (user.getName()==null || user.getPsw()==null)
+    //            return Response.status(500).build();
+    //        this.manager.addUser(user);
+    //        return Response.status(201).entity(user).build();
+    //    }
 
     //Update User
     @PUT
@@ -99,7 +104,7 @@ public class UserService {
     @ApiResponses(value = {
             @ApiResponse(code = 201, message = "Successful", response = User.class, responseContainer="List"),
     })
-    @Path("/")
+    @Path("/user")
     @Produces(MediaType.APPLICATION_JSON)
     public Response getAllUsers() {
         List<User> users = this.manager.getAllUsers();
@@ -127,38 +132,21 @@ public class UserService {
         }
     }
 
-
-    //Donam la llista d'objectes d'un usuari
-    /*@GET
-    @ApiOperation(value = "Get the objectList of an User", notes = "Get Objects")
-    @ApiResponses(value = {
-            @ApiResponse(code = 201, message = "Successful", response = Objecte.class, responseContainer="List"),
-    })
-    @Path("/{name}")
-    @Produces(MediaType.APPLICATION_JSON)
-    public Response getObjectListByName(@PathParam("name") String name) {
-        List<Objecte> objects = this.manager.getObjectListUser(name);
-        GenericEntity<List<Objecte>> entity = new GenericEntity<List<Objecte>>(objects) {};
-        if (objects == null){
-            return Response.status(404).build();
-        }else{
-            return Response.status(201).entity(entity).build();
-        }
-    }*/
-
     //Login
-    @POST
+    /*@POST
     @ApiOperation(value = "Login user", notes = "Password")
     @ApiResponses(value = {
             @ApiResponse(code = 201, message = "Successful", response= User.class),
             @ApiResponse(code = 500, message = "Validation Error"),
             @ApiResponse(code = 404, message = "User not found")
-
     })
 
-    @Path("/login/{name}/{password}")
+    @Path("/login")
     @Consumes(MediaType.APPLICATION_JSON)
-    public Response logUser(@PathParam("name") String name, @PathParam("password") String password) {
+    public Response logUser(Credentials credentials) {
+        String name = credentials.getName();
+        String password = credentials.getPassword();
+
         User u = this.manager.getUser(name);
 
         if (u == null){
@@ -170,24 +158,6 @@ public class UserService {
         }
         else
             return Response.status(500).build();
-    }
-
-    //Lista de usuarios por objeto
-    /*@GET
-    @ApiOperation(value = "Get the UserList by ObjectList size", notes = "Order users by objects")
-    @ApiResponses(value = {
-            @ApiResponse(code = 201, message = "Successful"),
-            @ApiResponse(code = 404, message = "Error")
-    })
-    @Path("/objectlist")
-    public Response getRanquingObjectes(){
-        List<User> users = this.manager.getRanquingObjectes();
-        GenericEntity<List<User>> entity = new GenericEntity<List<User>>(users) {};
-        if (users == null){
-            return Response.status(404).build();
-        }else{
-            return Response.status(201).entity(entity).build();
-        }
     }*/
 
     //Get Friends

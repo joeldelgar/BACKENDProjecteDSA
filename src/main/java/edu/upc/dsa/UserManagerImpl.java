@@ -32,8 +32,8 @@ public class UserManagerImpl implements UserManager{
     }
 
     @Override
-    public Objecte addObject(String name, String description, int value) {
-        return this.addObject(new Objecte(name,description,value));
+    public Objecte addObjecte(String name, String description, int value) {
+        return this.addObjecte(new Objecte(name,description,value));
     }
 
     @Override
@@ -45,7 +45,7 @@ public class UserManagerImpl implements UserManager{
     }
 
     @Override
-    public Objecte addObject(Objecte object) {
+    public Objecte addObjecte(Objecte object) {
         logger.info("New Object: "+object.toString());
         this.objectList.add(object);
         logger.info("New Object Added: "+object);
@@ -76,7 +76,7 @@ public class UserManagerImpl implements UserManager{
     }
 
     @Override
-    public Objecte getObject(String name) {
+    public Objecte getObjecte(String name) {
         for(Objecte object: this.objectList){
             if(object.getName().equals(name)){
                 logger.info("Object "+name+" Found");

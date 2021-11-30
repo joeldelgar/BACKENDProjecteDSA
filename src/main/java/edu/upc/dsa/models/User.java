@@ -6,7 +6,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class User {
-    String id;
     String name;
     String psw;
 
@@ -14,29 +13,19 @@ public class User {
 
     public List<User> friendList = new ArrayList<>();
 
-    public User() {
-        this.id = RandomUtils.getId();
-    }
-
     public User(String name, String psw){
         //this();
         this.psw=psw;
         this.name=name;
     }
 
+    public User() {}
+
     public List<Objecte> getObjectList(){
         return objectList;
     }
 
     public List<User> getFriendList() {return friendList;}
-
-    public String getId() {
-        return id;
-    }
-
-    public void setId(String id) {
-        this.id = id;
-    }
 
     public String getName() {
         return name;
@@ -64,4 +53,7 @@ public class User {
         return u;
 
     }
+
+    public void addObjecte(Objecte e){}
+    public void deleteObjecte(Objecte e){}
 }

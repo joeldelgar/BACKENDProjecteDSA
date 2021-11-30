@@ -10,12 +10,11 @@ public class GameManagerImpl implements GameManager{
 
     private static GameManager manager;
     protected List<Game> gameList;
-    //protected List<Objecte> objectList;
+
     final static Logger logger = Logger.getLogger(UserManagerImpl.class);
 
     private GameManagerImpl(){
         this.gameList= new LinkedList<>();
-        //this.objectList=new LinkedList<>();
     }
 
     //Singleton
@@ -70,7 +69,7 @@ public class GameManagerImpl implements GameManager{
     }
 
     @Override
-    public Object getObject(String type) {
+    public Objecte getObjecte(String type) {
         return null;
     }
 
@@ -84,4 +83,30 @@ public class GameManagerImpl implements GameManager{
         return null;
 
     }
+
+    @Override
+    public int gameListSize() {
+        return this.gameList.size();
+    }
+
+    @Override
+    public void addObject(int id, Objecte o) {
+        Game g = this.gameList.get(id);
+        g.addObjecte(o);
+    }
+
+    @Override
+    public void addEnemy(int id, Enemy e) {
+        Game g = this.gameList.get(id);
+        g.addEnemy(e);
+    }
+
+    @Override
+    public void addLevel(int id, Level l) {
+        Game g = this.gameList.get(id);
+        g.addLevel(l);
+
+    }
+
+
 }
