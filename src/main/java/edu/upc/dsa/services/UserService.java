@@ -133,10 +133,10 @@ public class UserService {
     }
 
     //Login
-    /*@POST
+    @POST
     @ApiOperation(value = "Login user", notes = "Password")
     @ApiResponses(value = {
-            @ApiResponse(code = 201, message = "Successful", response= User.class),
+            @ApiResponse(code = 200, message = "Successful", response= User.class),
             @ApiResponse(code = 500, message = "Validation Error"),
             @ApiResponse(code = 404, message = "User not found")
     })
@@ -144,9 +144,10 @@ public class UserService {
     @Path("/login")
     @Consumes(MediaType.APPLICATION_JSON)
     public Response logUser(Credentials credentials) {
+
         String name = credentials.getName();
         String password = credentials.getPassword();
-
+        System.out.println(name+", "+ password);
         User u = this.manager.getUser(name);
 
         if (u == null){
@@ -154,11 +155,11 @@ public class UserService {
         }
         else if (u.getPsw().equals(password)) {
             this.manager.logUser(name, password);
-            return Response.status(201).entity(u).build();
+            return Response.status(200).entity(u).build();
         }
         else
             return Response.status(500).build();
-    }*/
+    }
 
     //Get Friends
     @GET

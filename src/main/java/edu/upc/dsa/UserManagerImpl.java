@@ -65,7 +65,8 @@ public class UserManagerImpl implements UserManager{
 
     @Override
     public User getUser(String name) {
-       for(User user: this.userList){
+       logger.info("Noma buscar: "+name);
+        for(User user: this.userList){
            if(user.getName().equals(name)){
                logger.info("User "+name+" Found");
                return user;
