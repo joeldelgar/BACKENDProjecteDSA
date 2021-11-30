@@ -3,12 +3,14 @@ package edu.upc.dsa.models;
 public class Objecte {
     private String name;
     private String description;
+    private int value;
 
     public Objecte(){}
 
-    public Objecte(String name, String description) {
+    public Objecte(String name, String description, int value) {
         this.name = name;
         this.description = description;
+        this.value = value;
     }
 
     public String getName() {
@@ -25,5 +27,13 @@ public class Objecte {
 
     public void setDescription(String description) {
         this.description = description;
+    }
+
+    public int getValue() {
+        return value;
+    }
+
+    public void setValue(int value) {
+        this.value = value;
     }
 }

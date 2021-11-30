@@ -9,10 +9,9 @@ import java.util.List;
 public interface UserManager {
 
     //Funcions referides només a User
-    public User addUser(String name, String psw);
     public User addUser(User user);
     //Afegir Usuari
-    public User updateUser(User user);
+    public User updateUser(User user, String psw);
     //Modificar Usuari
     public User getUser(String name);
     //Veure Usuari
@@ -22,7 +21,7 @@ public interface UserManager {
     public int userListsize();
 
     //Funcions referides només a Objecte
-    public Objecte addObject(String name, String description);
+    public Objecte addObject(String name, String description, int value);
     public Objecte addObject(Objecte object);
     //Afegir un item
     public Objecte getObject(String name);
@@ -34,4 +33,12 @@ public interface UserManager {
     public List<Objecte> getObjectListUser(String name);
 
     public List<User> getRanquingObjectes();
+
+    //Friends
+    //public User addFriend(String name);
+    //public User deleteFriend(String name);
+    public List<User> getFriends(String name);
+
+
+    public List<User> getLoggedUsers();
 }

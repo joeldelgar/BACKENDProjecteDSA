@@ -13,11 +13,14 @@ public class UserManagerImpl implements UserManager{
     private static UserManager manager;
     protected List<User> userList;
     protected List<Objecte> objectList;
+    protected List<User> onlineUsersList;
+
     final static Logger logger = Logger.getLogger(UserManagerImpl.class);
 
     private UserManagerImpl(){
-        this.userList= new LinkedList<>();
-        this.objectList=new LinkedList<>();
+        this.userList = new LinkedList<>();
+        this.objectList = new LinkedList<>();
+        this.onlineUsersList = new LinkedList<>();
     }
 
     //Singleton
@@ -28,15 +31,9 @@ public class UserManagerImpl implements UserManager{
         return manager;
     }
 
-
     @Override
-    public User addUser(String name, String psw) {
-       return this.addUser(new User(name,psw));
-    }
-
-    @Override
-    public Objecte addObject(String name, String description) {
-        return this.addObject(new Objecte(name,description));
+    public Objecte addObject(String name, String description, int value) {
+        return this.addObject(new Objecte(name,description,value));
     }
 
     @Override
@@ -56,17 +53,14 @@ public class UserManagerImpl implements UserManager{
     }
 
     @Override
-    public User updateUser(User u) {
-        User user = this.getUser(u.getName());
-        if(u!=null){
-            logger.info("User to Update: "+u.getName());
-            user.setName(u.getName());
-            user.setPsw(u.getPsw());
-            logger.info("User Updated: "+user.getName());
+    public User updateUser(User u, String psw) {
+        if (u!=null){
+            u.setPsw(psw);
+            logger.info("User "+ u.getName() + " has updated the password");
         }else{
             logger.info("User "+u.getName()+" Not Found");
         }
-        return user;
+        return u;
     }
 
     @Override
@@ -98,8 +92,6 @@ public class UserManagerImpl implements UserManager{
         return this.userList;
     }
 
-
-
     @Override
     public void deleteUser(String name) {
         User user= this.getUser(name);
@@ -124,6 +116,7 @@ public class UserManagerImpl implements UserManager{
             //return null;
         }
         else if (u.getPsw().equals(password)){
+            this.onlineUsersList.add(u);
             logger.info("User "+name+" logged successfully");
             //return u;
         }
@@ -151,7 +144,6 @@ public class UserManagerImpl implements UserManager{
         return this.userList.size();
     }
 
-
     @Override
     public List<User> getRanquingObjectes(){
         Collections.sort(userList, new Comparator<User>() {
@@ -161,5 +153,44 @@ public class UserManagerImpl implements UserManager{
         });
         return null;
     }
+
+
+    //@Override
+    /*public User addFriend(String name) {
+        for(User user: this.userList){
+            if(user.getName().equals(name)){
+                user.friendList.add(user);
+                logger.info("User "+name+" is your friend!");
+                return user;
+            }
+        }
+        logger.info("User "+name+" Not Found");
+        return null;
+    }*/
+    /*
+    @Override
+    public User deleteFriend(String name) {
+        for(User user: this.userList){
+            if(user.getName().equals(name)){
+                userList.remove(user);
+                logger.info("User "+name+" has been removed");
+                return user;
+            }
+        }
+        logger.info("User "+name+" Not Found");
+        return null;
+    }
+    */
+    @Override
+    public List<User> getFriends(String name) {
+        User u = this.getUser(name);
+        return u.getFriendList();
+    }
+
+    @Override
+    public List<User> getLoggedUsers() {
+        return onlineUsersList;
+    }
+
 
 }
