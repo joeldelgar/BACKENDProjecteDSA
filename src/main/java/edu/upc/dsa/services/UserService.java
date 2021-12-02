@@ -19,6 +19,7 @@ public class UserService {
     private UserManager manager;
 
     public UserService(){
+        //manager fora, implementació del DAO
         this.manager= UserManagerImpl.getInstance();
         if(manager.userListsize()==0){
             User u1 = new User("Joel","Password");
