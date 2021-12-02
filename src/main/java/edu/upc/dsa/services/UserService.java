@@ -35,11 +35,11 @@ public class UserService {
         }
     }
 
-    //Add User
-    /*@POST
-    @ApiOperation(value = "Add a new User", notes = "Name and Password")
+    //Add User    Register
+    @POST
+    @ApiOperation(value = "Register a new User", notes = "Name and Password")
     @ApiResponses(value = {
-            @ApiResponse(code = 201, message = "Successful", response= User.class),
+            @ApiResponse(code = 200, message = "Successful", response= User.class),
             @ApiResponse(code = 500, message = "Validation Error")
     })
 
@@ -47,21 +47,12 @@ public class UserService {
     @Consumes(MediaType.APPLICATION_JSON)
     public Response newUser(Credentials credentials) {
         User user = new User(credentials.getName(), credentials.getPassword());
-        if (user.getName()==null || user.getPsw()==null)
+        if (user.getName()==null || user.getPsw()==null){
             return Response.status(500).build();
+        }
         this.manager.addUser(user);
-        return Response.status(201).entity(user).build();
-    }*/
-
-    //@Path("/{name}/{psw}")
-    //    @Consumes(MediaType.APPLICATION_JSON)
-    //    public Response newUser(@PathParam("name") String name, @PathParam("psw") String psw) {
-    //        User user = new User(name, psw);
-    //        if (user.getName()==null || user.getPsw()==null)
-    //            return Response.status(500).build();
-    //        this.manager.addUser(user);
-    //        return Response.status(201).entity(user).build();
-    //    }
+        return Response.status(200).entity(user).build();
+    }
 
     //Update User
     @PUT
