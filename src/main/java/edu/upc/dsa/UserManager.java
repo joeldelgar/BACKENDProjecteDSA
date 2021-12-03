@@ -1,5 +1,6 @@
 package edu.upc.dsa;
 
+import edu.upc.dsa.models.CredentialsRegister;
 import edu.upc.dsa.models.Objecte;
 import edu.upc.dsa.models.User;
 
@@ -10,12 +11,14 @@ public interface UserManager {
     //Funcions referides només a User
     public User addUser(User user);
     //Afegir Usuari
-    public User updateUser(User user, String psw);
+    public User updateUser(User user, CredentialsRegister reg);
     //Modificar Usuari
-    public User getUser(String name);
+    public User getUser(int id);
+    public User getUserName(String name);
+
     //Veure Usuari
     public List<User> getAllUsers();
-    public void deleteUser(String name);
+    public void deleteUser(int id);
     //Eliminar Usuari
     public int userListsize();
 
@@ -32,14 +35,14 @@ public interface UserManager {
     //Veure Amics
     //public List<User> getFriend(String name);
 
-    public List<Objecte> getObjectListUser(String name);
+    public List<Objecte> getObjectListUser(int id);
 
     public List<User> getRanquingObjectes();
 
     //Friends
-    //public User addFriend(String name);
+    //public User addFriend(int id);
     //public User deleteFriend(String name);
-    public List<User> getFriends(String name);
+    public List<User> getFriends(int id);
 
 
     public List<User> getLoggedUsers();

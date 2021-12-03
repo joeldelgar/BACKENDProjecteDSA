@@ -55,6 +55,7 @@ public class GameService {
     @Path("/")
     @Produces(MediaType.APPLICATION_JSON)
     public Response addGame() {
+        //id s'ha d'agafar del valor de la BD
         int id = this.manager.gameListSize() + 1;
         Game g = this.manager.getGame(id);
         if (g!=null) return Response.status(500).entity(g).build();

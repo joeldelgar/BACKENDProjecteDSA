@@ -1,5 +1,6 @@
 package edu.upc.dsa;
 
+import edu.upc.dsa.models.CredentialsRegister;
 import edu.upc.dsa.models.Objecte;
 import edu.upc.dsa.models.User;
 import org.apache.log4j.Logger;
@@ -53,10 +54,16 @@ public class UserManagerImpl implements UserManager{
     }
 
     @Override
-    public User updateUser(User u, String psw) {
+    public User updateUser(User u, CredentialsRegister reg) {
         if (u!=null){
-            u.setPsw(psw);
-            logger.info("User "+ u.getName() + " has updated the password");
+            if (!(u.getPsw().equals(reg.getPassword()))){
+                u.setPsw(reg.getPassword());
+                logger.info("User "+ u.getName() + " has updated the password");
+            }
+            else if (!(u.getMail().equals(reg.getMail()))){
+                u.setMail(reg.getMail());
+                logger.info("User "+ u.getName() + " has updated the mail");
+            }
         }else{
             logger.info("User "+u.getName()+" Not Found");
         }
@@ -64,15 +71,28 @@ public class UserManagerImpl implements UserManager{
     }
 
     @Override
-    public User getUser(String name) {
-       logger.info("Nom a buscar: "+name);
+    public User getUserName(String name) {
+        logger.info("Usuari: "+ name);
         for(User user: this.userList){
-           if(user.getName().equals(name)){
-               logger.info("User "+name+" Found");
+            if(user.getName().equals(name)){
+                logger.info("User "+name+" Found");
+                return user;
+            }
+        }
+        logger.info("User with id "+name+" Not Found");
+        return null;
+    }
+
+    @Override
+    public User getUser(int id) {
+       logger.info("Usuari amb id: "+ id);
+        for(User user: this.userList){
+           if(user.getId()==id){
+               logger.info("User with id "+id+" Found");
                return user;
            }
        }
-        logger.info("User "+name+" Not Found");
+        logger.info("User with id "+id+" Not Found");
         return null;
     }
 
@@ -94,13 +114,13 @@ public class UserManagerImpl implements UserManager{
     }
 
     @Override
-    public void deleteUser(String name) {
-        User user= this.getUser(name);
+    public void deleteUser(int id) {
+        User user= this.getUser(id);
         if(user==null){
-            logger.info("User "+name+" Not Found");
+            logger.info("User with id "+id+" Not Found");
         }else{
             this.userList.remove(user);
-            logger.info("User "+name+" Deleted");
+            logger.info("User with id "+id+" Deleted");
         }
     }
 
@@ -111,7 +131,7 @@ public class UserManagerImpl implements UserManager{
 
     @Override
     public void logUser(String name, String password) {
-        User u = this.getUser(name);
+        User u = this.getUserName(name);
         if (u==null) {
             logger.info("User does not exist");
             //return null;
@@ -128,10 +148,10 @@ public class UserManagerImpl implements UserManager{
     }
 
     @Override
-    public List<Objecte> getObjectListUser(String name) {
-        User user = this.getUser(name);
+    public List<Objecte> getObjectListUser(int id) {
+        User user = this.getUser(id);
         if(user == null){
-            logger.info("Llista d'Objectes de "+name);
+            logger.info("Llista d'Objectes de "+ user.getName());
             List<Objecte> list = user.getObjectList();
             return list;
         }else{
@@ -157,7 +177,7 @@ public class UserManagerImpl implements UserManager{
 
 
     //@Override
-    /*public User addFriend(String name) {
+    /*public User addFriend(int id) {
         for(User user: this.userList){
             if(user.getName().equals(name)){
                 user.friendList.add(user);
@@ -183,8 +203,8 @@ public class UserManagerImpl implements UserManager{
     }
     */
     @Override
-    public List<User> getFriends(String name) {
-        User u = this.getUser(name);
+    public List<User> getFriends(int id) {
+        User u = this.getUser(id);
         return u.getFriendList();
     }
 

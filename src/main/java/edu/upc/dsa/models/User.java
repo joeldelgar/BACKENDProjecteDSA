@@ -8,6 +8,8 @@ import java.util.List;
 public class User {
     String name;
     String psw;
+    String mail;
+    int id;
 
     public List<Objecte> objectList = new ArrayList<>();
 
@@ -43,6 +45,14 @@ public class User {
         this.psw = psw;
     }
 
+    public String getMail() {
+        return mail;
+    }
+
+    public void setMail(String mail) {
+        this.mail = mail;
+    }
+
     public User addFriend(User u){
         friendList.add(u);
         return u;
@@ -53,6 +63,17 @@ public class User {
         return u;
 
     }
+
+    //S'agafa el valor de la taula quan s'afegeix a la base de dades
+    public void setId(int id){
+        this.id=id;
+    }
+
+    public int getId() {
+        return id;
+    }
+
+
 
     public void addObjecte(Objecte e){}
     public void deleteObjecte(Objecte e){}
