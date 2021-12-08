@@ -1,4 +1,6 @@
-package edu.upc.dsa.DAO;
+package edu.upc.dsa.DAO.utils;
+
+import edu.upc.dsa.DAO.utils.ObjectHelper;
 
 public class QueryHelper {
 
@@ -34,4 +36,28 @@ public class QueryHelper {
         return sb.toString();
     }
 
+    public static String createQueryDELETE(Object entity){
+        StringBuffer sb = new StringBuffer();
+        sb.append("DELETE * FROM ").append(entity.getClass().getSimpleName());
+        sb.append(" WHERE ID = ?");
+
+        return  sb.toString();
+    }
+
+    public static String createQueryUPDATE(Object entity) {
+
+        StringBuffer sb = new StringBuffer("UPDATE ");
+        sb.append(entity.getClass().getSimpleName()).append(" ");
+        sb.append("SET ");
+
+        String [] fields = ObjectHelper.getFields(entity);
+
+        for (String field: fields) {
+            sb.append(", ").append(field).append("= ?");
+        }
+
+        sb.append(" WHERE ID = ?");
+
+        return sb.toString();
+    }
 }

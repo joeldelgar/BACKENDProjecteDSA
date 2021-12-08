@@ -1,7 +1,5 @@
 package edu.upc.dsa.models;
 
-import edu.upc.dsa.util.RandomUtils;
-
 import java.util.ArrayList;
 import java.util.List;
 
@@ -20,6 +18,14 @@ public class User {
         this.psw=psw;
         this.name=name;
     }
+    /*
+    public User(String name, String mail, String psw){
+        this.name=name;
+        this.mail=mail;
+        this.psw=psw;
+        //this.id = RandomStringUtils.randomAlphanumeric(8);
+    }
+     */
 
     public User() {}
 

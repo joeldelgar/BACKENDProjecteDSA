@@ -7,7 +7,6 @@ import java.sql.SQLException;
 public class GameSession {
     public static Session openSession() {
 
-
         Connection conn = getConnection();
 
         Session session = new SessionImpl(conn);
@@ -20,10 +19,8 @@ public class GameSession {
     private static Connection getConnection() {
         Connection conn = null;
         try {
-            conn =
-                    DriverManager.getConnection("jdbc:mysql://localhost/test?" +
-                            "user=minty&password=greatsqldb");
-
+            conn = DriverManager.getConnection("jdbc:mariadb://localhost:3306/dsadb","DSA5","esther");
+            System.out.println("Connected to the DB");
         } catch (SQLException ex) {
             // handle any errors
             System.out.println("SQLException: " + ex.getMessage());
