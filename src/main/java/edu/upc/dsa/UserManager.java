@@ -1,6 +1,7 @@
 package edu.upc.dsa;
 
-import edu.upc.dsa.models.Objecte;
+import edu.upc.dsa.models.CredentialsRegister;
+import edu.upc.dsa.models.Item;
 import edu.upc.dsa.models.User;
 
 import java.util.List;
@@ -9,39 +10,46 @@ public interface UserManager {
 
     //Funcions referides només a User
     public User addUser(User user);
+    public User addUser(String name, String password, String mail);
     //Afegir Usuari
-    public User updateUser(User user, String psw);
+    public User updateUser(User user, CredentialsRegister reg);
+    //public void updateUser(String newName, String newEmail, String newPassword, int id);
     //Modificar Usuari
     public User getUser(String name);
     public User getUserLogin (String name, String psw);
+    public User getUser(int id);
+    //public User getUser(int userID);
+    public User getUserName(String name);
+
     //Veure Usuari
     public List<User> getAllUsers();
-    public void deleteUser(String name);
+    //public List<User> getAllUsers();
     //Eliminar Usuari
-    public int userListsize();
-
-    //Funcions referides només a Objecte
-    public Objecte addObjecte(String name, String description, int value);
-    public Objecte addObjecte(Objecte object);
-    //Afegir un item
-    public Objecte getObjecte(String name);
-    public int objectListsize();
+    public void deleteUser(int id);
+    //public void deleteUser(int id);
+    public int userListSize();
 
     //Login
-    public void logUser(String name, String password);
-
-    //Veure Amics
-    //public List<User> getFriend(String name);
-
-    public List<Objecte> getObjectListUser(String name);
-
-    public List<User> getRanquingObjectes();
+    public void logInUser(String name, String password);
+    public List<User> getLoggedUsers();
+    public void logOutUser(String name);
 
     //Friends
-    //public User addFriend(String name);
+    //public User addFriend(int id);
     //public User deleteFriend(String name);
-    public List<User> getFriends(String name);
+    public List<User> getFriends(int id);
 
+    //Funcions referides només a Item
+    public Item addItem(Item item);
+    public Item addItem(String name, String description, int value);
+    //Afegir un item
+    public Item getItem(String name);
+    public int itemListSize();
 
-    public List<User> getLoggedUsers();
+    public List<Item> getItemListUser(int id);
+    //public List<Item> getItemListUser(int userID);
+
+    public List<User> getRankingItems();
+
+    void clear();
 }

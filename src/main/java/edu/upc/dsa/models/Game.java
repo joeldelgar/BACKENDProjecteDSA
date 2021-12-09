@@ -8,7 +8,7 @@ public class Game {
     private int points;
     private int level;
     private int life;
-    private List<Objecte> objectList = new ArrayList<>();
+    private List<Item> itemList = new ArrayList<>();
     private List<Enemy> enemyList = new ArrayList<>();
     private List<Level> levelList = new ArrayList<>();
 
@@ -54,12 +54,12 @@ public class Game {
         this.life = life;
     }
 
-    public List<Objecte> getObjectList() {
-        return objectList;
+    public List<Item> getItemList() {
+        return itemList;
     }
 
-    public void addObjecte(Objecte o){
-        objectList.add(o);
+    public void addItem(Item i){
+        itemList.add(i);
     }
 
     public void addLevel(Level l){

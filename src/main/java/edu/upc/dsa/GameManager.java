@@ -3,7 +3,7 @@ package edu.upc.dsa;
 import edu.upc.dsa.models.Enemy;
 import edu.upc.dsa.models.Game;
 import edu.upc.dsa.models.Level;
-import edu.upc.dsa.models.Objecte;
+import edu.upc.dsa.models.Item;
 
 public interface GameManager {
 
@@ -18,18 +18,18 @@ public interface GameManager {
     //Get Enemy data
     public Enemy getEnemy(String type);
 
-    //Get Object data
-    public Objecte getObjecte(String type);
+    //Get Item data
+    public Item getItem(String type);
 
     //Get Level
     public Level getLevel(int levelId);
 
     //Add Object to the Object list
-    public Objecte addObjectToPlayerList(Objecte object);
+    public Item addItemToPlayerList(Item item);
 
 
     public int gameListSize();
-    public void addObject (int id, Objecte o);
+    public void addItem(int id, Item i);
     public void addEnemy (int id, Enemy e);
     public void addLevel (int id, Level l);
 

@@ -69,7 +69,7 @@ public class GameManagerImpl implements GameManager{
     }
 
     @Override
-    public Objecte getObjecte(String type) {
+    public Item getItem(String type) {
         return null;
     }
 
@@ -79,7 +79,7 @@ public class GameManagerImpl implements GameManager{
     }
 
     @Override
-    public Objecte addObjectToPlayerList(Objecte object) {
+    public Item addItemToPlayerList(Item item) {
         return null;
 
     }
@@ -90,9 +90,9 @@ public class GameManagerImpl implements GameManager{
     }
 
     @Override
-    public void addObject(int id, Objecte o) {
+    public void addItem(int id, Item i) {
         Game g = this.gameList.get(id);
-        g.addObjecte(o);
+        g.addItem(i);
     }
 
     @Override

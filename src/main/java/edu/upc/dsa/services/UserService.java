@@ -1,7 +1,8 @@
 package edu.upc.dsa.services;
 import edu.upc.dsa.UserManager;
 import edu.upc.dsa.UserManagerImpl;
-import edu.upc.dsa.models.Credentials;
+import edu.upc.dsa.models.CredentialsLogin;
+import edu.upc.dsa.models.CredentialsRegister;
 import edu.upc.dsa.models.User;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -20,12 +21,18 @@ public class UserService {
     private UserManager manager;
 
     public UserService(){
+        //manager fora, implementació del DAO
         this.manager= UserManagerImpl.getInstance();
-        if(manager.userListsize()==0){
-            User u1 = new User("Joel","Password");
-            User u2 = new User("Maria","CaraDura");
-            User u3 = new User("Miguel","1234");
-            User u4 = new User("Sergi","5678");
+        if(manager.userListSize()==0){
+            User u1 = new User("Joel","Password","joel.delgado@estudiant.upc.edu");
+            User u2 = new User("Maria","CaraDura","maria.garcia@estudiant.upc.edu");
+            User u3 = new User("Miguel","1234","miguel.mateos@estudiant.upc.edu");
+            User u4 = new User("Arnau","5678","arnau.millan@estudiant.upc.edu");
+            u1.setId(1);
+            u2.setId(2);
+            u3.setId(3);
+            u4.setId(4);
+            //u4.setMail("arnau.millan@estudiant.upc.edu");
             u3.friendList.add(u2);
             u3.friendList.add(u1);
             this.manager.addUser(u1);
@@ -46,47 +53,55 @@ public class UserService {
 
     @Path("/add")
     @Consumes(MediaType.APPLICATION_JSON)
-    public Response newUser(Credentials credentials) {
-        User user = new User(credentials.getName(), credentials.getPassword());
-        if (user.getName()==null || user.getPsw()==null){
+    public Response addUser(CredentialsRegister reg) {
+        User user = new User(reg.getName(), reg.getPassword(), reg.getMail());
+        if (user.getName().equals("") || user.getPsw().equals("")){
             return Response.status(500).build();
         }
-        if (this.manager.addUser(user) == null){
-            return Response.status(500).build();
-        }else{
-            return Response.status(200).entity(user).build();
+        for(User u: this.manager.getAllUsers()){
+            if (u.getName().equals(user.getName()))
+                return Response.status(500).build();
         }
+        //set els paràmetres d'usuari que no siguin usuari i contrasenya
+        user.setMail(reg.getMail());
+        //set l'id obtingut a la BD
+        this.manager.addUser(user);
+        return Response.status(200).entity(user).build();
     }
 
-    //Update User
+    //Update User - Actualitzar dades (mail, psw...)
     @PUT
     @ApiOperation(value = "Update a User", notes = "Update a User")
     @ApiResponses(value = {
             @ApiResponse(code = 201, message = "Successful"),
-            @ApiResponse(code = 404, message = "User not found")
+            @ApiResponse(code = 404, message = "User not found"),
+            @ApiResponse(code = 500, message = "Validation error")
+
     })
-    @Path("/{name}/{psw}")
-    public Response updateUser(@PathParam("name") String name, @PathParam("psw") String psw) {
-        User u = this.manager.getUser(name);
+    @Path("/update")
+    public Response updateUser(CredentialsRegister upd) {
+        User u = this.manager.getUserName(upd.getName());
+
         if (u == null){
             return Response.status(404).build();
-        }else{
-            this.manager.updateUser(u, psw);
+        }else {
+            this.manager.updateUser(u, upd);
             return Response.status(201).entity(u).build();
         }
+
     }
 
-    //Get User
+    //Get User - Id
     @GET
     @ApiOperation(value = "Get a User", notes = "Get a User by Name")
     @ApiResponses(value = {
             @ApiResponse(code = 201, message = "Successful", response = User.class),
             @ApiResponse(code = 404, message = "User not found")
     })
-    @Path("/{name}")
+    @Path("/{id}")
     @Produces(MediaType.APPLICATION_JSON)
-    public Response getUser(@PathParam("name") String name) {
-        User user = this.manager.getUser(name);
+    public Response getUser(@PathParam("id") int id) {
+        User user = this.manager.getUser(id);
         if (user == null){
             return Response.status(404).build();
         }else{
@@ -100,7 +115,7 @@ public class UserService {
     @ApiResponses(value = {
             @ApiResponse(code = 201, message = "Successful", response = User.class, responseContainer="List"),
     })
-    @Path("/user")
+    @Path("/")
     @Produces(MediaType.APPLICATION_JSON)
     public Response getAllUsers() {
         List<User> users = this.manager.getAllUsers();
@@ -109,26 +124,25 @@ public class UserService {
 
     }
 
-    //Delete User
+    //Delete User - Id
     @DELETE
-    @ApiOperation(value = "Delete a User", notes = "Delete an User By Name")
+    @ApiOperation(value = "Delete a User", notes = "Delete a User by Credentials")
     @ApiResponses(value = {
             @ApiResponse(code = 201, message = "Successful"),
             @ApiResponse(code = 404, message = "User not found")
     })
-    @Path("/{name}")
-    public Response deleteUser(@PathParam("name") String name) {
-        User user = this.manager.getUser(name);
-        if (user == null){
-            return Response.status(404).build();
-        }
-        else{
-            this.manager.deleteUser(name);
-            return Response.status(201).entity(user).build();
+    @Path("/delete/{id}")
+    public Response deleteUser(@PathParam("id") int id) {
+       User u = this.manager.getUser(id);
+       if (u == null)
+           return Response.status(404).build();
+        else {
+           this.manager.deleteUser(id);
+           return Response.status(201).entity(u).build();
         }
     }
 
-    //Login
+    //Login - Credentials
     @POST
     @ApiOperation(value = "Login user", notes = "Password")
     @ApiResponses(value = {
@@ -139,10 +153,10 @@ public class UserService {
 
     @Path("/login")
     @Consumes(MediaType.APPLICATION_JSON)
-    public Response logUser(Credentials credentials) {
+    public Response logUser(CredentialsLogin credentialsLogin) {
 
-        String name = credentials.getName();
-        String password = credentials.getPassword();
+        String name = credentialsLogin.getName();
+        String password = credentialsLogin.getPassword();
         System.out.println(name+", "+ password);
         User u = this.manager.getUserLogin(name, password);
 
@@ -150,66 +164,71 @@ public class UserService {
             return Response.status(404).build();
         }
         else if (u.getPsw().equals(password)) {
-            this.manager.logUser(name, password);
+            this.manager.logInUser(name, password);
             return Response.status(200).entity(u).build();
         }
         else
             return Response.status(500).build();
     }
 
-    //Get Friends
+    //Get Friends - Id
     @GET
     @ApiOperation(value = "Get Friends")
     @ApiResponses(value = {
             @ApiResponse(code = 201, message = "Successful", response = User.class, responseContainer="List")
     })
-    @Path("/friends/{name}")
+    @Path("/friends/{id}")
     @Produces(MediaType.APPLICATION_JSON)
-    public Response getFriends(@PathParam("name") String name) {
-        User u = this.manager.getUser(name);
+    public Response getFriends(@PathParam("id") int id) {
+        User u = this.manager.getUser(id);
+        if (u==null)
+            Response.status(404).build();
         List<User> friendList = u.getFriendList();
         GenericEntity<List<User>> entity = new GenericEntity<List<User>>(friendList){};
         return Response.status(201).entity(entity).build()  ;
 
     }
 
-    //Add Friend
+    //Add Friend - Ids
+    //NO FUNCIONA --> No em deixa afegir des de les dues bandes
     @POST
     @ApiOperation(value = "Add Friend")
     @ApiResponses(value = {
             @ApiResponse(code = 201, message = "Successful", response= User.class),
-            @ApiResponse(code = 500, message = "Validation Error")
+            @ApiResponse(code = 500, message = "Validation Error"),
+            @ApiResponse(code = 404, message = "User Not Found")
     })
 
-    @Path("/friends/{name}/{friend}")
+    @Path("/friends/{id}/{friend}")
     @Consumes(MediaType.APPLICATION_JSON)
-    //M'afegeix els amics que no ho són per cap dels dos però els que ho són per una banda peten
-    public Response addFriend(@PathParam("name") String name, @PathParam("friend") String friend) {
-        User u = this.manager.getUser(name);
+    public Response addFriends(@PathParam("id") int id, @PathParam("friend") int friend) {
+        User u = this.manager.getUser(id);
         if (u == null)
-            return Response.status(500).build();
+            return Response.status(404).build();
+
         User f = this.manager.getUser(friend);
         if (f == null)
-            return Response.status(500).build();
-
-        List<User> friendList = u.getFriendList();
-        if (friendList.contains(f))
             return Response.status(404).build();
+
+        for (User user: u.getFriendList()){
+            if (user.equals(f))
+                return Response.status(500).build();
+        }
 
         u.addFriend(f);
         return Response.status(201).entity(f).build();
     }
 
-    //Delete friend
+    //Delete friend - Ids
     @DELETE
     @ApiOperation(value = "Delete a Friend", notes = "Delete a friend by Name")
     @ApiResponses(value = {
             @ApiResponse(code = 201, message = "Successful"),
             @ApiResponse(code = 404, message = "User not found")
     })
-    @Path("/friends/{name}/{friend}")
-    public Response deleteFriend(@PathParam("name") String name, @PathParam("friend") String friend) {
-        User u = this.manager.getUser(name);
+    @Path("/friends/{id}/{friend}")
+    public Response deleteFriend(@PathParam("id") int id, @PathParam("friend") int friend) {
+        User u = this.manager.getUser(id);
         if (u == null)
             return Response.status(404).build();
 
