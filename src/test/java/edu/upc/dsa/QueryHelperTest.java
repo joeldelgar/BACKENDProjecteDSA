@@ -69,15 +69,15 @@ public class QueryHelperTest {
         u = db.getUser("ID-Maria");
         Assert.assertEquals("Maria", u.getName());
     }
-    */
 
-/*
     @Test
     public void testQueryINSERT() {
-        Assert.assertEquals("INSERT INTO Employee (ID, name, surname, salary) VALUES (?, ?, ?, ?)",
-                QueryHelper.createQueryINSERT(new User("Juan", "1234")));
+        Assert.assertEquals("INSERT INTO User (ID, name, mail, password) VALUES (?, ?, ?, ?)",
+                QueryHelper.createQueryINSERT(new User("Joel","joel.delgado@estudiant.upc.edu","asdfg")));
     }
+     */
 
+/*
     @Test
     public void testQueryINSERT2() {
         Assert.assertEquals("INSERT INTO Deparment (ID, name, description) VALUES (?, ?, ?)",

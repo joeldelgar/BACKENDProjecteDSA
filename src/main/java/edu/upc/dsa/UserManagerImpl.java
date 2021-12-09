@@ -3,7 +3,7 @@ package edu.upc.dsa;
 import edu.upc.dsa.DAO.GameSession;
 import edu.upc.dsa.DAO.Session;
 import edu.upc.dsa.models.CredentialsRegister;
-import edu.upc.dsa.models.Objecte;
+import edu.upc.dsa.models.Item;
 import edu.upc.dsa.models.User;
 import org.apache.log4j.Logger;
 
@@ -12,14 +12,14 @@ import java.util.*;
 public class UserManagerImpl implements UserManager{
     private static UserManager manager;
     protected List<User> userList;
-    protected List<Objecte> objectList;
+    protected List<Item> itemList;
     protected List<User> onlineUsersList;
 
     final static Logger logger = Logger.getLogger(UserManagerImpl.class);
 
     private UserManagerImpl(){
         this.userList = new LinkedList<>();
-        this.objectList = new LinkedList<>();
+        this.itemList = new LinkedList<>();
         this.onlineUsersList = new LinkedList<>();
     }
 
@@ -43,16 +43,14 @@ public class UserManagerImpl implements UserManager{
         return user;
     }
 
-    /*
     @Override
-    public int addUser(String name, String mail, String password) {
+    public User addUser(String name, String password, String mail) {
         Session session = null;
-        int userID = 0;
         try {
             session = GameSession.openSession();
-            User u = new User(name, mail, password);
+            User u = new User(name, password, mail);
             session.save(u);
-            logger.info("name: " + name + "mail: " + mail);
+            logger.info("name: " + name + "password: " + password + "mail: " + mail);
         }
         catch (Exception e) {
             logger.error("Error addUser");
@@ -60,10 +58,8 @@ public class UserManagerImpl implements UserManager{
         finally {
             session.close();
         }
-
-        return userID;
+        return this.addUser(new User(name, password, mail));
     }
-     */
 
     @Override
     public User updateUser(User u, CredentialsRegister reg) {
@@ -125,7 +121,7 @@ public class UserManagerImpl implements UserManager{
         try {
             session = GameSession.openSession();
             u = (User)session.get(User.class, userID);
-            logger.info("name: "+ u.getName() + " Mail: "+u.getMail() + " Password: "+u.getPsw());
+            logger.info("name: "+ u.getName() + " Password: "+u.getPsw() + " Mail: "+u.getMail());
         }
         catch (Exception e) {
             logger.error("Error getUser");
@@ -133,7 +129,6 @@ public class UserManagerImpl implements UserManager{
         finally {
             session.close();
         }
-
         return u;
     }
      */
@@ -205,12 +200,12 @@ public class UserManagerImpl implements UserManager{
      */
 
     @Override
-    public int userListsize() {
+    public int userListSize() {
         return this.userList.size();
     }
 
     @Override
-    public void logUser(String name, String password) {
+    public void logInUser(String name, String password) {
         User u = this.getUserName(name);
         if (u==null) {
             logger.info("User does not exist");
@@ -218,7 +213,7 @@ public class UserManagerImpl implements UserManager{
         }
         else if (u.getPsw().equals(password)){
             this.onlineUsersList.add(u);
-            logger.info("User "+name+" logged successfully");
+            logger.info("User "+name+" logged in successfully");
             //return u;
         }
         else {
@@ -230,6 +225,18 @@ public class UserManagerImpl implements UserManager{
     @Override
     public List<User> getLoggedUsers() {
         return onlineUsersList;
+    }
+
+    @Override
+    public void logOutUser(String name) {
+        User u = this.getUserName(name);
+        if (u==null) {
+            logger.info("User does not exist");
+        }
+        else {
+            this.onlineUsersList.remove(u);
+            logger.info("User "+name+" logged out successfully");
+        }
     }
 
     //@Override
@@ -265,41 +272,41 @@ public class UserManagerImpl implements UserManager{
     }
 
     @Override
-    public Objecte addObjecte(String name, String description, int value) {
-        return this.addObjecte(new Objecte(name,description,value));
+    public Item addItem(Item item) {
+        logger.info("New Item " + item.getName() +": " + item.getDescription());
+        this.itemList.add(item);
+        logger.info("New Item Added: " + item);
+        return item;
     }
 
     @Override
-    public Objecte addObjecte(Objecte object) {
-        logger.info("New Object: "+object.toString());
-        this.objectList.add(object);
-        logger.info("New Object Added: "+object);
-        return object;
+    public Item addItem(String name, String description, int value) {
+        return this.addItem(new Item(name,description,value));
     }
 
     @Override
-    public Objecte getObjecte(String name) {
-        for(Objecte object: this.objectList){
-            if(object.getName().equals(name)){
-                logger.info("Object "+name+" Found");
-                return object;
+    public Item getItem(String name) {
+        for(Item item: this.itemList){
+            if(item.getName().equals(name)){
+                logger.info("Item "+name+" Found");
+                return item;
             }
         }
-        logger.info("Object Not Found");
+        logger.info("Item Not Found");
         return null;
     }
 
     @Override
-    public int objectListsize() {
-        return this.objectList.size();
+    public int itemListSize() {
+        return this.itemList.size();
     }
 
     @Override
-    public List<Objecte> getObjectListUser(int id) {
+    public List<Item> getItemListUser(int id) {
         User user = this.getUser(id);
         if(user == null){
-            logger.info("Llista d'Objectes de "+ user.getName());
-            List<Objecte> list = user.getObjectList();
+            logger.info("Llista d'Items de "+ user.getName());
+            List<Item> list = user.getItemList();
             return list;
         }else{
             logger.info("List not Found");
@@ -309,30 +316,30 @@ public class UserManagerImpl implements UserManager{
 
     /*
     @Override
-    public List<Objecte> getObjectListUser(int userID) {
+    public List<Item> getItemListUser(int userID) {
         Session session = null;
-        List<Objecte> objecteList=null;
+        List<Item> itemList=null;
         try {
             session = GameSession.openSession();
             HashMap<String, Integer> params = new HashMap<String, Integer>();
             params.put("userID", userID);
-            objecteList = session.findAll(Objecte.class, params);
+            itemList = session.findAll(Item.class, params);
         }
         catch (Exception e) {
-            logger.error("Error getObjectListUser List");
+            logger.error("Error getItemListUser List");
         }
         finally {
             session.close();
         }
-        return objecteList;
+        return itemList;
     }
      */
 
     @Override
-    public List<User> getRanquingObjectes(){
+    public List<User> getRankingItems(){
         Collections.sort(userList, new Comparator<User>() {
             public int compare(User list1, User list2) {
-                return Integer.valueOf(list1.objectList.size()).compareTo(Integer.valueOf(list2.objectList.size()));
+                return Integer.valueOf(list1.itemList.size()).compareTo(Integer.valueOf(list2.itemList.size()));
             }
         });
         return null;

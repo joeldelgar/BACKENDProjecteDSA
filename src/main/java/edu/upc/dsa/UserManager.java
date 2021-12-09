@@ -1,7 +1,7 @@
 package edu.upc.dsa;
 
 import edu.upc.dsa.models.CredentialsRegister;
-import edu.upc.dsa.models.Objecte;
+import edu.upc.dsa.models.Item;
 import edu.upc.dsa.models.User;
 
 import java.util.List;
@@ -10,7 +10,7 @@ public interface UserManager {
 
     //Funcions referides només a User
     public User addUser(User user);
-    //public int addUser(String name, String mail, String password);
+    public User addUser(String name, String password, String mail);
     //Afegir Usuari
     public User updateUser(User user, CredentialsRegister reg);
     //public void updateUser(String newName, String newEmail, String newPassword, int id);
@@ -24,28 +24,29 @@ public interface UserManager {
     //Eliminar Usuari
     public void deleteUser(int id);
     //public void deleteUser(int id);
-    public int userListsize();
+    public int userListSize();
 
     //Login
-    public void logUser(String name, String password);
+    public void logInUser(String name, String password);
     public List<User> getLoggedUsers();
+    public void logOutUser(String name);
 
     //Friends
     //public User addFriend(int id);
     //public User deleteFriend(String name);
     public List<User> getFriends(int id);
 
-    //Funcions referides només a Objecte
-    public Objecte addObjecte(String name, String description, int value);
-    public Objecte addObjecte(Objecte object);
+    //Funcions referides només a Item
+    public Item addItem(Item item);
+    public Item addItem(String name, String description, int value);
     //Afegir un item
-    public Objecte getObjecte(String name);
-    public int objectListsize();
+    public Item getItem(String name);
+    public int itemListSize();
 
-    public List<Objecte> getObjectListUser(int id);
-    //public List<Objecte> getObjectListUser(int userID);
+    public List<Item> getItemListUser(int id);
+    //public List<Item> getItemListUser(int userID);
 
-    public List<User> getRanquingObjectes();
+    public List<User> getRankingItems();
 
     void clear();
 }

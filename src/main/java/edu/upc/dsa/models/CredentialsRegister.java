@@ -12,9 +12,10 @@ public class CredentialsRegister {
 
     public CredentialsRegister() {}
 
-    public CredentialsRegister(String name, String password) {
+    public CredentialsRegister(String name, String password, String mail) {
         this.name = name;
         this.password = password;
+        this.mail = mail;
     }
 
     public String getName() {

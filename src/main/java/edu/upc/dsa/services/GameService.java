@@ -2,10 +2,8 @@ package edu.upc.dsa.services;
 
 import edu.upc.dsa.GameManager;
 import edu.upc.dsa.GameManagerImpl;
-import edu.upc.dsa.UserManagerImpl;
 import edu.upc.dsa.models.Game;
-import edu.upc.dsa.models.Objecte;
-import edu.upc.dsa.models.User;
+import edu.upc.dsa.models.Item;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiResponse;
@@ -32,14 +30,14 @@ public class GameService {
             this.manager.addGame(g2);
             this.manager.addGame(g3);
 
-            Objecte o1 = new Objecte("Porta", "Passar", 0);
-            Objecte o2= new Objecte("Ganzua","Eïna que et permet obrir panys", 0);
-            Objecte o3= new Objecte("Gerro","Objecte a robar", 100);
+            Item o1 = new Item("Porta", "Passar", 0);
+            Item o2= new Item("Ganzua","Eïna que et permet obrir panys", 0);
+            Item o3= new Item("Gerro","Objecte a robar", 100);
 
-            g1.addObjecte(o1);
-            g1.addObjecte(o2);
-            g2.addObjecte(o3);
-            g3.addObjecte(o3);
+            g1.addItem(o1);
+            g1.addItem(o2);
+            g2.addItem(o3);
+            g3.addItem(o3);
         }
     }
 
@@ -105,7 +103,7 @@ public class GameService {
     @GET
     @ApiOperation(value = "Get Object List", notes = "Get a object list by game")
     @ApiResponses(value = {
-            @ApiResponse(code = 201, message = "Successful", response = Objecte.class, responseContainer="List"),
+            @ApiResponse(code = 201, message = "Successful", response = Item.class, responseContainer="List"),
             @ApiResponse(code = 404, message = "Game not found")
     })
     @Path("/object/{id}")
@@ -115,8 +113,8 @@ public class GameService {
         if (g == null){
             return Response.status(404).build();
         }else{
-            List<Objecte> objectList = g.getObjectList();
-            GenericEntity<List<Objecte>> entity = new GenericEntity<List<Objecte>>(objectList){};
+            List<Item> objectList = g.getItemList();
+            GenericEntity<List<Item>> entity = new GenericEntity<List<Item>>(objectList){};
             return Response.status(201).entity(entity).build();
         }
     }

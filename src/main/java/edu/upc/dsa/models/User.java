@@ -9,28 +9,21 @@ public class User {
     String mail;
     int id;
 
-    public List<Objecte> objectList = new ArrayList<>();
+    public List<Item> itemList = new ArrayList<>();
 
     public List<User> friendList = new ArrayList<>();
 
-    public User(String name, String psw){
-        //this();
-        this.psw=psw;
-        this.name=name;
-    }
-    /*
-    public User(String name, String mail, String psw){
-        this.name=name;
-        this.mail=mail;
-        this.psw=psw;
-        //this.id = RandomStringUtils.randomAlphanumeric(8);
-    }
-     */
-
     public User() {}
 
-    public List<Objecte> getObjectList(){
-        return objectList;
+    public User(String name, String psw, String mail){
+        this.name=name;
+        this.psw=psw;
+        this.mail=mail;
+        //this.id = RandomStringUtils.randomAlphanumeric(8);
+    }
+
+    public List<Item> getItemList(){
+        return itemList;
     }
 
     public List<User> getFriendList() {return friendList;}
@@ -81,6 +74,6 @@ public class User {
 
 
 
-    public void addObjecte(Objecte e){}
-    public void deleteObjecte(Objecte e){}
+    public void addItem(Item e){}
+    public void deleteItem(Item e){}
 }

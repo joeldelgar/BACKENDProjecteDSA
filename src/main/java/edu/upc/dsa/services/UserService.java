@@ -12,7 +12,6 @@ import javax.ws.rs.*;
 import javax.ws.rs.core.GenericEntity;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
-import javax.ws.rs.core.StreamingOutput;
 import java.util.List;
 
 @Api(value = "/user", description = "Endpoint to User Service")
@@ -23,17 +22,16 @@ public class UserService {
     public UserService(){
         //manager fora, implementació del DAO
         this.manager= UserManagerImpl.getInstance();
-        if(manager.userListsize()==0){
-            User u1 = new User("Joel","Password");
-            User u2 = new User("Maria","CaraDura");
-            User u3 = new User("Miguel","1234");
-            User u4 = new User("Sergi","5678");
+        if(manager.userListSize()==0){
+            User u1 = new User("Joel","Password","joel.delgado@estudiant.upc.edu");
+            User u2 = new User("Maria","CaraDura","maria.garcia@estudiant.upc.edu");
+            User u3 = new User("Miguel","1234","miguel.mateos@estudiant.upc.edu");
+            User u4 = new User("Arnau","5678","arnau.millan@estudiant.upc.edu");
             u1.setId(1);
             u2.setId(2);
             u3.setId(3);
             u4.setId(4);
-            u3.setMail("asaaasdfdsa");
-            u2.setMail("asdfrtyu");
+            //u4.setMail("arnau.millan@estudiant.upc.edu");
             u3.friendList.add(u2);
             u3.friendList.add(u1);
             this.manager.addUser(u1);
@@ -54,7 +52,7 @@ public class UserService {
     @Path("/add")
     @Consumes(MediaType.APPLICATION_JSON)
     public Response addUser(CredentialsRegister reg) {
-        User user = new User(reg.getName(), reg.getPassword());
+        User user = new User(reg.getName(), reg.getPassword(), reg.getMail());
         if (user.getName().equals("") || user.getPsw().equals("")){
             return Response.status(500).build();
         }
@@ -164,7 +162,7 @@ public class UserService {
             return Response.status(404).build();
         }
         else if (u.getPsw().equals(password)) {
-            this.manager.logUser(name, password);
+            this.manager.logInUser(name, password);
             return Response.status(200).entity(u).build();
         }
         else
