@@ -13,6 +13,7 @@ public interface UserManager {
     public User updateUser(User user, String psw);
     //Modificar Usuari
     public User getUser(String name);
+    public User getUserLogin (String name, String psw);
     //Veure Usuari
     public List<User> getAllUsers();
     public void deleteUser(String name);

@@ -38,6 +38,13 @@ public class UserManagerImpl implements UserManager{
 
     @Override
     public User addUser(User user) {
+        String name =user.getName();
+        for(User u: this.userList){
+            if(u.getName().equals(name)){
+                logger.info("User "+name+" Found");
+                return null;
+            }
+        }
         logger.info("New User: "+user.toString());
         this.userList.add(user);
         logger.info("New User Added: "+user);
@@ -72,6 +79,19 @@ public class UserManagerImpl implements UserManager{
                return user;
            }
        }
+        logger.info("User "+name+" Not Found");
+        return null;
+    }
+
+    @Override
+    public User getUserLogin(String name, String psw) {
+        logger.info("Nom a buscar: "+name);
+        for(User user: this.userList){
+            if(user.getName().equals(name) && user.getPsw().equals(psw)){
+                logger.info("User "+name+" Found");
+                return user;
+            }
+        }
         logger.info("User "+name+" Not Found");
         return null;
     }

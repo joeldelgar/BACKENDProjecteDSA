@@ -13,6 +13,7 @@ import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 import java.util.List;
 
+
 @Api(value = "/user", description = "Endpoint to User Service")
 @Path("/user")
 public class UserService {
@@ -34,6 +35,7 @@ public class UserService {
         }
     }
 
+
     //Add User    Register
     @POST
     @ApiOperation(value = "Register a new User", notes = "Name and Password")
@@ -49,8 +51,11 @@ public class UserService {
         if (user.getName()==null || user.getPsw()==null){
             return Response.status(500).build();
         }
-        this.manager.addUser(user);
-        return Response.status(200).entity(user).build();
+        if (this.manager.addUser(user) == null){
+            return Response.status(500).build();
+        }else{
+            return Response.status(200).entity(user).build();
+        }
     }
 
     //Update User
@@ -139,7 +144,7 @@ public class UserService {
         String name = credentials.getName();
         String password = credentials.getPassword();
         System.out.println(name+", "+ password);
-        User u = this.manager.getUser(name);
+        User u = this.manager.getUserLogin(name, password);
 
         if (u == null){
             return Response.status(404).build();
