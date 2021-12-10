@@ -1,34 +1,22 @@
 package edu.upc.dsa;
 
-import edu.upc.dsa.DAO.GameSession;
-import edu.upc.dsa.DAO.Session;
-import edu.upc.dsa.models.User;
-import edu.upc.dsa.UserManagerImpl;
-import edu.upc.dsa.DAO.utils.ObjectHelper;
-import edu.upc.dsa.DAO.utils.QueryHelper;
-import org.junit.Assert;
-import org.junit.Test;
-
-import java.lang.reflect.InvocationTargetException;
-import java.sql.SQLException;
-
 public class QueryHelperTest {
 
     /*
     @Test
-    public void testSetter() throws NoSuchMethodException {
+    public void testSetter() {
         User u = new User("Miguel", "miguel.mateos@estudiant.upc.edu", "1234");
         ObjectHelper.setter(u,"name","Miguel");
         Assert.assertEquals(u.getName(),"Miguel");
     }
     @Test
-    public void testGetter() throws InvocationTargetException, IllegalAccessException, NoSuchMethodException {
+    public void testGetter() {
         User u = new User("Miguel", "miguel.mateos@estudiant.upc.edu", "1234");
         String name = (String) ObjectHelper.getter(u,"name");
         Assert.assertEquals(u.getName(),name);
     }
     @Test
-    public void testInsert() throws SQLException, InvocationTargetException, IllegalAccessException, NoSuchMethodException {
+    public void testInsert() {
         User u = new User("Maria", "maria.garcia@estudiant.upc.edu", "qwerty");
         GameSession gs = new GameSession();
         Session s = gs.openSession();

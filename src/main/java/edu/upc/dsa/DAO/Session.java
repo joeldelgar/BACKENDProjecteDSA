@@ -1,17 +1,26 @@
 package edu.upc.dsa.DAO;
 
-import java.lang.reflect.InvocationTargetException;
-import java.sql.SQLException;
 import java.util.HashMap;
 import java.util.List;
 
 public interface Session<E> {
-    void save(Object entity) throws SQLException, InvocationTargetException, IllegalAccessException, NoSuchMethodException;
+
+    void save(Object entity);
     void close();
-    Object get(Object object, int ID) throws SQLException, NoSuchMethodException;
-    void update(Object object, String ID) throws SQLException;
-    void delete(Object object);
-    List<Object> findAll(Class theClass);
-    List<Object> findAll(Class theClass, HashMap params);
-    List<Object> query(String query, Class theClass, HashMap params);
+
+    Object get(Object object);
+    Object getByParameter(Class theClass, String byParameter, Object byParameterValue);
+    Object getParameterByParameter(Class theClass, String parameter, String byParameter, Object byParameterValue);
+
+    boolean update(Object object);
+    boolean updateByParameter(Object object, String byParameter, Object byParameterValue);
+    boolean updateParameterByParameter(Class theClass, String parameter, Object parameterValue, String byParameter, Object byParameterValue);
+
+    boolean delete(Object object);
+    boolean deleteByParameter(Class theClass, String byParameter, Object byParameterValue);
+
+    List<Object> queryObjects(String query, Class theClass, List params);
+
+    HashMap<Integer, Object> FindAll(Class theClass);
+    HashMap<Integer, Object> FindAllByParameter(Class theClass, String byParameter, Object byParameterValue);
 }

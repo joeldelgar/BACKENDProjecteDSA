@@ -1,6 +1,6 @@
 package edu.upc.dsa;
 
-import edu.upc.dsa.DAO.GameSession;
+import edu.upc.dsa.DAO.FactorySession;
 import edu.upc.dsa.DAO.Session;
 import edu.upc.dsa.models.CredentialsRegister;
 import edu.upc.dsa.models.Item;
@@ -14,6 +14,7 @@ public class UserManagerImpl implements UserManager{
     protected List<User> userList;
     protected List<Item> itemList;
     protected List<User> onlineUsersList;
+    private Session session = null;
 
     final static Logger logger = Logger.getLogger(UserManagerImpl.class);
 
@@ -45,9 +46,8 @@ public class UserManagerImpl implements UserManager{
 
     @Override
     public User addUser(String name, String password, String mail) {
-        Session session = null;
         try {
-            session = GameSession.openSession();
+            session = FactorySession.openSession();
             User u = new User(name, password, mail);
             session.save(u);
             logger.info("name: " + name + "password: " + password + "mail: " + mail);
@@ -64,8 +64,8 @@ public class UserManagerImpl implements UserManager{
     @Override
     public User updateUser(User u, CredentialsRegister reg) {
         if (u!=null){
-            if (!(u.getPsw().equals(reg.getPassword()))){
-                u.setPsw(reg.getPassword());
+            if (!(u.getPassword().equals(reg.getPassword()))){
+                u.setPassword(reg.getPassword());
                 logger.info("User "+ u.getName() + " has updated the password");
             }
             else if (!(u.getMail().equals(reg.getMail()))){
@@ -86,8 +86,6 @@ public class UserManagerImpl implements UserManager{
         u.setMail(newEmail);
         u.setPsw(newPassword);
 
-        Session session = null;
-
         try {
             session = GameSession.openSession();
             session.update(User.class, id);
@@ -102,7 +100,7 @@ public class UserManagerImpl implements UserManager{
     */
 
     @Override
-    public User getUser(int id) {
+    public User getUser(String id) {
         logger.info("Usuari amb id: "+ id);
         for(User user: this.userList){
             if(user.getId()==id){
@@ -116,7 +114,6 @@ public class UserManagerImpl implements UserManager{
 
     /*
     public User getUser(int userID) {
-        Session session = null;
         User u = null;
         try {
             session = GameSession.openSession();
@@ -154,7 +151,6 @@ public class UserManagerImpl implements UserManager{
     /*
     @Override
     public List<User> getAllUsers() {
-        Session session = null;
         List<User> userList=null;
         try {
             session = GameSession.openSession();
@@ -185,7 +181,6 @@ public class UserManagerImpl implements UserManager{
     @Override
     public void deleteUser(int id) {
         User u = this.getUser(id);
-        Session session = null;
         try {
             session = GameSession.openSession();
             session.delete(User.class);
@@ -211,7 +206,7 @@ public class UserManagerImpl implements UserManager{
             logger.info("User does not exist");
             //return null;
         }
-        else if (u.getPsw().equals(password)){
+        else if (u.getPassword().equals(password)){
             this.onlineUsersList.add(u);
             logger.info("User "+name+" logged in successfully");
             //return u;
@@ -317,7 +312,6 @@ public class UserManagerImpl implements UserManager{
     /*
     @Override
     public List<Item> getItemListUser(int userID) {
-        Session session = null;
         List<Item> itemList=null;
         try {
             session = GameSession.openSession();

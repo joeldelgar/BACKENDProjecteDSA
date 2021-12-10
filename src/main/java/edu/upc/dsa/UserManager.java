@@ -15,7 +15,7 @@ public interface UserManager {
     public User updateUser(User user, CredentialsRegister reg);
     //public void updateUser(String newName, String newEmail, String newPassword, int id);
     //Modificar Usuari
-    public User getUser(int id);
+    public User getUser(String id);
     //public User getUser(int userID);
     public User getUserName(String name);
     //Veure Usuari

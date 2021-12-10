@@ -1,32 +1,40 @@
 package edu.upc.dsa.models;
 
-import java.util.ArrayList;
-import java.util.List;
+import edu.upc.dsa.utils.RandomUtils;
+
+import java.util.ArrayList; //temp
+import java.util.List; //temp
 
 public class User {
+    String id;
     String name;
-    String psw;
+    String password;
     String mail;
-    int id;
 
-    public List<Item> itemList = new ArrayList<>();
-
-    public List<User> friendList = new ArrayList<>();
+    public List<Item> itemList = new ArrayList<>(); //temp
+    public List<User> friendList = new ArrayList<>(); //temp
 
     public User() {}
 
-    public User(String name, String psw, String mail){
-        this.name=name;
-        this.psw=psw;
-        this.mail=mail;
-        //this.id = RandomStringUtils.randomAlphanumeric(8);
+    public User(String name, String password, String mail) {
+        this.id = RandomUtils.getId();
+        this.name = name;
+        this.password = password;
+        this.mail = mail;
     }
 
-    public List<Item> getItemList(){
-        return itemList;
+    public User(String name, String password) {
+        this.name = name;
+        this.password = password;
     }
 
-    public List<User> getFriendList() {return friendList;}
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id){
+        this.id = id;
+    }
 
     public String getName() {
         return name;
@@ -36,12 +44,12 @@ public class User {
         this.name = name;
     }
 
-    public String getPsw() {
-        return psw;
+    public String getPassword() {
+        return password;
     }
 
-    public void setPsw(String psw) {
-        this.psw = psw;
+    public void setPassword(String password) {
+        this.password = password;
     }
 
     public String getMail() {
@@ -52,6 +60,25 @@ public class User {
         this.mail = mail;
     }
 
+    @Override
+    public String toString() {
+        return "User{" + "ID='" + id + '\'' +
+                ", username='" + name + '\'' +
+                ", password='" + password + '\'' +
+                ", email='" + mail + '\'' +
+                '}';
+    }
+
+    //To review
+
+    public List<Item> getItemList(){
+        return itemList;
+    }
+
+    public List<User> getFriendList() {
+        return friendList;
+    }
+
     public User addFriend(User u){
         friendList.add(u);
         return u;
@@ -60,19 +87,7 @@ public class User {
     public User deleteFriend(User u){
         friendList.remove(u);
         return u;
-
     }
-
-    //S'agafa el valor de la taula quan s'afegeix a la base de dades
-    public void setId(int id){
-        this.id=id;
-    }
-
-    public int getId() {
-        return id;
-    }
-
-
 
     public void addItem(Item e){}
     public void deleteItem(Item e){}

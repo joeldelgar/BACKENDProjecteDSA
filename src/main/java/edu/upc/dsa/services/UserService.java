@@ -1,7 +1,7 @@
 package edu.upc.dsa.services;
 import edu.upc.dsa.UserManager;
 import edu.upc.dsa.UserManagerImpl;
-import edu.upc.dsa.models.CredentialsLogin;
+import edu.upc.dsa.models.CredentialsLogIn;
 import edu.upc.dsa.models.CredentialsRegister;
 import edu.upc.dsa.models.User;
 import io.swagger.annotations.Api;
@@ -27,10 +27,10 @@ public class UserService {
             User u2 = new User("Maria","CaraDura","maria.garcia@estudiant.upc.edu");
             User u3 = new User("Miguel","1234","miguel.mateos@estudiant.upc.edu");
             User u4 = new User("Arnau","5678","arnau.millan@estudiant.upc.edu");
-            u1.setId(1);
-            u2.setId(2);
-            u3.setId(3);
-            u4.setId(4);
+            u1.setId("1");
+            u2.setId("2");
+            u3.setId("3");
+            u4.setId("4");
             //u4.setMail("arnau.millan@estudiant.upc.edu");
             u3.friendList.add(u2);
             u3.friendList.add(u1);
@@ -53,7 +53,7 @@ public class UserService {
     @Consumes(MediaType.APPLICATION_JSON)
     public Response addUser(CredentialsRegister reg) {
         User user = new User(reg.getName(), reg.getPassword(), reg.getMail());
-        if (user.getName().equals("") || user.getPsw().equals("")){
+        if (user.getName().equals("") || user.getPassword().equals("")){
             return Response.status(500).build();
         }
         for(User u: this.manager.getAllUsers()){
@@ -151,7 +151,7 @@ public class UserService {
 
     @Path("/login")
     @Consumes(MediaType.APPLICATION_JSON)
-    public Response logUser(CredentialsLogin credentialsLogin) {
+    public Response logUser(CredentialsLogIn credentialsLogin) {
 
         String name = credentialsLogin.getName();
         String password = credentialsLogin.getPassword();
@@ -161,7 +161,7 @@ public class UserService {
         if (u == null){
             return Response.status(404).build();
         }
-        else if (u.getPsw().equals(password)) {
+        else if (u.getPassword().equals(password)) {
             this.manager.logInUser(name, password);
             return Response.status(200).entity(u).build();
         }
