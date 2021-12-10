@@ -131,13 +131,13 @@ public class UserService {
             @ApiResponse(code = 201, message = "Successful"),
             @ApiResponse(code = 404, message = "User not found")
     })
-    @Path("/delete/{id}")
-    public Response deleteUser(@PathParam("id") String id) {
-       User u = this.manager.getUser(id);
+    @Path("/delete/{name}")
+    public Response deleteUser(@PathParam("name") String name) {
+       User u = this.manager.getUser(name);
        if (u == null)
            return Response.status(404).build();
         else {
-           this.manager.deleteUser(id);
+           this.manager.deleteUser(name);
            return Response.status(201).entity(u).build();
         }
     }

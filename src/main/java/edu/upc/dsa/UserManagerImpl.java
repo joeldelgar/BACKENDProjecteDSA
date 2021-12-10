@@ -187,13 +187,13 @@ public class UserManagerImpl implements UserManager{
     */
 
     @Override
-    public void deleteUser(String id) {
-        User user= this.getUser(id);
+    public void deleteUser(String name) {
+        User user= this.getUserName(name);
         if(user==null){
-            logger.info("User with id "+id+" Not Found");
+            logger.info("User: "+name+" Not Found");
         }else{
             this.userList.remove(user);
-            logger.info("User with id "+id+" Deleted");
+            logger.info("User: "+name+" Deleted");
         }
     }
 
