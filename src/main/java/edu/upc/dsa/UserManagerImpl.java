@@ -38,6 +38,13 @@ public class UserManagerImpl implements UserManager{
 
     @Override
     public User addUser(User user) {
+        String name =user.getName();
+        for(User u: this.userList){
+            if(u.getName().equals(name)){
+                logger.info("User "+name+" Found");
+                return null;
+            }
+        }
         logger.info("New User: "+user.toString());
         this.userList.add(user);
         logger.info("New User Added: "+user);
@@ -60,6 +67,86 @@ public class UserManagerImpl implements UserManager{
         }
         return this.addUser(new User(name, password, mail));
     }
+
+    @Override
+    public User getUser(String id) {
+        logger.info("Usuari amb id: "+ id);
+        for(User user: this.userList){
+            if(user.getId()==id){
+                logger.info("User with id "+id+" Found");
+                return user;
+            }
+        }
+        logger.info("User with id "+id+" Not Found");
+        return null;
+    }
+
+    /*
+    public User getUser(int userID) {
+        User u = null;
+        try {
+            session = GameSession.openSession();
+            u = (User)session.get(User.class, userID);
+            logger.info("name: "+ u.getName() + " Password: "+u.getPassword() + " Mail: "+u.getMail());
+        }
+        catch (Exception e) {
+            logger.error("Error getUser");
+        }
+        finally {
+            session.close();
+        }
+        return u;
+    }
+     */
+
+    @Override
+    public User getUserName(String name) {
+        logger.info("Usuari: "+ name);
+        for(User user: this.userList){
+            if(user.getName().equals(name)){
+                logger.info("User "+name+" Found");
+                return user;
+            }
+        }
+        logger.info("User with id "+name+" Not Found");
+        return null;
+    }
+
+    @Override
+    public User getUserLogin(String name, String password) {
+        logger.info("Nom a buscar: "+name);
+        for(User user: this.userList){
+            if(user.getName().equals(name) && user.getPassword().equals(password)){
+                logger.info("User "+name+" Found");
+                return user;
+            }
+        }
+        logger.info("User "+name+" Not Found");
+        return null;
+    }
+
+    @Override
+    public List<User> getAllUsers() {
+        return this.userList;
+    }
+
+    /*
+    @Override
+    public List<User> getAllUsers() {
+        List<User> userList=null;
+        try {
+            session = GameSession.openSession();
+            userList = session.findAll(User.class);
+        }
+        catch (Exception e) {
+            logger.error("Error getUser List");
+        }
+        finally {
+            session.close();
+        }
+        return userList;
+    }
+     */
 
     @Override
     public User updateUser(User u, CredentialsRegister reg) {
@@ -100,74 +187,7 @@ public class UserManagerImpl implements UserManager{
     */
 
     @Override
-    public User getUser(String id) {
-        logger.info("Usuari amb id: "+ id);
-        for(User user: this.userList){
-            if(user.getId()==id){
-                logger.info("User with id "+id+" Found");
-                return user;
-            }
-        }
-        logger.info("User with id "+id+" Not Found");
-        return null;
-    }
-
-    /*
-    public User getUser(int userID) {
-        User u = null;
-        try {
-            session = GameSession.openSession();
-            u = (User)session.get(User.class, userID);
-            logger.info("name: "+ u.getName() + " Password: "+u.getPsw() + " Mail: "+u.getMail());
-        }
-        catch (Exception e) {
-            logger.error("Error getUser");
-        }
-        finally {
-            session.close();
-        }
-        return u;
-    }
-     */
-
-    @Override
-    public User getUserName(String name) {
-        logger.info("Usuari: "+ name);
-        for(User user: this.userList){
-            if(user.getName().equals(name)){
-                logger.info("User "+name+" Found");
-                return user;
-            }
-        }
-        logger.info("User with id "+name+" Not Found");
-        return null;
-    }
-
-    @Override
-    public List<User> getAllUsers() {
-        return this.userList;
-    }
-
-    /*
-    @Override
-    public List<User> getAllUsers() {
-        List<User> userList=null;
-        try {
-            session = GameSession.openSession();
-            userList = session.findAll(User.class);
-        }
-        catch (Exception e) {
-            logger.error("Error getUser List");
-        }
-        finally {
-            session.close();
-        }
-        return userList;
-    }
-     */
-
-    @Override
-    public void deleteUser(int id) {
+    public void deleteUser(String id) {
         User user= this.getUser(id);
         if(user==null){
             logger.info("User with id "+id+" Not Found");
@@ -261,7 +281,7 @@ public class UserManagerImpl implements UserManager{
     }
     */
     @Override
-    public List<User> getFriends(int id) {
+    public List<User> getFriends(String id) {
         User u = this.getUser(id);
         return u.getFriendList();
     }
@@ -297,7 +317,7 @@ public class UserManagerImpl implements UserManager{
     }
 
     @Override
-    public List<Item> getItemListUser(int id) {
+    public List<Item> getItemListUser(String id) {
         User user = this.getUser(id);
         if(user == null){
             logger.info("Llista d'Items de "+ user.getName());

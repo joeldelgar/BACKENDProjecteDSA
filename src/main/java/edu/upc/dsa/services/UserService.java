@@ -14,6 +14,7 @@ import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 import java.util.List;
 
+
 @Api(value = "/user", description = "Endpoint to User Service")
 @Path("/user")
 public class UserService {
@@ -41,7 +42,8 @@ public class UserService {
         }
     }
 
-    //Add User - Register
+
+    //Add User    Register
     @POST
     @ApiOperation(value = "Register a new User", notes = "Name and Password")
     @ApiResponses(value = {
@@ -98,7 +100,7 @@ public class UserService {
     })
     @Path("/{id}")
     @Produces(MediaType.APPLICATION_JSON)
-    public Response getUser(@PathParam("id") int id) {
+    public Response getUser(@PathParam("id") String id) {
         User user = this.manager.getUser(id);
         if (user == null){
             return Response.status(404).build();
@@ -130,7 +132,7 @@ public class UserService {
             @ApiResponse(code = 404, message = "User not found")
     })
     @Path("/delete/{id}")
-    public Response deleteUser(@PathParam("id") int id) {
+    public Response deleteUser(@PathParam("id") String id) {
        User u = this.manager.getUser(id);
        if (u == null)
            return Response.status(404).build();
@@ -156,7 +158,7 @@ public class UserService {
         String name = credentialsLogin.getName();
         String password = credentialsLogin.getPassword();
         System.out.println(name+", "+ password);
-        User u = this.manager.getUserName(name);
+        User u = this.manager.getUserLogin(name, password);
 
         if (u == null){
             return Response.status(404).build();
@@ -177,7 +179,7 @@ public class UserService {
     })
     @Path("/friends/{id}")
     @Produces(MediaType.APPLICATION_JSON)
-    public Response getFriends(@PathParam("id") int id) {
+    public Response getFriends(@PathParam("id") String id) {
         User u = this.manager.getUser(id);
         if (u==null)
             Response.status(404).build();
@@ -199,7 +201,7 @@ public class UserService {
 
     @Path("/friends/{id}/{friend}")
     @Consumes(MediaType.APPLICATION_JSON)
-    public Response addFriends(@PathParam("id") int id, @PathParam("friend") int friend) {
+    public Response addFriends(@PathParam("id") String id, @PathParam("friend") String friend) {
         User u = this.manager.getUser(id);
         if (u == null)
             return Response.status(404).build();
@@ -225,7 +227,7 @@ public class UserService {
             @ApiResponse(code = 404, message = "User not found")
     })
     @Path("/friends/{id}/{friend}")
-    public Response deleteFriend(@PathParam("id") int id, @PathParam("friend") int friend) {
+    public Response deleteFriend(@PathParam("id") String id, @PathParam("friend") String friend) {
         User u = this.manager.getUser(id);
         if (u == null)
             return Response.status(404).build();
