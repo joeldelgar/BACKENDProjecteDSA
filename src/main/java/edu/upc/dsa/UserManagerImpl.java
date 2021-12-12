@@ -2,6 +2,7 @@ package edu.upc.dsa;
 
 import edu.upc.dsa.DAO.FactorySession;
 import edu.upc.dsa.DAO.Session;
+import edu.upc.dsa.models.CredentialsLogIn;
 import edu.upc.dsa.models.CredentialsRegister;
 import edu.upc.dsa.models.Item;
 import edu.upc.dsa.models.User;
@@ -108,7 +109,7 @@ public class UserManagerImpl implements UserManager{
                 return user;
             }
         }
-        logger.info("User with id "+name+" Not Found");
+        logger.info("User "+name+" Not Found");
         return null;
     }
 
@@ -149,15 +150,15 @@ public class UserManagerImpl implements UserManager{
      */
 
     @Override
-    public User updateUser(User u, CredentialsRegister reg) {
+    public User updateUser(User u, CredentialsLogIn reg) {
         if (u!=null){
             if (!(u.getPassword().equals(reg.getPassword()))){
                 u.setPassword(reg.getPassword());
                 logger.info("User "+ u.getName() + " has updated the password");
             }
-            else if (!(u.getMail().equals(reg.getMail()))){
-                u.setMail(reg.getMail());
-                logger.info("User "+ u.getName() + " has updated the mail");
+            else if (!(u.getName().equals(reg.getName()))){
+                u.setName(reg.getName());
+                logger.info("User "+ u.getName() + " has updated the user name");
             }
         }else{
             logger.info("User "+u.getName()+" Not Found");

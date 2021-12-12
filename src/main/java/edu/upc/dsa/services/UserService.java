@@ -54,7 +54,8 @@ public class UserService {
     @Path("/add")
     @Consumes(MediaType.APPLICATION_JSON)
     public Response addUser(CredentialsRegister reg) {
-        User user = new User(reg.getName(), reg.getPassword(), reg.getMail());
+        User user = new User(reg.getName(), reg.getPassword());
+        //Joel ha eliminat reg.getMail()
         if (user.getName().equals("") || user.getPassword().equals("")){
             return Response.status(500).build();
         }
@@ -63,7 +64,7 @@ public class UserService {
                 return Response.status(500).build();
         }
         //set els paràmetres d'usuari que no siguin usuari i contrasenya
-        user.setMail(reg.getMail());
+        //user.setMail(reg.getMail());
         //set l'id obtingut a la BD
         this.manager.addUser(user);
         return Response.status(200).entity(user).build();
@@ -79,16 +80,15 @@ public class UserService {
 
     })
     @Path("/update")
-    public Response updateUser(CredentialsRegister upd) {
-        User u = this.manager.getUserName(upd.getName());
-
+    public Response updateUser(CredentialsLogIn upd, @PathParam("name") String oldName) {
+        User uT = this.manager.getUserName(oldName);
+        User u = this.manager.updateUser(uT,upd);
         if (u == null){
             return Response.status(404).build();
         }else {
             this.manager.updateUser(u, upd);
             return Response.status(201).entity(u).build();
         }
-
     }
 
     //Get User - Id

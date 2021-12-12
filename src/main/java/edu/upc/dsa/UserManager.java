@@ -1,5 +1,6 @@
 package edu.upc.dsa;
 
+import edu.upc.dsa.models.CredentialsLogIn;
 import edu.upc.dsa.models.CredentialsRegister;
 import edu.upc.dsa.models.Item;
 import edu.upc.dsa.models.User;
@@ -23,7 +24,7 @@ public interface UserManager {
     //public List<User> getAllUsers();
 
     //Modificar Usuari
-    public User updateUser(User user, CredentialsRegister reg);
+    public User updateUser(User user, CredentialsLogIn reg);
     //public void updateUser(String newName, String newEmail, String newPassword, int id);
 
     //Eliminar Usuari
