@@ -5,10 +5,11 @@ import java.util.List;
 
 public interface Session<E> {
 
+    boolean create(Object object);
     void save(Object entity);
     void close();
 
-    Object get(Object object);
+    Object get(Object object); //in develop, not used, not tested
     Object getByParameter(Class theClass, String byParameter, Object byParameterValue);
     Object getParameterByParameter(Class theClass, String parameter, String byParameter, Object byParameterValue);
 

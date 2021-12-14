@@ -1,4 +1,4 @@
-package edu.upc.dsa;
+package edu.upc.dsa.managers;
 
 import edu.upc.dsa.models.*;
 import org.apache.log4j.Logger;
@@ -8,7 +8,7 @@ import java.util.List;
 
 public class GameManagerImpl implements GameManager{
 
-    private static GameManager manager;
+    /*private static GameManager manager;
     protected List<Game> gameList;
 
     final static Logger logger = Logger.getLogger(UserManagerImpl.class);
@@ -29,19 +29,19 @@ public class GameManagerImpl implements GameManager{
     public Game addGame(Game game) {
         for(Game g: this.gameList){
             if(g.equals(game)){
-                logger.info("Game with ID "+ game.getGameId() +"already exists");
+                logger.info("Game with ID "+ game.getUserName() +"already exists");
                 return game;
             }
         }
         gameList.add(game);
-        logger.info("Game with ID " + game.getGameId() + "added successfully");
+        logger.info("Game with ID " + game.getUserName() + "added successfully");
         return game;
     }
 
     @Override
     public Game getGame(int id) {
         for(Game game: this.gameList){
-            if(game.getGameId()==id){
+            if(game.getUserName()==id){
                 logger.info("Game with ID "+ id +"found");
                 return game;
             }
@@ -53,7 +53,7 @@ public class GameManagerImpl implements GameManager{
     @Override
     public Game deleteGame(int id) {
         for(Game game: this.gameList){
-            if(game.getGameId()==id){
+            if(game.getUserName()==id){
                 gameList.remove(game);
                 logger.info("Game with ID "+ id +"deleted");
                 return game;
@@ -65,11 +65,6 @@ public class GameManagerImpl implements GameManager{
 
     @Override
     public Enemy getEnemy(String type) {
-        return null;
-    }
-
-    @Override
-    public Item getItem(String type) {
         return null;
     }
 
@@ -106,7 +101,7 @@ public class GameManagerImpl implements GameManager{
         Game g = this.gameList.get(id);
         g.addLevel(l);
 
-    }
+    }*/
 
 
 }

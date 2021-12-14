@@ -1,13 +1,13 @@
 package edu.upc.dsa.models;
 
-public class CredentialsLogIn {
+public class LogInCredentials {
     private String name;
     private String password;
 
-    public CredentialsLogIn() {}
+    public LogInCredentials() {}
 
-    public CredentialsLogIn(String username, String password) {
-        this.name = username;
+    public LogInCredentials(String name, String password) {
+        this.name = name;
         this.password = password;
     }
 

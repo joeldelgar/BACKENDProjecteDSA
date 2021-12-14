@@ -1,6 +1,6 @@
 package edu.upc.dsa.models;
 
-public class CredentialsRegister {
+public class RegisterCredentials {
     String name;
     String password;
     String mail;
@@ -10,9 +10,9 @@ public class CredentialsRegister {
     ...
     */
 
-    public CredentialsRegister() {}
+    public RegisterCredentials() {}
 
-    public CredentialsRegister(String name, String password, String mail) {
+    public RegisterCredentials(String name, String password, String mail) {
         this.name = name;
         this.password = password;
         this.mail = mail;

@@ -1,7 +1,18 @@
 package edu.upc.dsa;
 
+import edu.upc.dsa.DAO.UserDAO;
+import edu.upc.dsa.DAO.UserDAOImpl;
+import edu.upc.dsa.models.User;
+import org.junit.Test;
+
 public class QueryHelperTest {
 
+    @Test
+    public void testInsert() {
+        User u = new User("Pepe", "lol", "pepito@gmail.com");
+        UserDAO userDAO = UserDAOImpl.getInstance();
+        userDAO.addUser(u);
+    }
     /*
     @Test
     public void testSetter() {

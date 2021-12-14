@@ -10,9 +10,11 @@ public class User {
     String name;
     String password;
     String mail;
+    int health;
+    int coins;
 
-    public List<Item> itemList = new ArrayList<>(); //temp
-    public List<User> friendList = new ArrayList<>(); //temp
+//    public List<Item> itemList = new ArrayList<>(); //temp
+//    public List<User> friendList = new ArrayList<>(); //temp
 
     public User() {}
 
@@ -21,6 +23,8 @@ public class User {
         this.name = name;
         this.password = password;
         this.mail = mail;
+        this.health = 100;
+        this.coins = 10;
     }
 
     public User(String name, String password) {
@@ -60,6 +64,22 @@ public class User {
         this.mail = mail;
     }
 
+    public int getHealth() {
+        return health;
+    }
+
+    public void setHealth(int health) {
+        this.health = health;
+    }
+
+    public int getCoins() {
+        return coins;
+    }
+
+    public void setCoins(int coins) {
+        this.coins = coins;
+    }
+
     @Override
     public String toString() {
         return "User{" + "ID='" + id + '\'' +
@@ -71,7 +91,7 @@ public class User {
 
     //To review
 
-    public List<Item> getItemList(){
+/*    public List<Item> getItemList(){
         return itemList;
     }
 
@@ -90,5 +110,5 @@ public class User {
     }
 
     public void addItem(Item e){}
-    public void deleteItem(Item e){}
+    public void deleteItem(Item e){}*/
 }

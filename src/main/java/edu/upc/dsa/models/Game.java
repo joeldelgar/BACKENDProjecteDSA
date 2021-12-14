@@ -4,30 +4,40 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Game {
-    private int gameId;
+    private String userName;
+    private int coins;
     private int points;
-    private int level;
-    private int life;
-    private List<Item> itemList = new ArrayList<>();
-    private List<Enemy> enemyList = new ArrayList<>();
-    private List<Level> levelList = new ArrayList<>();
+    //private int level;
+    //private int life;
+    //private List<Item> itemList = new ArrayList<>();
+    //private List<Enemy> enemyList = new ArrayList<>();
+    //private List<Level> levelList = new ArrayList<>();
 
     public Game() {
     }
 
-    public Game(int gameId, int points, int level, int life) {
-        this.gameId = gameId;
+    public Game(String userName, int coins, int points) {
+        this.userName = userName;
+        this.coins = points/10;
         this.points = points;
-        this.level = level;
-        this.life = life;
+        //this.level = level;
+        //this.life = life;
     }
 
-    public int getGameId() {
-        return gameId;
+    public String getUserName() {
+        return userName;
     }
 
-    public void setGameId(int gameId) {
-        this.gameId = gameId;
+    public void setUserName(String userName) {
+        this.userName = userName;
+    }
+
+    public int getCoins() {
+        return coins;
+    }
+
+    public void setCoins(int coins) {
+        this.coins = coins;
     }
 
     public int getPoints() {
@@ -38,7 +48,7 @@ public class Game {
         this.points = points;
     }
 
-    public int getLevel() {
+/*    public int getLevel() {
         return level;
     }
 
@@ -68,5 +78,5 @@ public class Game {
 
     public void addEnemy(Enemy e){
         enemyList.add(e);
-    }
+    }*/
 }

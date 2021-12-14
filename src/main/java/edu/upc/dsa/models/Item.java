@@ -1,16 +1,18 @@
 package edu.upc.dsa.models;
 
 public class Item {
-    private String name;
-    private String description;
-    private int value;
+    String name;
+    int cost;
+    String description;
+    String avatar;
 
-    public Item(){}
+    public Item() {}
 
-    public Item(String name, String description, int value) {
+    public Item(String name, int cost, String description, String avatar) {
         this.name = name;
+        this.cost = cost;
         this.description = description;
-        this.value = value;
+        this.avatar = avatar;
     }
 
     public String getName() {
@@ -21,6 +23,14 @@ public class Item {
         this.name = name;
     }
 
+    public int getCost() {
+        return cost;
+    }
+
+    public void setCost(int cost) {
+        this.cost = cost;
+    }
+
     public String getDescription() {
         return description;
     }
@@ -29,11 +39,11 @@ public class Item {
         this.description = description;
     }
 
-    public int getValue() {
-        return value;
+    public String getAvatar() {
+        return avatar;
     }
 
-    public void setValue(int value) {
-        this.value = value;
+    public void setAvatar(String avatar) {
+        this.avatar = avatar;
     }
 }

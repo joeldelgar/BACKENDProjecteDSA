@@ -5,6 +5,7 @@ import java.sql.DriverManager;
 import java.sql.SQLException;
 
 public class FactorySession {
+
     public static Session openSession() {
 
         Connection conn = getConnection();
@@ -13,8 +14,6 @@ public class FactorySession {
 
         return session;
     }
-
-
 
     private static Connection getConnection() {
         Connection conn = null;

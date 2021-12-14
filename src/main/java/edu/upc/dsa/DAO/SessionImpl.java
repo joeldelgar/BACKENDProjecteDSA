@@ -9,7 +9,7 @@ import java.sql.*;
 import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
-import java.util.logging.Logger;
+import org.apache.log4j.Logger;
 
 
 public class SessionImpl implements Session {
@@ -19,6 +19,31 @@ public class SessionImpl implements Session {
 
     public SessionImpl(Connection conn) {
         this.conn = conn;
+    }
+
+    @Override
+    public boolean create(Object object) {
+
+        String insertQuery = QueryHelper.createQueryINSERT(object);
+        logger.info(insertQuery);
+
+        PreparedStatement pstm = null;
+
+        try {
+            pstm = conn.prepareStatement(insertQuery);
+            int i = 1;
+
+            for (String field: ObjectHelper.getFields(object)) {
+                pstm.setObject(i++, ObjectHelper.getter(object, field));
+            }
+            logger.info(pstm.toString());
+            pstm.executeQuery();
+            return true;
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return false;
+        }
     }
 
     public void save(Object entity) {
