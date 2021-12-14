@@ -45,6 +45,7 @@ public class UserService {
     })
     @Path("/register")
     @Consumes(MediaType.APPLICATION_JSON)
+
     public Response registerUser(RegisterCredentials rCr) {
 
         User user = new User(rCr.getName(), rCr.getPassword(), rCr.getMail());
