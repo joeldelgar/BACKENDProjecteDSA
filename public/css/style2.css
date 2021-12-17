@@ -1,0 +1,109 @@
+body {
+	font-family:sans-serif;
+	width: 100%;
+	font-weight: 300;
+	text-align: center;
+	font-size:25px;
+	color:grey;
+	background-color: white;
+}
+
+h1 {
+  width: 100%;
+  font-weight: 300;
+  text-align: center;
+  font-size:60px;
+  color:green;
+}
+
+h2 {
+    width: 100%;
+    font-weight: 300;
+    text-align: center;
+    font-size:40px;
+    color:black;
+}
+
+h3 {
+	font-family:sans-serif;
+	width: 100%;
+	font-weight: 300;
+	text-align: left;
+	font-size:20px;
+	color:black;
+	text-align: center;
+}
+
+.container{
+    width: 100%;
+    padding: 15px;
+		text-align: center;
+}
+
+.button {
+  background-color: #A4DB96;
+  border: none;
+  color: black;
+  padding: 20px 36px;
+  font-size: 25px;
+  opacity: 0.6;
+  transition: 0.3s;
+  text-decoration: none;
+  cursor: pointer;
+	margin: auto;
+	justify-content: center;
+}
+
+.button:hover {opacity: 1}
+
+.textbox {
+	size: 10px 20px;
+text-align: center;
+}
+
+.box{
+	text-align: center;
+}
+
+input[type="text"]{
+  background: #EEF9EB;
+  font-size: 20px;
+	text-align: center;
+  width: 40%;
+  padding: 10px;
+	border-radius: 20px;
+	color: black;
+}
+
+.wrapper {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  grid-gap: 10px;
+  grid-auto-rows: minmax(100px, auto);
+}
+
+.col {
+  grid-column: auto;
+  grid-row: auto;
+}
+
+
+.topnav {
+  overflow: hidden;
+  background-color: #BFE7B3;
+}
+
+.topnav a {
+  display:inline-grid;
+	width: 15%;
+
+  color: grey;
+  text-align: center;
+  padding: 14px 16px;
+  text-decoration: none;
+}
+
+.topnav a:hover {
+  background-color: #EEF9EB;
+  color: black;
+}
