@@ -205,26 +205,6 @@ public class UserManagerImpl implements UserManager{
         }
     }*/
 
-    /*
-    @Override
-    public List<Item> getItemListUser(int userID) {
-        List<Item> itemList=null;
-        try {
-            session = GameSession.openSession();
-            HashMap<String, Integer> params = new HashMap<String, Integer>();
-            params.put("userID", userID);
-            itemList = session.findAll(Item.class, params);
-        }
-        catch (Exception e) {
-            logger.error("Error getItemListUser List");
-        }
-        finally {
-            session.close();
-        }
-        return itemList;
-    }
-     */
-
 /*    @Override
     public List<User> getRankingItems(){
         Collections.sort(userList, new Comparator<User>() {

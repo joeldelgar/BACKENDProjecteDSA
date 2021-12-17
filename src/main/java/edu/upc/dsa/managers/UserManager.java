@@ -38,6 +38,5 @@ public interface UserManager {
     public Item getItem(String name);
     public int itemListSize();
     public List<Item> getItemListUser(String id);
-    //public List<Item> getItemListUser(int userID);
     public List<User> getRankingItems();*/
 }
