@@ -69,7 +69,7 @@ public class UserService {
             @ApiResponse(code = 200, message = "Successful", response = User.class),
             @ApiResponse(code = 404, message = "User not found")
     })
-    @Path("/")
+    @Path("/{name}")
     @Produces(MediaType.APPLICATION_JSON)
     public Response getUser(@PathParam("name") String name) {
 
