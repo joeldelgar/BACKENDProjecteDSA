@@ -47,7 +47,6 @@ public class StoreService {
         List<Item> itemList = itemDAO.getAll();
         GenericEntity<List<Item>> entity = new GenericEntity<List<Item>>(itemList) {};
         return Response.status(200).entity(entity).build();
-
     }
 
     //Buy an Item
@@ -87,7 +86,7 @@ public class StoreService {
                             } else
                                 return Response.status(406).build();
                         }
-                        if (itemName.equals("level1IKey")) {
+                        if (itemName.equals("level1Key")) {
                             if (inventory.getLevel1Key() == 0) {
                                 itemState = 1;
                             } else

@@ -52,6 +52,7 @@ public class GameService {
     @ApiOperation(value = "Create a new Game", notes = "userName and Points")
     @ApiResponses(value = {
             @ApiResponse(code = 201, message = "Created", response= Game.class),
+            @ApiResponse(code = 404, message = "User not found"),
             @ApiResponse(code = 500, message = "Validation Error")
     })
     @Path("/addGame")
@@ -63,11 +64,15 @@ public class GameService {
         if (gCr.getUserName().isEmpty())
             return Response.status(500).build();
         else {
-            gameDAO.addGame(game);
-            User user = userDAO.getUser(gCr.getUserName());
-            int op = gCr.getPoints() + user.getCoins();
-            userDAO.updateUserCoinsByUserName(op,gCr.getUserName());
-            return Response.status(201).entity(game).build();
+            if (userDAO.existsName(gCr.getUserName())) {
+                gameDAO.addGame(game);
+                User user = userDAO.getUser(gCr.getUserName());
+                int op = gCr.getPoints() + user.getCoins();
+                userDAO.updateUserCoinsByUserName(op, gCr.getUserName());
+                return Response.status(201).entity(game).build();
+            } else {
+                return Response.status(404).build();
+            }
         }
     }
 

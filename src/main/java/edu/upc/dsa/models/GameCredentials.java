@@ -8,8 +8,8 @@ public class GameCredentials {
 
     public GameCredentials(){}
 
-    public GameCredentials(String username, int coins, int points) {
-        this.userName = username;
+    public GameCredentials(String userName, int coins, int points) {
+        this.userName = userName;
         this.coins = coins;
         this.points = points;
     }
