@@ -26,13 +26,6 @@ public class UserService {
         this.userManager = UserManagerImpl.getInstance(); //
         this.userDAO = UserDAOImpl.getInstance();
         this.inventoryDAO = InventoryDAOImpl.getInstance();
-/*        if (userManager.userListSize() == 0) {
-            userManager.addUser("Joel", "boss", "joel.delgado@estudiant.upc.edu");
-            userManager.addUser("Maria", "caradura", "maria.garcia@estudiant.upc.edu");
-            userManager.addUser("Miguel", "trolo", "miguel.mateos@estudiant.upc.edu");
-            userManager.addUser("Arnau", "bunker", "arnau.millan@estudiant.upc.edu");
-            userManager.addUser("Sergi", "alo", "sergi.picazo@estudiant.upc.edu");
-        }*/
     }
 
     //Register User

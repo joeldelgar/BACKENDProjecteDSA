@@ -45,8 +45,8 @@ public class StoreService {
     public Response getAllItems() {
 
         List<Item> itemList = itemDAO.getAll();
-        GenericEntity<List<Item>> entity = new GenericEntity<List<Item>>(itemList) {};
-        return Response.status(200).entity(entity).build();
+        //GenericEntity<List<Item>> entity = new GenericEntity<List<Item>>(itemList) {};
+        return Response.status(200).entity(itemList).build();
 
     }
 
