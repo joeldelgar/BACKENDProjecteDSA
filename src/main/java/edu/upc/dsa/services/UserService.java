@@ -3,9 +3,7 @@ import edu.upc.dsa.DAO.*;
 import edu.upc.dsa.managers.UserManager;
 import edu.upc.dsa.managers.UserManagerImpl;
 import edu.upc.dsa.models.*;
-
 import io.swagger.annotations.*;
-
 import javax.ws.rs.*;
 import javax.ws.rs.core.GenericEntity;
 import javax.ws.rs.core.MediaType;
@@ -124,11 +122,10 @@ public class UserService {
     @Path("/delete/{name}")
     public Response deleteUser(@PathParam("name") String name) {
 
-        //User user = userDAO.getUser(name);
-
+        User user = userDAO.getUser(name);
         if (userDAO.existsName(name)) {
             userDAO.deleteUserByName(name);
-            return Response.status(200).build();
+            return Response.status(200).entity(user).build();
         } else {
             return Response.status(404).build();
         }
