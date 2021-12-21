@@ -4,33 +4,67 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Login</title>
+    <title>EXEMPLE HTML</title>
     <!--Titol incial a la pestanya -->
-    <link rel="shortcut sicon" href="icon.png" type="image/x-icon">
-    <link rel ="stylesheet" href ="css/style2.css">
-    <script src="main.js"></script>
+    <link rel="shortcut icon" href="icon.png" type="image/x-icon">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
 
 </head>
 <body>
-    <h1>Login</h1>
-    <div class="container">
-      <div class="box"><input type="text" placeholder="Username" id="username" required></div>
-    </div>
+<h1 style="color:darkmagenta; display: block; margin-left: 100px;">PAGINA WEB DEL JOC</h1>
+<P>Aquesta és la pàgina web del projecte de DSA.<br><br>De moment només tenim implementat:</P>
+<ul>
+    <li>Login</li>
+    <li>Register</li>
+</ul>
 
-    <div class="container">
-      <div class="box"><input type="text" placeholder="Password" id="password" required></div>
-    </div>
+<div>
+    <input id="usuari" type="text" placeholder="Usuari">
+    <input id="contrasenya" type="text" placeholder="Contrasenya">
 
-    <div class="container">
-      <input type="submit" value="Login" class="button" onClick="login()">
-    </div>
+    <input type="submit" value="login" class="button" id="login">
 
-    <br>
-        You don't have an account?
-    </br>
-    <div class="container">
-        <a href="register.html"><input type="submit" value="Register" class="button"></a>
-    </div>
+    <button onclick="register()"> Register</button>
+
+    <input type="submit" value="Iniciar sesión" class="button" id="inici">
+</div>
+<script>
+$(document).ready(function(){
+   $("#inici").click(function(){
+     alert("Hay campos vacios!");
+  })
+});
+</script>
+
+<script>
+$(document).ready(function(){
+          $("#login").click(function(){
+          var n = $('#usuari').val();
+          var p = $('#contrasenya').val();
+
+          alert(n);
+          alert(p);
+
+            $.ajax({
+                contentType: "application/json",
+                type: 'POST',
+                url: "http://147.83.7.206:8080/dsaApp/user/logIn",
+                data: JSON.stringify({name: n, password: p}),
+                dataType: 'json',
+                success: function (result) {
+                  alert('USUARI I CONTRASENYA CORRECTES');
+                },
+                error : function(error) {
+                    alert("error");
+                }
+            });
+        });
+    });
+
+</script>
 
 </body>
 </html>
