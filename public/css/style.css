@@ -16,6 +16,10 @@ h1 {
   color:green;
 }
 
+var {
+  font-style: normal;
+}
+
 h2 {
     width: 100%;
     font-weight: 300;
@@ -28,16 +32,48 @@ h3 {
 	font-family:sans-serif;
 	width: 100%;
 	font-weight: 300;
-	text-align: left;
 	font-size:20px;
 	color:black;
 	text-align: center;
 }
 
+h4{
+    font-family:sans-serif;
+	width: auto;
+	font-weight: 300;
+	font-size:25px;
+	color:green;
+	font-weight: bold;
+	text-align: right;
+	margin-right: 290px;
+
+}
 .container{
     width: 100%;
     padding: 15px;
-		text-align: center;
+	text-align: center;
+}
+
+.table{
+    width: 60%;
+    padding: 15px;
+    text-align: center;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.table2{
+    width: 40%;
+    padding: 15px;
+    text-align: left;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.tr, th{
+    width=auto;
+    text-align: center;
+    color:blue;
 }
 
 .button {
@@ -54,7 +90,22 @@ h3 {
 	justify-content: center;
 }
 
+.button_del {
+  background-color: #DC5E52;
+  border: none;
+  color: black;
+  padding: 20px 36px;
+  font-size: 25px;
+  opacity: 0.6;
+  transition: 0.3s;
+  text-decoration: none;
+  cursor: pointer;
+	margin: auto;
+	justify-content: center;
+}
 .button:hover {opacity: 1}
+
+.button_del:hover {opacity: 1}
 
 .textbox {
 	size: 10px 20px;
@@ -68,7 +119,7 @@ text-align: center;
 input[type="text"]{
   background: #EEF9EB;
   font-size: 20px;
-	text-align: center;
+  text-align: center;
   width: 40%;
   padding: 10px;
 	border-radius: 20px;
@@ -95,7 +146,7 @@ input[type="text"]{
 
 .topnav a {
   display:inline-grid;
-	width: 15%;
+  width: 15%;
 
   color: grey;
   text-align: center;
