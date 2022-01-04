@@ -112,7 +112,7 @@ public class UserService {
             return Response.status(404).build();
         } else {
             User newUser = new User(rCr.getName(), rCr.getPassword(), rCr.getMail());
-            if (rCr.getName().isEmpty() || rCr.getPassword().isEmpty() || rCr.getMail().isEmpty())
+            if (rCr.getName().isEmpty() || rCr.getPassword().isEmpty()) //|| rCr.getMail().isEmpty()
                 return Response.status(500).build();
             else {
                 if (!oldName.equals(rCr.getName()) && userDAO.existsName(rCr.getName()))
