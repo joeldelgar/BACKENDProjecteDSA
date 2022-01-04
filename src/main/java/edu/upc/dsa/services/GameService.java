@@ -89,7 +89,7 @@ public class GameService {
     })
     @Path("/{userName}")
     @Produces(MediaType.APPLICATION_JSON)
-    public Response getGames(@PathParam("userName") String userName) {
+    public Response getGame(@PathParam("userName") String userName) {
 
         Game game = gameDAO.getGameByUserName(userName);
 
