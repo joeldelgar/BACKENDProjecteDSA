@@ -1,6 +1,7 @@
 package edu.upc.dsa.DAO;
 
 import edu.upc.dsa.models.Item;
+import edu.upc.dsa.models.User;
 
 import java.util.LinkedList;
 import java.util.List;

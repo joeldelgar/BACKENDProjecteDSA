@@ -3,14 +3,12 @@ package edu.upc.dsa.models;
 public class GameCredentials {
 
     String userName;
-    int coins;
     int points;
 
     public GameCredentials(){}
 
-    public GameCredentials(String userName, int coins, int points) {
+    public GameCredentials(String userName, int points) {
         this.userName = userName;
-        this.coins = coins;
         this.points = points;
     }
 
@@ -20,14 +18,6 @@ public class GameCredentials {
 
     public void setUserName(String userName) {
         this.userName = userName;
-    }
-
-    public int getCoins() {
-        return coins;
-    }
-
-    public void setCoins(int coins) {
-        this.coins = coins;
     }
 
     public int getPoints() {
@@ -42,8 +32,7 @@ public class GameCredentials {
     public String toString() {
         return "CredentialsGame{" +
                 "userName='" + userName + '\'' +
-                " coins=" + coins +
-                ", points=" + points +
+                " points=" + points +
                 '}';
     }
 }

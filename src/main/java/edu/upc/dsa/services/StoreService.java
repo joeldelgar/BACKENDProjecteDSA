@@ -50,7 +50,7 @@ public class StoreService {
     }
 
     //Buy an Item
-    @POST
+    @PUT
     @ApiOperation(value = "Buy an Item", notes = "Item and userName")
     @ApiResponses(value = {
             @ApiResponse(code = 200, message = "Successful"),
@@ -59,7 +59,7 @@ public class StoreService {
             @ApiResponse(code = 405, message = "Item not found"),
             @ApiResponse(code = 406, message = "Item is already in Inventory")
     })
-    @Path("/buyItem")
+    @Path("/buyItem/{itemName}")
     @Produces(MediaType.APPLICATION_JSON)
     public Response buyItem(StoreCredentials sCr) {
 
@@ -144,7 +144,7 @@ public class StoreService {
                     }
                     int userCoins = user.getCoins() - item.getCost();
                     userDAO.updateUserCoinsByUserName(userCoins, userName);
-                    return Response.status(200).entity(sCr).build();
+                    return Response.status(200).entity(item).build();
                 }
             } else
                 return Response.status(405).build();
@@ -159,7 +159,7 @@ public class StoreService {
             @ApiResponse(code = 200, message = "Successful", response = Inventory.class),
             @ApiResponse(code = 404, message = "User not found")
     })
-    @Path("/getUserInventory/{userName}")
+    @Path("/userInventory/{userName}")
     @Produces(MediaType.APPLICATION_JSON)
     public Response getUserInventory(@PathParam("userName") String userName) {
 
@@ -174,7 +174,7 @@ public class StoreService {
     }
 
     //Use an Item
-    @POST
+    @PUT
     @ApiOperation(value = "Use an Item", notes = "Item and userName")
     @ApiResponses(value = {
             @ApiResponse(code = 200, message = "Successful"),
@@ -183,7 +183,7 @@ public class StoreService {
             @ApiResponse(code = 405, message = "Item not found"),
             @ApiResponse(code = 406, message = "Item can not be used")
     })
-    @Path("/useItem")
+    @Path("/useItem/{itemName}")
     @Produces(MediaType.APPLICATION_JSON)
     public Response useItem(StoreCredentials sCr) {
 
@@ -202,7 +202,7 @@ public class StoreService {
                     } else {
                         int op = inventory.getMagicBerry() - 1;
                         inventoryDAO.updateItemCountByUserName(itemName, op, userName);
-                        return Response.status(200).build();
+                        return Response.status(200).entity(item).build();
                     }
                 } else
                     return Response.status(406).build();

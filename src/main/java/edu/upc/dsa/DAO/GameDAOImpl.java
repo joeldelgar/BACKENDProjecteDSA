@@ -2,8 +2,10 @@ package edu.upc.dsa.DAO;
 
 import edu.upc.dsa.DAO.FactorySession;
 import edu.upc.dsa.DAO.Session;
+import edu.upc.dsa.models.Inventory;
 import edu.upc.dsa.models.Item;
 import edu.upc.dsa.models.Game;
+import edu.upc.dsa.models.User;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -75,8 +77,21 @@ public class GameDAOImpl implements GameDAO {
     }
 
     @Override
+    public Game getGameByUserName(String userName) {
+        return ((Game) session.getByParameter(Game.class, "userName", userName));
+    }
+
+    @Override
     public Game getByParameter(String parameter, Object value) {
         return ((Game) session.getByParameter(Game.class, parameter, value));
+    }
+
+    @Override
+    public boolean existsUserName(String userName) {
+        if (session.getParameterByParameter(Game.class, "userName", "userName", userName) == null)
+            return false;
+        else
+            return true;
     }
 
     @Override
@@ -87,6 +102,16 @@ public class GameDAOImpl implements GameDAO {
     @Override
     public boolean updateByParameter(Game game, String parameter, Object value) {
         return session.updateByParameter(game, parameter, value);
+    }
+
+    @Override
+    public boolean updateUserName(String oldName, User newUser) {
+        return session.updateParameterByParameter(Game.class,"userName", newUser.getName(), "userName", oldName);
+    }
+
+    @Override
+    public boolean updatePointsByUserName(int Points, String userName) {
+        return session.updateParameterByParameter(Game.class, "points", Points, "userName", userName);
     }
 
     @Override

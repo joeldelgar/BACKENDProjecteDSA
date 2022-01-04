@@ -19,9 +19,10 @@ public interface UserDAO {
     boolean updateUser(User user);
     boolean updateByParameter(User user, String parameter, Object value); //needed?
     boolean updateUserCoinsByUserName(int userCoins, String userName);
+    boolean updateUserParameters(String oldName, User newUser);
     boolean updateParameterByParameter(String parameter, Object parameterValue, String byParameter, Object byParameterValue);
 
     boolean deleteUser(User user);
-    boolean deleteUserByName(String name); //needed?
+    boolean deleteUserByName(String name);
     boolean deleteByParameter(String parameter, Object value); //needed?
 }

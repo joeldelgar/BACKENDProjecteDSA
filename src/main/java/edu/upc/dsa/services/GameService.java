@@ -53,52 +53,51 @@ public class GameService {
     @ApiResponses(value = {
             @ApiResponse(code = 201, message = "Created", response= Game.class),
             @ApiResponse(code = 404, message = "User not found"),
+            @ApiResponse(code = 409, message = "Game already exists"),
             @ApiResponse(code = 500, message = "Validation Error")
     })
-    @Path("/addGame")
+    @Path("/add")
     @Produces(MediaType.APPLICATION_JSON)
     public Response addGame(GameCredentials gCr) {
 
-        Game game = new Game(gCr.getUserName(), gCr.getCoins(), gCr.getPoints());
+        Game game = new Game(gCr.getUserName(), gCr.getPoints());
 
         if (gCr.getUserName().isEmpty())
             return Response.status(500).build();
         else {
             if (userDAO.existsName(gCr.getUserName())) {
-                gameDAO.addGame(game);
-                User user = userDAO.getUser(gCr.getUserName());
-                int op = gCr.getPoints() + user.getCoins();
-                userDAO.updateUserCoinsByUserName(op, gCr.getUserName());
-                return Response.status(201).entity(game).build();
+                if (!gameDAO.existsUserName(gCr.getUserName())) {
+                    gameDAO.addGame(game);
+                    User user = userDAO.getUser(gCr.getUserName());
+                    int op = (gCr.getPoints() / 10) + user.getCoins();
+                    userDAO.updateUserCoinsByUserName(op, gCr.getUserName());
+                    return Response.status(201).entity(game).build();
+                } else
+                    return Response.status(409).build();
             } else {
                 return Response.status(404).build();
             }
         }
     }
 
-    //Get all Games of a User
+    //Get the Game of a User
     @GET
-    @ApiOperation(value = "Get all Games of a User", notes = "userName")
+    @ApiOperation(value = "Get the Game of a User", notes = "userName")
     @ApiResponses(value = {
             @ApiResponse(code = 200, message = "Successful", response = Game.class, responseContainer="List"),
             @ApiResponse(code = 404, message = "User not found")
     })
     @Path("/{userName}")
     @Produces(MediaType.APPLICATION_JSON)
-    public Response getUserGames(@PathParam("userName") String userName) {
-        if (userDAO.existsName(userName)) {
-            List<Game> userGameList = null;
-            try {
-                userGameList = gameDAO.getAllByParameter("userName", userName);
-            }
-            catch (Throwable t) {
-                t.printStackTrace();
-            }
-            GenericEntity<List<Game>> entity = new GenericEntity<List<Game>>(userGameList) {};
-            return Response.status(200).entity(entity).build();
-        }
-        else {
+    public Response getGames(@PathParam("userName") String userName) {
+
+        Game game = gameDAO.getGameByUserName(userName);
+
+        if (game == null) {
             return Response.status(404).build();
+        } else {
+            GenericEntity<Game> entity = new GenericEntity<Game>(game) {};
+            return Response.status(200).entity(entity).build();
         }
     }
 
@@ -116,6 +115,36 @@ public class GameService {
 
         GenericEntity<List<Game>> entity = new GenericEntity<List<Game>>(gamaList) {};
         return Response.status(200).entity(entity).build();
+    }
+
+    //Update Game
+    @PUT
+    @ApiOperation(value = "Update a Game", notes = "userName and Points")
+    @ApiResponses(value = {
+            @ApiResponse(code = 200, message = "Successful", response= Game.class),
+            @ApiResponse(code = 404, message = "User not found"),
+            @ApiResponse(code = 500, message = "Validation Error")
+    })
+    @Path("/update/{userName}")
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response updateGame(GameCredentials gCr) {
+
+        Game oldGame = gameDAO.getGameByUserName(gCr.getUserName());
+        Game game = new Game(gCr.getUserName(), gCr.getPoints());
+
+        if (gCr.getUserName().isEmpty())
+            return Response.status(500).build();
+        else {
+            if (userDAO.existsName(gCr.getUserName())) {
+                gameDAO.updatePointsByUserName(gCr.getPoints(), gCr.getUserName());
+                User user = userDAO.getUser(gCr.getUserName());
+                int op = (gCr.getPoints()/10) - (oldGame.getPoints()/10) + user.getCoins();
+                userDAO.updateUserCoinsByUserName(op, gCr.getUserName());
+                return Response.status(200).entity(game).build();
+            } else {
+                return Response.status(404).build();
+            }
+        }
     }
 
 /*    //Delete Game

@@ -3,6 +3,7 @@ package edu.upc.dsa.DAO;
 import edu.upc.dsa.DAO.FactorySession;
 import edu.upc.dsa.DAO.Session;
 import edu.upc.dsa.models.Inventory;
+import edu.upc.dsa.models.Item;
 import edu.upc.dsa.models.User;
 import io.swagger.models.auth.In;
 
@@ -59,6 +60,11 @@ public class InventoryDAOImpl implements InventoryDAO{
     }
 
     @Override
+    public boolean updateUserName(String oldName, User newUser) {
+        return session.updateParameterByParameter(Inventory.class,"userName", newUser.getName(), "userName", oldName);
+    }
+
+    @Override
     public boolean updateParameterByParameter(String parameter, Object parameterValue, String byParameter, Object byParameterValue) {
         return session.updateParameterByParameter(Inventory.class, parameter, parameterValue, byParameter, byParameterValue);
     }
@@ -66,6 +72,11 @@ public class InventoryDAOImpl implements InventoryDAO{
     @Override
     public boolean delete(Inventory inventory) {
         return session.delete(inventory);
+    }
+
+    @Override
+    public boolean deleteInventoryByUserName(String userName) {
+        return session.deleteByParameter(Inventory.class, "userName", userName);
     }
 
     @Override

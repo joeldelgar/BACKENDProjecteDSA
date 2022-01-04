@@ -19,11 +19,13 @@ public class UserService {
     private UserManager userManager; //
     private final UserDAO userDAO;
     private final InventoryDAO inventoryDAO;
+    private final GameDAO gameDAO;
 
     public UserService() {
         this.userManager = UserManagerImpl.getInstance(); //
         this.userDAO = UserDAOImpl.getInstance();
         this.inventoryDAO = InventoryDAOImpl.getInstance();
+        this.gameDAO = GameDAOImpl.getInstance();
     }
 
     //Register User
@@ -70,7 +72,7 @@ public class UserService {
             return Response.status(404).build();
         } else {
             GenericEntity<User> entity = new GenericEntity<User>(user) {};
-            return Response.status(200).entity(user).build();
+            return Response.status(200).entity(entity).build();
         }
     }
 
@@ -91,27 +93,43 @@ public class UserService {
     }
 
 
-/*    //Update User - Actualitzar dades (mail, psw...)
+    //Update User
     @PUT
-    @ApiOperation(value = "Update a User", notes = "Update a User")
+    @ApiOperation(value = "Update a User", notes = "oldName, newName, newPassword, newMail")
     @ApiResponses(value = {
-            @ApiResponse(code = 201, message = "Successful"),
+            @ApiResponse(code = 200, message = "Successful", response = User.class),
             @ApiResponse(code = 404, message = "User not found"),
-            @ApiResponse(code = 500, message = "Validation error")
-
+            @ApiResponse(code = 406, message = "User already in use"),
+            @ApiResponse(code = 409, message = "Mail already in use"),
+            @ApiResponse(code = 500, message = "Invalid inputs")
     })
-    @Path("/update")
-    public Response updateUser(CredentialsLogIn upd, @PathParam("name") String oldName) {
-        User uT = this.userManager.getUserName(oldName);
-        User u = this.userManager.updateUser(uT,upd);
-        if (u == null){
+    @Path("/update/{name}")
+    public Response updateUser(@PathParam("name") String oldName, RegisterCredentials rCr) {
+
+        User oldUser = userDAO.getUser(oldName);
+
+        if (!userDAO.existsName(oldName)) {
             return Response.status(404).build();
-        }else {
-            this.userManager.updateUser(u, upd);
-            return Response.status(201).entity(u).build();
+        } else {
+            User newUser = new User(rCr.getName(), rCr.getPassword(), rCr.getMail());
+            if (rCr.getName().isEmpty() || rCr.getPassword().isEmpty() || rCr.getMail().isEmpty())
+                return Response.status(500).build();
+            else {
+                if (!oldName.equals(rCr.getName()) && userDAO.existsName(rCr.getName()))
+                    return Response.status(406).build();
+                if (!oldUser.getMail().equals(rCr.getMail()) && userDAO.existsMail(rCr.getMail()))
+                    return Response.status(409).build();
+                else {
+                    userDAO.updateUserParameters(oldName, newUser);
+                    inventoryDAO.updateUserName(oldName, newUser);
+                    if (gameDAO.existsUserName(oldName))
+                        gameDAO.updateUserName(oldName, newUser);
+                    return Response.status(200).entity(newUser).build();
+                }
+            }
         }
     }
-*/
+
     //Delete User
     @DELETE
     @ApiOperation(value = "Delete a User", notes = "Name")
@@ -125,6 +143,7 @@ public class UserService {
         User user = userDAO.getUser(name);
         if (userDAO.existsName(name)) {
             userDAO.deleteUserByName(name);
+            inventoryDAO.deleteInventoryByUserName(name);
             return Response.status(200).entity(user).build();
         } else {
             return Response.status(404).build();
@@ -133,7 +152,7 @@ public class UserService {
 
     //LogIn User
     @POST
-    @ApiOperation(value = "LogIn User", notes = "Name, Password and Mail")
+    @ApiOperation(value = "LogIn User", notes = "Name and Password")
     @ApiResponses(value = {
             @ApiResponse(code = 200, message = "Successful", response = User.class),
             @ApiResponse(code = 404, message = "User not found"),

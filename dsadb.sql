@@ -56,7 +56,6 @@ INSERT INTO Item (name, cost, description, avatar) values ("level4Key", 50, "Key
 CREATE TABLE Game(
 
    	userName VARCHAR(30),
-	coins INT,
 	points INT
 
 )ENGINE = InnoDB;

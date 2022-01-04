@@ -99,6 +99,16 @@ public class UserDAOImpl implements UserDAO{
     }
 
     @Override
+    public boolean updateUserParameters(String oldName, User newUser) {
+        if (session.updateParameterByParameter(User.class, "name", newUser.getName(), "name", oldName) &&
+                session.updateParameterByParameter(User.class, "password", newUser.getPassword(), "name", newUser.getName()) &&
+                session.updateParameterByParameter(User.class, "mail", newUser.getMail(), "name", newUser.getName()))
+            return true;
+        else
+            return false;
+    }
+
+    @Override
     public boolean updateParameterByParameter(String parameter, Object parameterValue, String byParameter, Object byParameterValue) {
         return session.updateParameterByParameter(User.class, parameter, parameterValue, byParameter, byParameterValue);
     }
