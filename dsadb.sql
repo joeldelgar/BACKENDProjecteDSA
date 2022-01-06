@@ -16,20 +16,20 @@ CREATE TABLE User(
 
 CREATE TABLE Inventory(
 
-	name userName(30),
-	cost INT,
-    description VARCHAR(100),
-    avatar VARCHAR(100)
-	
-)ENGINE = InnoDB;
-
-CREATE TABLE Item(
-
 	userName VARCHAR(30),
 	itemName VARCHAR(30),
 	itemQuantity INT,
     itemDescription VARCHAR(100),
     itemAvatar VARCHAR(100)
+	
+)ENGINE = InnoDB;
+
+CREATE TABLE Item(
+
+	name VARCHAR(30),
+	cost INT,
+    description VARCHAR(100),
+    avatar VARCHAR(100)
 
 )ENGINE = InnoDB;
 
