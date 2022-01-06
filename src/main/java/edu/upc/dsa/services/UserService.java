@@ -19,12 +19,14 @@ public class UserService {
     private UserManager userManager; //
     private final UserDAO userDAO;
     private final InventoryDAO inventoryDAO;
+    private final ItemDAO itemDAO;
     private final GameDAO gameDAO;
 
     public UserService() {
         this.userManager = UserManagerImpl.getInstance(); //
         this.userDAO = UserDAOImpl.getInstance();
         this.inventoryDAO = InventoryDAOImpl.getInstance();
+        this.itemDAO = ItemDAOImpl.getInstance();
         this.gameDAO = GameDAOImpl.getInstance();
     }
 
@@ -41,7 +43,8 @@ public class UserService {
     public Response registerUser(RegisterCredentials rCr) {
 
         User user = new User(rCr.getName(), rCr.getPassword(), rCr.getMail());
-        Inventory inventory = new Inventory(rCr.getName());
+        Item magicBerry = itemDAO.getItemByName("magicBerry");
+        Inventory inventory = new Inventory(rCr.getName(), magicBerry.getName(), 0, magicBerry.getDescription(), magicBerry.getAvatar());
         if (rCr.getName().isEmpty() || rCr.getPassword().isEmpty() || rCr.getMail().isEmpty())
             return Response.status(500).build();
         else {

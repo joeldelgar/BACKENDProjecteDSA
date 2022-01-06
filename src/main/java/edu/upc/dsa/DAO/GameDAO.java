@@ -11,8 +11,8 @@ public interface GameDAO {
     boolean addGame(Game game);
 
     List<Game> getAll();
-
     List<Game> getAllByParameter(String parameter, Object value);
+
     Game getGameByUserName(String userName);
     Game getByParameter(String parameter, Object value);
 

@@ -154,6 +154,46 @@ public class SessionImpl implements Session {
         }
     }
 
+    public Object getByTwoParameters(Class theClass, String byFirstParameter, Object byFirstParameterValue, String bySecondParameter, Object bySecondParameterValue) {
+
+        String selectQuery = QueryHelper.createQuerySELECTbyTwoParameters(theClass, byFirstParameter, bySecondParameter);
+        logger.info(selectQuery);
+
+        PreparedStatement pstm = null;
+        ResultSet rs = null;
+        ResultSetMetaData rsmd = null;
+
+        try {
+            Object object = theClass.getDeclaredConstructor().newInstance();
+
+            pstm = conn.prepareStatement(selectQuery);
+
+            pstm.setObject(1, byFirstParameterValue);
+            pstm.setObject(2, bySecondParameterValue);
+            logger.info(pstm.toString());
+            pstm.executeQuery();
+            rs = pstm.getResultSet();
+
+            if (rs.next()) {
+
+                rsmd = rs.getMetaData();
+                for (int i = 1; i <= rsmd.getColumnCount(); i++) {
+                    String field = rsmd.getColumnName(i);
+                    ObjectHelper.setter(object, field, rs.getObject(i));
+                }
+                return object;
+
+            } else {
+                return null;
+            }
+
+        } catch (SQLException | NoSuchMethodException | IllegalAccessException
+                | InstantiationException | InvocationTargetException e) {
+            e.printStackTrace();
+            return null;
+        }
+    }
+
     public Object getParameterByParameter(Class theClass, String parameter, String byParameter, Object byParameterValue) {
 
         String selectQuery = QueryHelper.createQuerySELECTParameterByParameter(theClass, parameter, byParameter);
@@ -233,6 +273,33 @@ public class SessionImpl implements Session {
         }
     }
 
+    public boolean updateByTwoParameters(Object object, String byFirstParameter, Object byFirstParameterValue, String bySecondParameter, Object bySecondParameterValue) {
+
+        String updateQuery = QueryHelper.createQueryUPDATEbyTwoParameters(object.getClass(), byFirstParameter, bySecondParameter);
+        logger.info(updateQuery);
+
+        PreparedStatement pstm = null;
+
+        try {
+            pstm = conn.prepareStatement(updateQuery);
+            int i = 1;
+
+            for (String field: ObjectHelper.getFields(object)) {
+                pstm.setObject(i++, ObjectHelper.getter(object, field));
+            }
+
+            pstm.setObject(i++, ObjectHelper.getter(object, byFirstParameterValue.toString()));
+            pstm.setObject(i++, ObjectHelper.getter(object, bySecondParameterValue.toString()));
+            pstm.executeQuery();
+            logger.info(pstm.toString());
+            return true;
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return false;
+        }
+    }
+
     public boolean updateParameterByParameter(Class theClass, String parameter, Object parameterValue, String byParameter, Object byParameterValue) {
 
         String updateQuery = QueryHelper.createQueryUPDATEParameterByParameter(theClass, parameter, byParameter);
@@ -245,6 +312,29 @@ public class SessionImpl implements Session {
 
             pstm.setObject(1, parameterValue);
             pstm.setObject(2, byParameterValue);
+            logger.info(pstm.toString());
+            pstm.executeQuery();
+            return true;
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return false;
+        }
+    }
+
+    public boolean updateParameterByTwoParameters(Class theClass, String parameter, Object parameterValue, String byFirstParameter, Object byFirstParameterValue, String bySecondParameter, Object bySecondParameterValue) {
+
+        String updateQuery = QueryHelper.createQueryUPDATEParameterByTwoParameters(theClass, parameter, byFirstParameter, bySecondParameter);
+        logger.info(updateQuery);
+
+        PreparedStatement pstm = null;
+
+        try {
+            pstm = conn.prepareStatement(updateQuery);
+
+            pstm.setObject(1, parameterValue);
+            pstm.setObject(2, byFirstParameterValue);
+            pstm.setObject(3, bySecondParameterValue);
             logger.info(pstm.toString());
             pstm.executeQuery();
             return true;
@@ -288,6 +378,28 @@ public class SessionImpl implements Session {
             pstm = conn.prepareStatement(deleteQuery);
 
             pstm.setObject(1, byParameterValue);
+            logger.info(pstm.toString());
+            pstm.executeQuery();
+            return true;
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return false;
+        }
+    }
+
+    public boolean deleteByTwoParameters(Class theClass, String byFirstParameter, Object byFirstParameterValue, String bySecondParameter, Object bySecondParameterValue) {
+
+        String deleteQuery = QueryHelper.createQueryDELETEbyTwoParameters(theClass, byFirstParameter, bySecondParameter);
+        logger.info(deleteQuery);
+
+        PreparedStatement pstm = null;
+
+        try {
+            pstm = conn.prepareStatement(deleteQuery);
+
+            pstm.setObject(1, byFirstParameterValue);
+            pstm.setObject(2, bySecondParameterValue);
             logger.info(pstm.toString());
             pstm.executeQuery();
             return true;

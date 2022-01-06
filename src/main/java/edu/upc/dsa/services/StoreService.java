@@ -70,77 +70,21 @@ public class StoreService {
             if (itemDAO.existsItem(itemName)) {
                 Item item = itemDAO.getItemByName(itemName);
                 User user = userDAO.getUser(userName);
-                Inventory inventory = inventoryDAO.getInventoryByUserName(userName);
+
+                Inventory newInventory = new Inventory(userName, itemName, 1, item.getDescription(), item.getAvatar());
 
                 if (item.getCost() > user.getCoins()) {
                     return Response.status(402).build();
                 } else {
                     if (itemName.equals("magicBerry")) {
-                        int itemCount = inventory.getMagicBerry() + 1;
-                        inventoryDAO.updateItemCountByUserName(itemName, itemCount, userName);
+                        Inventory defaultInventory = inventoryDAO.getInventoryByUserNameAndItemName(userName, itemName);
+                        int itemQuantity = defaultInventory.getItemQuantity() + 1;
+                        inventoryDAO.updateItemQuantityByUserNameAndItemName(itemQuantity, userName, itemName);
                     } else {
-                        int itemState = 0;
-                        if (itemName.equals("level1Item")) {
-                            if (inventory.getLevel1Item() == 0) {
-                               itemState = 1;
-                            } else
-                                return Response.status(406).build();
-                        }
-                        if (itemName.equals("level1Key")) {
-                            if (inventory.getLevel1Key() == 0) {
-                                itemState = 1;
-                            } else
-                                return Response.status(406).build();
-                        }
-                        if (itemName.equals("level2Item")) {
-                            if (inventory.getLevel2Item() == 0) {
-                                itemState = 1;
-                            } else
-                                return Response.status(406).build();
-                        }
-                        if (itemName.equals("level2Key")) {
-                            if (inventory.getLevel2Key() == 0) {
-                                itemState = 1;
-                            } else
-                                return Response.status(406).build();
-                        }
-                        if (itemName.equals("level3Item")) {
-                            if (inventory.getLevel3Item() == 0) {
-                                itemState = 1;
-                            } else
-                                return Response.status(406).build();
-                        }
-                        if (itemName.equals("level3Key")) {
-                            if (inventory.getLevel3Key() == 0) {
-                                itemState = 1;
-                            } else
-                                return Response.status(406).build();
-                        }
-                        if (itemName.equals("level4Item")) {
-                            if (inventory.getLevel4Item() == 0) {
-                                itemState = 1;
-                            } else
-                                return Response.status(406).build();
-                        }
-                        if (itemName.equals("level4Key")) {
-                            if (inventory.getLevel4Key() == 0) {
-                                itemState = 1;
-                            } else
-                                return Response.status(406).build();
-                        }
-                        if (itemName.equals("level5Item")) {
-                            if (inventory.getLevel5Item() == 0) {
-                                itemState = 1;
-                            } else
-                                return Response.status(406).build();
-                        }
-                        if (itemName.equals("level5Key")) {
-                            if (inventory.getLevel5Key() == 0) {
-                                itemState = 1;
-                            } else
-                                return Response.status(406).build();
-                        }
-                        inventoryDAO.updateItemCountByUserName(itemName, itemState, userName);
+                        if (!inventoryDAO.existsInventoryByUserNameAndItemName(userName, itemName))
+                            inventoryDAO.createInventory(newInventory);
+                        else
+                            return Response.status(406).build();
                     }
                     int userCoins = user.getCoins() - item.getCost();
                     userDAO.updateUserCoinsByUserName(userCoins, userName);
@@ -152,26 +96,33 @@ public class StoreService {
             return Response.status(404).build();
     }
 
-    //Get User Inventory
+    //Get User inventoryList
     @GET
-    @ApiOperation(value = "Get the Inventory of a User", notes = "userName")
+    @ApiOperation(value = "Get the Inventory List of a User", notes = "userName")
     @ApiResponses(value = {
-            @ApiResponse(code = 200, message = "Successful", response = Inventory.class),
+            @ApiResponse(code = 200, message = "Successful", response = Inventory.class, responseContainer="List"),
             @ApiResponse(code = 404, message = "User not found")
     })
-    @Path("/userInventory/{userName}")
+    @Path("/userInventoryList/{userName}")
     @Produces(MediaType.APPLICATION_JSON)
-    public Response getUserInventory(@PathParam("userName") String userName) {
+    public Response getUserInventoryList(@PathParam("userName") String userName) {
 
-        Inventory inventory = inventoryDAO.getInventoryByUserName(userName);
-
-        if (inventory == null) {
-            return Response.status(404).build();
-        } else {
-            GenericEntity<Inventory> entity = new GenericEntity<Inventory>(inventory) {};
+        if (userDAO.existsName(userName)) {
+            List<Inventory> inventoryList = null;
+            try {
+                inventoryList = inventoryDAO.getAllByParameter("userName", userName);
+            }
+            catch (Throwable t) {
+                t.printStackTrace();
+            }
+            GenericEntity<List<Inventory>> entity = new GenericEntity<List<Inventory>>(inventoryList) {};
             return Response.status(200).entity(entity).build();
         }
+        else {
+            return Response.status(404).build();
+        }
     }
+
 
     //Use an Item
     @PUT
@@ -181,7 +132,7 @@ public class StoreService {
             @ApiResponse(code = 402, message = "No units left"),
             @ApiResponse(code = 404, message = "User not found"),
             @ApiResponse(code = 405, message = "Item not found"),
-            @ApiResponse(code = 406, message = "Item can not be used")
+            @ApiResponse(code = 406, message = "Item not available")
     })
     @Path("/useItem/{itemName}")
     @Produces(MediaType.APPLICATION_JSON)
@@ -197,15 +148,19 @@ public class StoreService {
                 Inventory inventory = inventoryDAO.getInventoryByUserName(userName);
 
                 if (itemName.equals("magicBerry")) {
-                    if (inventory.getMagicBerry() == 0) {
+                    if (inventory.getItemQuantity() == 0) {
                         return Response.status(402).build();
                     } else {
-                        int op = inventory.getMagicBerry() - 1;
-                        inventoryDAO.updateItemCountByUserName(itemName, op, userName);
+                        int itemQuantity = inventory.getItemQuantity() - 1;
+                        inventoryDAO.updateItemQuantityByUserNameAndItemName(itemQuantity, userName, itemName);
                         return Response.status(200).entity(item).build();
                     }
-                } else
-                    return Response.status(406).build();
+                } else {
+                    if (inventoryDAO.existsInventoryByUserNameAndItemName(userName, itemName))
+                        return Response.status(200).entity(item).build();
+                    else
+                        return Response.status(406).build();
+                }
             } else
                 return Response.status(405).build();
         } else
