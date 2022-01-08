@@ -33,12 +33,12 @@ CREATE TABLE Item(
 
 )ENGINE = InnoDB;
 
-INSERT INTO Item (name, cost, description, avatar) values ("magicBerry", 5, "Restore Health", "public/images/magicBerry.jpeg");
-INSERT INTO Item (name, cost, description, avatar) values ("level1Item", 20, "Item to steal in the first level", "public/images/level1Item.jpeg");
-INSERT INTO Item (name, cost, description, avatar) values ("level2Item", 20, "Item to steal in the second level", "public/images/level2Item.jpeg");
-INSERT INTO Item (name, cost, description, avatar) values ("level3Item", 20, "Item to steal in the third level", "public/images/level3Item.jpeg");
-INSERT INTO Item (name, cost, description, avatar) values ("level4Item", 20, "Item to steal in the fourth level", "public/images/level4Item.jpeg");
-INSERT INTO Item (name, cost, description, avatar) values ("level5Item", 20, "Item to steal in the fifth level", "public/images/level5Item.jpeg");
+INSERT INTO Item (name, cost, description, avatar) values ("magicBerry", 5, "Restore Health", "images/magicBerry.jpeg");
+INSERT INTO Item (name, cost, description, avatar) values ("level1Item", 20, "Item to steal in the first level", "images/level1Item.jpeg");
+INSERT INTO Item (name, cost, description, avatar) values ("level2Item", 20, "Item to steal in the second level", "images/level2Item.jpeg");
+INSERT INTO Item (name, cost, description, avatar) values ("level3Item", 20, "Item to steal in the third level", "images/level3Item.jpeg");
+INSERT INTO Item (name, cost, description, avatar) values ("level4Item", 20, "Item to steal in the fourth level", "images/level4Item.jpeg");
+INSERT INTO Item (name, cost, description, avatar) values ("level5Item", 20, "Item to steal in the fifth level", "images/level5Item.jpeg");
 
 CREATE TABLE Game(
 
@@ -56,5 +56,5 @@ CREATE TABLE Enemy(
 
 )ENGINE = InnoDB;
 
-INSERT INTO Enemy (name, damage, description, avatar) values ("securityGuard", 25, "As he sees you, he will not leave you alone", "public/images/securityGuard.jpeg");
-INSERT INTO Enemy (name, damage, description, avatar) values ("finalBoss", 100, "Stay away, it kills you with a slap", "public/images/finalBoss.jpeg");
+INSERT INTO Enemy (name, damage, description, avatar) values ("securityGuard", 25, "As he sees you, he will not leave you alone", "images/securityGuard.jpeg");
+INSERT INTO Enemy (name, damage, description, avatar) values ("finalBoss", 100, "Stay away, it kills you with a slap", "images/finalBoss.jpeg");
