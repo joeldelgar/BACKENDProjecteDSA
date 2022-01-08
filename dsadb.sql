@@ -40,7 +40,6 @@ INSERT INTO Item (name, cost, description, avatar) values ("level3Item", 20, "It
 INSERT INTO Item (name, cost, description, avatar) values ("level4Item", 20, "Item to steal in the fourth level", "public/images/level4Item.jpeg");
 INSERT INTO Item (name, cost, description, avatar) values ("level5Item", 20, "Item to steal in the fifth level", "public/images/level5Item.jpeg");
 
-
 CREATE TABLE Game(
 
    	userName VARCHAR(30),
@@ -52,6 +51,10 @@ CREATE TABLE Enemy(
 
 	name VARCHAR(30),
 	damage INT,
+	description VARCHAR(100),
 	avatar VARCHAR(100)
 
 )ENGINE = InnoDB;
+
+INSERT INTO Enemy (name, damage, description, avatar) values ("securityGuard", 25, "As he sees you, he will not leave you alone", "public/images/securityGuard.jpeg");
+INSERT INTO Enemy (name, damage, description, avatar) values ("finalBoss", 100, "Stay away, it kills you with a slap", "public/images/finalBoss.jpeg");
