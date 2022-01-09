@@ -16,14 +16,14 @@ import java.util.List;
 
 public class UserService {
 
-    private UserManager userManager; //
+    //private UserManager userManager;
     private final UserDAO userDAO;
     private final InventoryDAO inventoryDAO;
     private final ItemDAO itemDAO;
     private final GameDAO gameDAO;
 
     public UserService() {
-        this.userManager = UserManagerImpl.getInstance(); //
+        //this.userManager = UserManagerImpl.getInstance();
         this.userDAO = UserDAOImpl.getInstance();
         this.inventoryDAO = InventoryDAOImpl.getInstance();
         this.itemDAO = ItemDAOImpl.getInstance();
@@ -188,91 +188,4 @@ public class UserService {
         else
             return Response.status(404).build();
     }
-
-/*    //Get Logged Users
-    @GET
-    @ApiOperation(value = "Get Logged Users")
-    @ApiResponses(value = {
-            @ApiResponse(code = 201, message = "Successful", response = User.class, responseContainer="List"),
-    })
-    @Path("/login")
-    @Produces(MediaType.APPLICATION_JSON)
-    public Response getLoggedUsers() {
-        List<User> loggedUsers = this.userManager.getLoggedUsers();
-        GenericEntity<List<User>> entity = new GenericEntity<List<User>>(loggedUsers) {};
-        return Response.status(201).entity(entity).build()  ;
-
-    }*//*
-
-*//*    //Add Friend - Ids
-    //NO FUNCIONA --> No em deixa afegir des de les dues bandes
-    @POST
-    @ApiOperation(value = "Add Friend")
-    @ApiResponses(value = {
-            @ApiResponse(code = 201, message = "Successful", response= User.class),
-            @ApiResponse(code = 500, message = "Validation Error"),
-            @ApiResponse(code = 404, message = "User Not Found")
-    })
-    @Path("/friends/{id}/{friend}")
-    @Consumes(MediaType.APPLICATION_JSON)
-    public Response addFriends(@PathParam("id") String id, @PathParam("friend") String friend) {
-        User u = this.userManager.getUser(id);
-        if (u == null)
-            return Response.status(404).build();
-
-        User f = this.userManager.getUser(friend);
-        if (f == null)
-            return Response.status(404).build();
-
-        for (User user: u.getFriendList()){
-            if (user.equals(f))
-                return Response.status(500).build();
-        }
-
-        u.addFriend(f);
-        return Response.status(201).entity(f).build();
-    }*//*
-
-*//*    //Get Friends - Id
-    @GET
-    @ApiOperation(value = "Get Friends")
-    @ApiResponses(value = {
-            @ApiResponse(code = 201, message = "Successful", response = User.class, responseContainer="List")
-    })
-    @Path("/friends/{id}")
-    @Produces(MediaType.APPLICATION_JSON)
-    public Response getFriends(@PathParam("id") String id) {
-        User u = this.userManager.getUser(id);
-        if (u==null)
-            Response.status(404).build();
-        List<User> friendList = u.getFriendList();
-        GenericEntity<List<User>> entity = new GenericEntity<List<User>>(friendList){};
-        return Response.status(201).entity(entity).build()  ;
-
-    }*//*
-
-*//*    //Delete friend - Name
-    @DELETE
-    @ApiOperation(value = "Delete a Friend", notes = "Delete a friend by Name")
-    @ApiResponses(value = {
-            @ApiResponse(code = 201, message = "Successful"),
-            @ApiResponse(code = 404, message = "User not found")
-    })
-    @Path("/friends/{name}/{friend}")
-    public Response deleteFriend(@PathParam("name") String name, @PathParam("friend") String friend) {
-        User u = this.userManager.getUser(name);
-        if (u == null)
-            return Response.status(404).build();
-
-        User f = this.userManager.getUser(friend);
-        if (f == null)
-            return Response.status(404).build();
-
-        List<User> friendList = u.getFriendList();
-        if (friendList.contains(f)){
-            u.deleteFriend(f);
-            return Response.status(201).entity(f).build();
-        }
-        else return Response.status(404).build();
-    }*/
 }

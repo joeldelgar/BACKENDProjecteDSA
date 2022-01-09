@@ -21,8 +21,8 @@ import java.util.List;
 @Path("/store")
 public class StoreService {
 
-    private GameManager gameManager;
-    private InventoryManager inventoryManager;
+    //private GameManager gameManager;
+    //private InventoryManager inventoryManager;
     private final ItemDAO itemDAO;
     private final UserDAO userDAO;
     private final InventoryDAO inventoryDAO;

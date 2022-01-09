@@ -12,6 +12,7 @@ public interface GameDAO {
 
     List<Game> getAll();
     List<Game> getAllByParameter(String parameter, Object value);
+    List<Game> orderByParameter(String parameter);
 
     Game getGameByUserName(String userName);
     Game getByParameter(String parameter, Object value);

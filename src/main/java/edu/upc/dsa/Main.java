@@ -1,8 +1,6 @@
 package edu.upc.dsa;
 
-import edu.upc.dsa.models.CorsFilter;
 import io.swagger.jaxrs.config.BeanConfig;
-import io.swagger.jersey.listing.ApiListingResourceJSON;
 import org.glassfish.grizzly.http.server.HttpServer;
 import org.glassfish.grizzly.http.server.StaticHttpHandler;
 import org.glassfish.jersey.grizzly2.httpserver.GrizzlyHttpServerFactory;
@@ -33,7 +31,6 @@ public class Main {
 
         rc.register(io.swagger.jaxrs.listing.ApiListingResource.class);
         rc.register(io.swagger.jaxrs.listing.SwaggerSerializers.class);
-        rc.register(new CorsFilter());
         BeanConfig beanConfig = new BeanConfig();
 
         beanConfig.setHost("147.83.7.206:8080");

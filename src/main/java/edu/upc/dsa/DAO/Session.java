@@ -13,6 +13,7 @@ public interface Session<E> {
     Object getByParameter(Class theClass, String byParameter, Object byParameterValue);
     Object getByTwoParameters(Class theClass, String byFirstParameter, Object byFirstParameterValue, String bySecondParameter, Object bySecondParameterValue);
     Object getParameterByParameter(Class theClass, String parameter, String byParameter, Object byParameterValue);
+    Object orderByParameter(Class theClass, String byParameter);
 
     boolean update(Object object);
     boolean updateByParameter(Object object, String byParameter, Object byParameterValue);

@@ -221,6 +221,43 @@ public class SessionImpl implements Session {
         }
     }
 
+    public Object orderByParameter(Class theClass, String byParameter) {
+
+        String selectQuery = QueryHelper.createQueryORDERbyParameter(theClass, byParameter);
+        logger.info(selectQuery);
+
+        PreparedStatement pstm = null;
+        ResultSet rs = null;
+        ResultSetMetaData rsmd = null;
+
+        try {
+            Object object = theClass.getDeclaredConstructor().newInstance();
+
+            pstm = conn.prepareStatement(selectQuery);
+
+            pstm.executeQuery();
+            rs = pstm.getResultSet();
+
+            if (rs.next()) {
+
+                rsmd = rs.getMetaData();
+                for (int i = 1; i <= rsmd.getColumnCount(); i++) {
+                    String field = rsmd.getColumnName(i);
+                    ObjectHelper.setter(object, field, rs.getObject(i));
+                }
+                return object;
+
+            } else {
+                return null;
+            }
+
+        } catch (SQLException | NoSuchMethodException | IllegalAccessException
+                | InstantiationException | InvocationTargetException e) {
+            e.printStackTrace();
+            return null;
+        }
+    }
+
     public boolean update(Object object) {
 
         String updateQuery = QueryHelper.createQueryUPDATE(object);

@@ -77,6 +77,27 @@ public class GameDAOImpl implements GameDAO {
     }
 
     @Override
+    public List<Game> orderByParameter(String parameter) {
+        Session session = null;
+        List<Game> gameList = null;
+
+        try{
+            List<String> params= new LinkedList<>();
+            String query = "SELECT * FROM Game ORDER BY " + parameter + " DESC";
+            session = FactorySession.openSession();
+            gameList = (List) session.queryObjects(query, Game.class, params);
+        } catch(Exception e) {
+            e.printStackTrace();
+        }
+        finally {
+            if(session!=null){
+                session.close();
+            }
+        }
+        return gameList;
+    }
+
+    @Override
     public Game getGameByUserName(String userName) {
         return ((Game) session.getByParameter(Game.class, "userName", userName));
     }

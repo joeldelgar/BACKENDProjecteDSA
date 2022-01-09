@@ -67,6 +67,15 @@ public class QueryHelper {
         return sb.toString();
     }
 
+    public static String createQueryORDERbyParameter(Class theClass, String byParameter) {
+
+        StringBuffer sb = new StringBuffer("SELECT * FROM ");
+        sb.append(theClass.getSimpleName());
+        sb.append(" ORDER BY " + byParameter + " DESC");
+
+        return sb.toString();
+    }
+
     public static String createQueryUPDATE(Object entity) {
 
         StringBuffer sb = new StringBuffer("UPDATE ");
@@ -114,7 +123,7 @@ public class QueryHelper {
 
         StringBuffer sb = new StringBuffer("UPDATE ");
         sb.append(theClass.getSimpleName() + " SET " + parameter + " = ?");
-        sb.append(" WHERE " + byParameter + " = ? ");
+        sb.append(" WHERE " + byParameter + " = ?");
 
         return sb.toString();
     }
@@ -123,8 +132,8 @@ public class QueryHelper {
 
         StringBuffer sb = new StringBuffer("UPDATE ");
         sb.append(theClass.getSimpleName() + " SET " + parameter + " = ?");
-        sb.append(" WHERE " + byFirstParameter + " = ? ");
-        sb.append(" AND " + bySecondParameter + " = ? ");
+        sb.append(" WHERE " + byFirstParameter + " = ?");
+        sb.append(" AND " + bySecondParameter + " = ?");
 
         return sb.toString();
     }
