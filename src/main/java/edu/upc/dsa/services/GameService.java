@@ -51,9 +51,9 @@ public class GameService {
             if (userDAO.existsName(gCr.getUserName())) {
                 if (!gameDAO.existsUserName(gCr.getUserName())) {
                     gameDAO.addGame(game);
-                    User user = userDAO.getUser(gCr.getUserName());
-                    int op = (gCr.getPoints() / 10) + user.getCoins();
-                    userDAO.updateUserCoinsByUserName(op, gCr.getUserName());
+                    //User user = userDAO.getUser(gCr.getUserName());
+                    //int op = (gCr.getPoints() / 10) + user.getCoins();
+                    //userDAO.updateUserCoinsByUserName(op, gCr.getUserName());
                     return Response.status(201).entity(game).build();
                 } else
                     return Response.status(409).build();
@@ -136,9 +136,9 @@ public class GameService {
         else {
             if (userDAO.existsName(gCr.getUserName())) {
                 gameDAO.updatePointsByUserName(gCr.getPoints(), gCr.getUserName());
-                User user = userDAO.getUser(gCr.getUserName());
-                int op = (gCr.getPoints() / 10) - (oldGame.getPoints() / 10) + user.getCoins();
-                userDAO.updateUserCoinsByUserName(op, gCr.getUserName());
+                //User user = userDAO.getUser(gCr.getUserName());
+                //int op = (gCr.getPoints() / 10) - (oldGame.getPoints() / 10) + user.getCoins();
+                //userDAO.updateUserCoinsByUserName(op, gCr.getUserName());
                 return Response.status(200).entity(game).build();
             } else {
                 return Response.status(404).build();

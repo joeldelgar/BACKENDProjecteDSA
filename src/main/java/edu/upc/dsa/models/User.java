@@ -10,7 +10,6 @@ public class User {
     String name;
     String password;
     String mail;
-    int health;
     int coins;
 
 //    public List<Item> itemList = new ArrayList<>(); //temp
@@ -23,7 +22,6 @@ public class User {
         this.name = name;
         this.password = password;
         this.mail = mail;
-        this.health = 100;
         this.coins = 10;
     }
 
@@ -64,14 +62,6 @@ public class User {
         this.mail = mail;
     }
 
-    public int getHealth() {
-        return health;
-    }
-
-    public void setHealth(int health) {
-        this.health = health;
-    }
-
     public int getCoins() {
         return coins;
     }
@@ -88,27 +78,4 @@ public class User {
                 ", email='" + mail + '\'' +
                 '}';
     }
-
-    //To review
-
-/*    public List<Item> getItemList(){
-        return itemList;
-    }
-
-    public List<User> getFriendList() {
-        return friendList;
-    }
-
-    public User addFriend(User u){
-        friendList.add(u);
-        return u;
-    }
-
-    public User deleteFriend(User u){
-        friendList.remove(u);
-        return u;
-    }
-
-    public void addItem(Item e){}
-    public void deleteItem(Item e){}*/
 }
