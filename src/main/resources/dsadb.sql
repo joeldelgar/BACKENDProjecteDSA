@@ -9,7 +9,6 @@ CREATE TABLE User(
 	name VARCHAR(30) PRIMARY KEY NOT NULL,
 	password VARCHAR(30),
 	mail VARCHAR(50),
-	health INT,
 	coins INT
 
 )ENGINE = InnoDB;
