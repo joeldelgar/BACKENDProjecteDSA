@@ -22,7 +22,7 @@ public class User {
         this.name = name;
         this.password = password;
         this.mail = mail;
-        this.coins = 10;
+        this.coins = 10000; //Temp, until updateCoins
     }
 
     public User(String name, String password) {
