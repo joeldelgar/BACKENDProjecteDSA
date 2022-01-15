@@ -4,6 +4,7 @@
   <meta charset="UTF-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Edit User</title>
 
   <link rel="shortcut icon" href="icon.png" type="image/x-icon">
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
@@ -13,45 +14,45 @@
   <link rel ="stylesheet" href ="css/style.css">
 </head>
 <body>
-  <div class="topnav">
-    <a href="profile.html">Profile</a>
-    <a href="inventory.html">Inventory</a>
-    <a href="shop.html">Shop</a>
-    <a href="rankings.html">Rankings</a>
-    <a onclick="logOut()">Log Out</a>
+<div class="topnav">
+  <a href="profile.html">Profile</a>
+  <a href="inventory.html">Inventory</a>
+  <a href="shop.html">Shop</a>
+  <a href="rankings.html">Rankings</a>
+  <a onclick="logOut()">Log Out</a>
 
-  </div>
+</div>
 
-  <h1>Edit your data:</h1>
+<h1>Edit your data:</h1>
 
 
-  <div class="container">
-    <h3>
-        Edit your username:
-    </h3>
-    <div class="box"><input type="text" placeholder="Username" id="username"></div>
-  </div>
+<div class="container">
+  <h3>
+    Edit your username:
+  </h3>
+  <div class="box"><input type="text" placeholder="Username" id="username"></div>
+</div>
 
-  <div class="container">
-    <h3>
-        Edit your password:
-    </h3>
-    <div class="box"><input type="text" placeholder="Password" id="password"></div>
-  </div>
+<div class="container">
+  <h3>
+    Edit your password:
+  </h3>
+  <div class="box"><input type="text" placeholder="Password" id="password"></div>
+</div>
 
-  <div class="container">
-    <h3>
-        Edit your mail:
-    </h3>
-    <div class="box"><input type="text" placeholder="Mail" id="mail"></div>
-  </div>
+<div class="container">
+  <h3>
+    Edit your mail:
+  </h3>
+  <div class="box"><input type="text" placeholder="Mail" id="mail"></div>
+</div>
 
-  <div class="container">
-    <input type="submit" value="Save" class="button" onclick="updateUser()">
-  </div>
+<div class="container">
+  <input type="submit" value="Save" class="button" onclick="updateUser()">
+</div>
 
-  <div class="container">
-    <input type="submit" value="Delete your account" class="button_del" onclick="deleteUser()">
-  </div>
+<div class="container">
+  <input type="submit" value="Delete your account" class="button_del" onclick="deleteUser()">
+</div>
 </body>
 </html>

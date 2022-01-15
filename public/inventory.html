@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Inventory</title>
 
     <link rel="shortcut icon" href="icon.png" type="image/x-icon">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
@@ -12,30 +13,37 @@
     <script src="main.js"></script>
     <link rel ="stylesheet" href ="css/style.css">
 </head>
-<body onload="getInventory();">
+<body onload="setUpInventory();">
 
 <div class="topnav">
-  <a href="profile.html">Profile</a>
-  <a href="inventory.html">Inventory</a>
-  <a href="shop.html">Shop</a>
-  <a href="rankings.html">Rankings</a>
+    <a href="profile.html">Profile</a>
+    <a href="inventory.html">Inventory</a>
+    <a href="shop.html">Shop</a>
+    <a href="rankings.html">Rankings</a>
     <a onclick="logOut()">Log Out</a>
 
 
 </div>
 
 <h1> <var id="username"></var>'s Inventory </h1>
-<br>
-The objects you own are listed below:
-</br>
 
+
+<h3>The objects you own are listed below:
+
+</h3>
 
 <div class="container">
-    <table class="table2">
-    <tr>
-    <tbody id=table>
-    </tr>
-    </tbody>
+    <table class="styled-table">
+        <thead>
+        <tr><td>Item</td>
+            <td>Description</td>
+            <td>Quantity</td>
+            <td>   </td>
+        </tr>
+        </thead>
+
+        <tbody id=table>
+        </tbody>
     </table>
 </div>
 

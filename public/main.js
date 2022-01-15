@@ -60,7 +60,6 @@ function getUser() {
             $("#username").text(result.name);
             $("#mail").text(result.mail);
             $("#coins").text(result.coins);
-            $("#health").text(result.health);
         },
         error : function(error) {
         alert("Unable to get your data.");
@@ -68,28 +67,22 @@ function getUser() {
     });
 }
 
-//GetInventory: problemes amb el DAO
+//GetInventory OK
 function getInventory() {
     let userlocal = localStorage.getItem("loggedUser");
     $.ajax({
         type: 'GET',
-        url: "/dsaApp/store/getUserInventory/"+userlocal,
+        url: "/dsaApp/store/userInventoryList/"+userlocal,
         dataType: 'json',
         success: function (result) {
-            $("#username").text(result.userName);
-            $('#table').append(
-                '<tr><td> Magic Berry </td><td>'+ result.magicBerry +'</td></tr>' +
-                '<tr><td> Level 1 Item </td><td>'+ result.level1Item +'</td></tr>' +
-                '<tr><td> Level 1 Key </td><td>'+ result.level1Key +'</td></tr>' +
-                '<tr><td> Level 2 Item </td><td>'+ result.level2Item +'</td></tr>' +
-                '<tr><td> Level 2 Key </td><td>'+ result.level2Key +'</td></tr>' +
-                '<tr><td> Level 3 Item</td><td>'+ result.level3Item +'</td></tr>' +
-                '<tr><td> Level 3 Key </td><td>'+ result.level3Key +'</td></tr>' +
-                '<tr><td> Level 4 Item </td><td>'+ result.level4Item +'</td></tr>' +
-                '<tr><td> Level 4 Key </td><td>'+ result.level4Key +'</td></tr>' +
-                '<tr><td> Level 5 Item </td><td>'+ result.level5Item +'</td></tr>' +
-                '<tr><td> Level 5 Key </td><td>'+ result.level5Key +'</td></tr>'
-            );
+            $.each(result, function(i, e){
+                $('#table').append(
+                    '<tr><td><p>' +e.itemName + '</p></td><td><p>' + e.itemDescription +
+                    '</p></td><td><p>' + e.itemQuantity +
+                    '</p></td><td><p>' + '<img src="' + e.itemAvatar + '" alt="Avatar" style="width:30%">'+
+                    '</p></td></tr>'
+                );
+            });
         },
         error : function(error) {
             alert("Unable to get your inventory.");
@@ -106,8 +99,8 @@ function getShop(){
         success: function (result) {
             $.each(result, function(i, e){
                 $('#table').append(
-                    '<tr><td><p>' +e.name + '</p><p>' + e.description +
-                        '</p><p>' + 'Price: ' + e.cost +
+                    '<tr><td><p><b> ' +e.name + '</b></p><p>' + e.description +
+                        '</p><p>' + '<b>Price:</b> ' + e.cost +
                         '</p></td> <td><p>' + '<img src="' + e.avatar + '" alt="Avatar" style="width:35%">'+
                         '</p></td> <td> <div class="container"> <input type="submit" value="Buy" ' +
                         ' class="button" onclick="buyItem(this.id)" id="' + e.name +'"></div> </td> </tr>'
@@ -120,10 +113,27 @@ function getShop(){
     });
 }
 
-//UpdateUser no implementat al DAO
+//UpdateUser OK
 function updateUser(){
-    alert('Function unavailable');
-
+    let userlocal = localStorage.getItem("loggedUser");
+    var n = $('#username').val();
+    var p = $('#password').val();
+    var m = $('#mail').val();
+    $.ajax({
+        contentType: "application/json",
+        type: 'PUT',
+        url: "/dsaApp/user/update/"+userlocal,
+        data: JSON.stringify({name: n, password: p, mail: m}),
+        dataType: 'json',
+        success: function (result) {
+            alert("Updated successfully!");
+            localStorage.setItem("loggedUser", n);
+            window.location.href = "profile.html";
+        },
+        error : function(error) {
+            alert("Something went wrong, try again!");
+        }
+    });
 }
 
 //DeleteUser OK
@@ -144,13 +154,14 @@ function deleteUser(){
     });
 }
 
-//BuyItem OK
+//BuyItem pilla el item i el username però no compra, revisar després
+//mirar què passa si es treu el getUser (actualitza monedes)
 function buyItem(it){
     let userlocal = localStorage.getItem("loggedUser");
     $.ajax({
         contentType: "application/json",
-        type: 'POST',
-        url: "/dsaApp/store/buyItem",
+        type: 'PUT',
+        url: "/dsaApp/store/buyItem/"+it,
         data: JSON.stringify({itemName: it, userName: userlocal}),
         dataType: 'json',
         success: function (result) {
@@ -164,12 +175,39 @@ function buyItem(it){
     });
 }
 
+//GetRankings  OK
+function getRankings(){
+    $.ajax({
+        type: 'GET',
+        url: "/dsaApp/game/byPoints",
+        dataType: 'json',
+        success: function (result) {
+            $.each(result, function(i, e){
+                $('#table').append(
+                    '<tr><td><p>' +e.userName + '</p></td><td><p>' + e.points +'</td></p></tr>'
+                );
+            });
+        },
+        error : function(error) {
+            alert("Unable to get rankings.");
+        }
+    });
+}
+
+// Funcions extres
+
 function logOut(){
     localStorage.setItem("loggedUser", null);
     alert('See you soon!');
     window.location.href = "index.html";
 }
+
 function setUpShop(){
     getShop();
+    getUser();
+}
+
+function setUpInventory(){
+    getInventory();
     getUser();
 }

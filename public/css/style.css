@@ -1,11 +1,13 @@
 body {
-	font-family:sans-serif;
 	width: 100%;
+	padding: 15px;
 	font-weight: 300;
 	text-align: center;
 	font-size:25px;
-	color:grey;
-	background-color: white;
+	color:black;
+	margin: 1px;
+	background: linear-gradient(to left top, #E1F6F4, #6AC1B8) fixed;
+    font-family: "Lucida Grande", Arial;
 }
 
 h1 {
@@ -13,10 +15,13 @@ h1 {
   font-weight: 300;
   text-align: center;
   font-size:60px;
-  color:green;
+  color:black;
+  font-family: "OCR A Std", Arial;
+  font-weight: bold;
 }
 
 var {
+  font-family: "Lucida Grande", Arial;
   font-style: normal;
 }
 
@@ -26,86 +31,99 @@ h2 {
     text-align: center;
     font-size:40px;
     color:black;
+    font-family: "Lucida Grande", Arial;
+    font-weight: bold;
 }
 
 h3 {
-	font-family:sans-serif;
+	width: 100%;
+	font-weight: normal;
+	font-size:25px;
+	color:black;
+	text-align: center;
+    font-family: "Lucida Grande", Arial;
+}
+
+h4{
+	width: auto;
+	font-weight: normal;
+	font-size:30px;
+	color:#07588A;
+	font-weight: bold;
+	text-align: center;
+	text-align: center;
+    font-family: "Lucida Grande", Arial;
+
+}
+
+h5 {
 	width: 100%;
 	font-weight: 300;
 	font-size:20px;
 	color:black;
 	text-align: center;
-}
-
-h4{
-    font-family:sans-serif;
-	width: auto;
-	font-weight: 300;
-	font-size:25px;
-	color:green;
-	font-weight: bold;
-	text-align: right;
-	margin-right: 290px;
+	font-family: "Lucida Grande", Arial;
 
 }
+
 .container{
     width: 100%;
-    padding: 15px;
 	text-align: center;
+	font-family: "Lucida Grande", Arial;
+	padding-top: 15px;
+	padding-bottom: 15px;
+
+
+
 }
 
 .table{
     width: 60%;
+    table-layout: fixed; /**/
     padding: 15px;
     text-align: center;
     margin-left: auto;
     margin-right: auto;
 }
 
-.table2{
-    width: 40%;
-    padding: 15px;
-    text-align: left;
-    margin-left: auto;
-    margin-right: auto;
-}
-
-.tr, th{
-    width=auto;
-    text-align: center;
-    color:blue;
-}
 
 .button {
-  background-color: #A4DB96;
+  background-color: #07588A;
   border: none;
-  color: black;
+  color: #E1F6F4;
   padding: 20px 36px;
   font-size: 25px;
-  opacity: 0.6;
   transition: 0.3s;
   text-decoration: none;
   cursor: pointer;
-	margin: auto;
-	justify-content: center;
+  margin: auto;
+  justify-content: center;
+  font-family: "Lucida Grande", Arial;
+
+
 }
 
 .button_del {
-  background-color: #DC5E52;
+  background-color: #D9534F;
   border: none;
-  color: black;
+  color: #E1F6F4;
   padding: 20px 36px;
   font-size: 25px;
-  opacity: 0.6;
   transition: 0.3s;
   text-decoration: none;
   cursor: pointer;
-	margin: auto;
-	justify-content: center;
-}
-.button:hover {opacity: 1}
+  margin: auto;
+  justify-content: center;
+      font-family: "Lucida Grande", Arial;
 
-.button_del:hover {opacity: 1}
+}
+.button:hover {  opacity: 0.6;
+}
+
+.button_del:hover {
+    opacity: 0.6;
+    color: black;
+}
 
 .textbox {
 	size: 10px 20px;
@@ -122,8 +140,8 @@ input[type="text"]{
   text-align: center;
   width: 40%;
   padding: 10px;
-	border-radius: 20px;
-	color: black;
+  border-radius: 20px;
+  color: black;
 }
 
 .wrapper {
@@ -141,20 +159,64 @@ input[type="text"]{
 
 .topnav {
   overflow: hidden;
-  background-color: #BFE7B3;
+  background-color: #07588A;
+  font-family: "Lucida Grande", Arial;
+    font-size: 24px;
+text-decoration: none;
 }
 
 .topnav a {
   display:inline-grid;
   width: 15%;
-
-  color: grey;
+  color: #E1F6F4;
   text-align: center;
   padding: 14px 16px;
   text-decoration: none;
 }
 
 .topnav a:hover {
-  background-color: #EEF9EB;
-  color: black;
+  background-color: #E1F6F4;
+  color: #07588A;
+}
+
+.styled-table {
+	width: 75%;
+	table-layout: fixed;
+	padding: 15px;
+	text-align: center;
+	margin-left: auto;
+	margin-right: auto;
+    border-collapse: collapse;
+    font-family: sans-serif;
+    box-shadow: 0 0 20px rgba(0, 0, 0, 0.15);
+    font-family: "Lucida Grande", Arial;
+
+}
+.styled-table thead td{
+    background-color: #07588A;
+    text-align: center;
+    color: #E1F6F4;
+    font-weight: bold;
+}
+
+.styled-table td {
+    padding: 20px 25px;
+}
+
+.styled-table th {
+    padding: 20px 25px;
+}
+.styled-table tbody tr {
+    border-bottom: 1px solid #07588A;
+}
+
+.styled-table tbody tr:nth-of-type {
+    background-color: #E1F6F4;
+}
+
+.styled-table tbody tr:last-of-type {
+    border-bottom: 2px solid #07588A;
+}
+.styled-table tbody tr:hover {
+	background-color: #E1F6F4;
 }
