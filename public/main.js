@@ -79,7 +79,7 @@ function getInventory() {
                 $('#table').append(
                     '<tr><td><p>' +e.itemName + '</p></td><td><p>' + e.itemDescription +
                     '</p></td><td><p>' + e.itemQuantity +
-                    '</p></td><td><p>' + '<img src="' + e.itemAvatar + '" alt="Avatar" style="width:30%">'+
+                    '</p></td><td><p>' + '<img src="http://147.83.7.206:8080/' + e.itemAvatar + '" alt="Avatar" style="width:30%">'+
                     '</p></td></tr>'
                 );
             });
@@ -101,7 +101,7 @@ function getShop(){
                 $('#table').append(
                     '<tr><td><p><b> ' +e.name + '</b></p><p>' + e.description +
                         '</p><p>' + '<b>Price:</b> ' + e.cost +
-                        '</p></td> <td><p>' + '<img src="' + e.avatar + '" alt="Avatar" style="width:35%">'+
+                        '</p></td> <td><p>' + '<img src="http://147.83.7.206:8080/' + e.avatar + '" alt="Avatar" style="width:35%">'+
                         '</p></td> <td> <div class="container"> <input type="submit" value="Buy" ' +
                         ' class="button" onclick="buyItem(this.id)" id="' + e.name +'"></div> </td> </tr>'
                 );
