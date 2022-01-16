@@ -32,12 +32,13 @@ CREATE TABLE Item(
 
 )ENGINE = InnoDB;
 
-INSERT INTO Item (name, cost, description, avatar) values ("magicBerry", 5, "Restore Health", "images/magicBerry.jpeg");
-INSERT INTO Item (name, cost, description, avatar) values ("level1Item", 20, "Item to steal in the first level", "images/level1Item.jpeg");
-INSERT INTO Item (name, cost, description, avatar) values ("level2Item", 20, "Item to steal in the second level", "images/level2Item.jpeg");
-INSERT INTO Item (name, cost, description, avatar) values ("level3Item", 20, "Item to steal in the third level", "images/level3Item.jpeg");
-INSERT INTO Item (name, cost, description, avatar) values ("level4Item", 20, "Item to steal in the fourth level", "images/level4Item.jpeg");
-INSERT INTO Item (name, cost, description, avatar) values ("level5Item", 20, "Item to steal in the fifth level", "images/level5Item.jpeg");
+INSERT INTO Item (name, cost, description, avatar) values ("magicBerry", 10, "Restore Health", "images/magicBerry.jpeg");
+INSERT INTO Item (name, cost, description, avatar) values ("barKey", 20, "Key to access the bar", "images/key.jpeg");
+INSERT INTO Item (name, cost, description, avatar) values ("sacredCake", 60, "Cake that was made by the best pastry chefs", "images/sacredCake.jpeg");
+INSERT INTO Item (name, cost, description, avatar) values ("museumKey", 40, "Key to access the museum", "images/key.jpeg");
+INSERT INTO Item (name, cost, description, avatar) values ("goldenPot", 80, "Item to steal in the fourth level", "images/goldenPot.jpeg");
+INSERT INTO Item (name, cost, description, avatar) values ("directorOfficeKey", 60, "Key to access the director's office", "images/key.jpeg");
+INSERT INTO Item (name, cost, description, avatar) values ("directorPapers", 100, "Papers uncovering EETAC's affairs", "images/directorPapers.jpeg");
 
 CREATE TABLE Game(
 
