@@ -14,7 +14,7 @@ public interface InventoryDAO {
 
     List<Inventory> getAllByParameter(String parameter, Object value);
 
-    Inventory getInventoryByUserName(String userName);
+    //Inventory getInventoryByUserName(String userName);
     Inventory getByParameter(String parameter, Object value);
     Inventory getInventoryByUserNameAndItemName(String userName, String itemName);
     Inventory getByTwoParameters(String firstParameter, Object firstValue, String secondParameter, Object secondValue);

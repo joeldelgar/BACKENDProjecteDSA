@@ -139,6 +139,32 @@ public class UserService {
         }
     }
 
+    //Update User Coins
+    @PUT
+    @ApiOperation(value = "Update the Coins of a User", notes = "userName and Coins")
+    @ApiResponses(value = {
+            @ApiResponse(code = 200, message = "Successful", response = Game.class),
+            @ApiResponse(code = 404, message = "User not found"),
+            @ApiResponse(code = 500, message = "Validation Error")
+    })
+    @Path("/update/{name}/coins")
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response updateUserCoins(CoinsCredentials cCr) {
+
+        User oldUser = userDAO.getUser(cCr.getUserName());
+        if (cCr.getUserName().isEmpty())
+            return Response.status(500).build();
+        else {
+            if (userDAO.existsName(cCr.getUserName())) {
+                userDAO.updateUserCoinsByUserName(cCr.getUserCoins(), cCr.getUserName());
+                User newUser = userDAO.getUser(cCr.getUserName());
+                return Response.status(200).entity(newUser).build();
+            } else {
+                return Response.status(404).build();
+            }
+        }
+    }
+
     //Delete User
     @DELETE
     @ApiOperation(value = "Delete a User", notes = "Name")

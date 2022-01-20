@@ -54,10 +54,10 @@ public class InventoryDAOImpl implements InventoryDAO{
         return inventoryList;
     }
 
-    @Override
+/*    @Override
     public Inventory getInventoryByUserName(String userName) {
         return ((Inventory) session.getByParameter(Inventory.class, "userName", userName));
-    }
+    }*/
 
     @Override
     public Inventory getByParameter(String parameter, Object value) {

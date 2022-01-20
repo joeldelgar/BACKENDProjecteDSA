@@ -57,7 +57,8 @@ public class StoreService {
             @ApiResponse(code = 402, message = "Not enough coins"),
             @ApiResponse(code = 404, message = "User not found"),
             @ApiResponse(code = 405, message = "Item not found"),
-            @ApiResponse(code = 406, message = "Item is already in Inventory")
+            @ApiResponse(code = 406, message = "Item cannot be bought"),
+            @ApiResponse(code = 409, message = "Item is already in Inventory")
     })
     @Path("/buyItem/{itemName}")
     @Produces(MediaType.APPLICATION_JSON)
@@ -80,16 +81,59 @@ public class StoreService {
                         Inventory defaultInventory = inventoryDAO.getInventoryByUserNameAndItemName(userName, itemName);
                         int itemQuantity = defaultInventory.getItemQuantity() + 1;
                         inventoryDAO.updateItemQuantityByUserNameAndItemName(itemQuantity, userName, itemName);
-                    } else {
+                    } else if (itemName.contains("Key")) {
                         if (!inventoryDAO.existsInventoryByUserNameAndItemName(userName, itemName))
                             inventoryDAO.createInventory(newInventory);
                         else
-                            return Response.status(406).build();
+                            return Response.status(409).build();
+                    } else {
+                        return Response.status(406).build();
                     }
                     int userCoins = user.getCoins() - item.getCost();
                     userDAO.updateUserCoinsByUserName(userCoins, userName);
-                    return Response.status(200).entity(item).build();
+                    Inventory updatedInventory = inventoryDAO.getInventoryByUserNameAndItemName(userName, itemName);
+                    return Response.status(200).entity(updatedInventory).build();
                 }
+            } else
+                return Response.status(405).build();
+        } else
+            return Response.status(404).build();
+    }
+
+    //Collect an Item
+    @PUT
+    @ApiOperation(value = "Collect an Item", notes = "Item and userName")
+    @ApiResponses(value = {
+            @ApiResponse(code = 200, message = "Successful"),
+            @ApiResponse(code = 404, message = "User not found"),
+            @ApiResponse(code = 405, message = "Item not found"),
+            @ApiResponse(code = 409, message = "Item is already in Inventory")
+    })
+    @Path("/collectItem/{itemName}")
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response collectItem(StoreCredentials sCr) {
+
+        String itemName = sCr.getItemName();
+        String userName = sCr.getUserName();
+
+        if (userDAO.existsName(userName)) {
+            if (itemDAO.existsItem(itemName)) {
+                Item item = itemDAO.getItemByName(itemName);
+                User user = userDAO.getUser(userName);
+
+                Inventory newInventory = new Inventory(userName, itemName, 1, item.getDescription(), item.getAvatar());
+
+                if (itemName.equals("magicBerry")) {
+                    Inventory defaultInventory = inventoryDAO.getInventoryByUserNameAndItemName(userName, itemName);
+                    int itemQuantity = defaultInventory.getItemQuantity() + 1;
+                    inventoryDAO.updateItemQuantityByUserNameAndItemName(itemQuantity, userName, itemName);
+                } else if (!inventoryDAO.existsInventoryByUserNameAndItemName(userName, itemName)) {
+                    inventoryDAO.createInventory(newInventory);
+                } else {
+                    return Response.status(409).build();
+                }
+                Inventory updatedInventory = inventoryDAO.getInventoryByUserNameAndItemName(userName, itemName);
+                return Response.status(200).entity(updatedInventory).build();
             } else
                 return Response.status(405).build();
         } else
@@ -132,7 +176,8 @@ public class StoreService {
             @ApiResponse(code = 402, message = "No units left"),
             @ApiResponse(code = 404, message = "User not found"),
             @ApiResponse(code = 405, message = "Item not found"),
-            @ApiResponse(code = 406, message = "Item not available")
+            @ApiResponse(code = 406, message = "Item cannot be used"),
+            @ApiResponse(code = 409, message = "Item not available")
     })
     @Path("/useItem/{itemName}")
     @Produces(MediaType.APPLICATION_JSON)
@@ -145,21 +190,25 @@ public class StoreService {
             if (itemDAO.existsItem(itemName)) {
                 Item item = itemDAO.getItemByName(itemName);
                 User user = userDAO.getUser(userName);
-                Inventory inventory = inventoryDAO.getInventoryByUserName(userName);
+                Inventory defaultInventory = inventoryDAO.getInventoryByUserNameAndItemName(userName, itemName);
 
                 if (itemName.equals("magicBerry")) {
-                    if (inventory.getItemQuantity() == 0) {
+                    if (defaultInventory.getItemQuantity() == 0) {
                         return Response.status(402).build();
                     } else {
-                        int itemQuantity = inventory.getItemQuantity() - 1;
+                        int itemQuantity = defaultInventory.getItemQuantity() - 1;
                         inventoryDAO.updateItemQuantityByUserNameAndItemName(itemQuantity, userName, itemName);
-                        return Response.status(200).entity(item).build();
+                        Inventory updatedInventory = inventoryDAO.getInventoryByUserNameAndItemName(userName, itemName);
+                        return Response.status(200).entity(updatedInventory).build();
                     }
-                } else {
-                    if (inventoryDAO.existsInventoryByUserNameAndItemName(userName, itemName))
-                        return Response.status(200).entity(item).build();
-                    else
+                } else if (inventoryDAO.existsInventoryByUserNameAndItemName(userName, itemName)) {
+                    if (itemName.contains("Key")) {
+                        Inventory inventory = inventoryDAO.getInventoryByUserNameAndItemName(userName, itemName);
+                        return Response.status(200).entity(inventory).build();
+                    } else
                         return Response.status(406).build();
+                } else {
+                    return Response.status(409).build();
                 }
             } else
                 return Response.status(405).build();
