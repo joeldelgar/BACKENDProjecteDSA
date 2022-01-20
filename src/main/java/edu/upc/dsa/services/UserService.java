@@ -48,7 +48,7 @@ public class UserService {
         if (rCr.getName().isEmpty() || rCr.getPassword().isEmpty() || rCr.getMail().isEmpty())
             return Response.status(500).build();
         else {
-            if (userDAO.existsName(rCr.getName()) || userDAO.existsMail(rCr.getMail())) {
+            if (userDAO.existsName(rCr.getName()) || gameDAO.existsUserName(rCr.getName()) || userDAO.existsMail(rCr.getMail())) {
                 return Response.status(409).build();
             } else {
                 userDAO.addUser(user);
