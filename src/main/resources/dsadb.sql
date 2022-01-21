@@ -43,7 +43,8 @@ INSERT INTO Item (name, cost, description, avatar) values ("directorPapers", 0, 
 CREATE TABLE Game(
 
    	userName VARCHAR(30),
-	points INT
+	points INT,
+	health INT
 
 )ENGINE = InnoDB;
 

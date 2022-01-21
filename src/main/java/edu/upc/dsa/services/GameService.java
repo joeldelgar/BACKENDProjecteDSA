@@ -43,7 +43,7 @@ public class GameService {
     @Produces(MediaType.APPLICATION_JSON)
     public Response addGame(GameCredentials gCr) {
 
-        Game game = new Game(gCr.getUserName(), gCr.getPoints());
+        Game game = new Game(gCr.getUserName(), gCr.getPoints(), gCr.getHealth());
 
         if (gCr.getUserName().isEmpty())
             return Response.status(500).build();
@@ -129,13 +129,14 @@ public class GameService {
     public Response updateGame(GameCredentials gCr) {
 
         Game oldGame = gameDAO.getGameByUserName(gCr.getUserName());
-        Game game = new Game(gCr.getUserName(), gCr.getPoints());
+        Game game = new Game(gCr.getUserName(), gCr.getPoints(), gCr.getHealth());
 
         if (gCr.getUserName().isEmpty())
             return Response.status(500).build();
         else {
             if (userDAO.existsName(gCr.getUserName())) {
                 gameDAO.updatePointsByUserName(gCr.getPoints(), gCr.getUserName());
+                gameDAO.updateHealthByUserName(gCr.getHealth(), gCr.getUserName());
                 //User user = userDAO.getUser(gCr.getUserName());
                 //int op = (gCr.getPoints() / 10) - (oldGame.getPoints() / 10) + user.getCoins();
                 //userDAO.updateUserCoinsByUserName(op, gCr.getUserName());

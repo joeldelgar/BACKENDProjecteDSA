@@ -131,8 +131,13 @@ public class GameDAOImpl implements GameDAO {
     }
 
     @Override
-    public boolean updatePointsByUserName(int Points, String userName) {
-        return session.updateParameterByParameter(Game.class, "points", Points, "userName", userName);
+    public boolean updatePointsByUserName(int points, String userName) {
+        return session.updateParameterByParameter(Game.class, "points", points, "userName", userName);
+    }
+
+    @Override
+    public boolean updateHealthByUserName(int health, String userName) {
+        return session.updateParameterByParameter(Game.class, "health", health, "userName", userName);
     }
 
     @Override

@@ -22,7 +22,8 @@ public interface GameDAO {
     boolean update(Game game);
     boolean updateByParameter(Game game, String parameter, Object value);
     boolean updateUserName(String oldName, User newUser);
-    boolean updatePointsByUserName(int Points, String userName);
+    boolean updatePointsByUserName(int points, String userName);
+    boolean updateHealthByUserName(int health, String userName);
     boolean updateParameterByParameter(String parameter, Object parameterValue, String byParameter, Object byParameterValue);
 
     boolean delete(Game game);

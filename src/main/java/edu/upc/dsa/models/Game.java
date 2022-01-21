@@ -6,8 +6,9 @@ import java.util.List;
 public class Game {
     private String userName;
     private int points;
+
     //private int level;
-    //private int life;
+    private int health;
     //private List<Item> itemList = new ArrayList<>();
     //private List<Enemy> enemyList = new ArrayList<>();
     //private List<Level> levelList = new ArrayList<>();
@@ -15,11 +16,11 @@ public class Game {
     public Game() {
     }
 
-    public Game(String userName, int points) {
+    public Game(String userName, int points, int health) {
         this.userName = userName;
         this.points = points;
         //this.level = level;
-        //this.life = life;
+        this.health = health;
     }
 
     public String getUserName() {
@@ -36,5 +37,13 @@ public class Game {
 
     public void setPoints(int points) {
         this.points = points;
+    }
+
+    public int getHealth() {
+        return health;
+    }
+
+    public void setHealth(int health) {
+        this.health = health;
     }
 }
