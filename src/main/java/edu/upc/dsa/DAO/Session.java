@@ -1,5 +1,7 @@
 package edu.upc.dsa.DAO;
 
+import edu.upc.dsa.models.Inventory;
+
 import java.util.HashMap;
 import java.util.List;
 
@@ -13,7 +15,6 @@ public interface Session<E> {
     Object getByParameter(Class theClass, String byParameter, Object byParameterValue);
     Object getByTwoParameters(Class theClass, String byFirstParameter, Object byFirstParameterValue, String bySecondParameter, Object bySecondParameterValue);
     Object getParameterByParameter(Class theClass, String parameter, String byParameter, Object byParameterValue);
-    Object orderByParameter(Class theClass, String byParameter);
 
     boolean update(Object object);
     boolean updateByParameter(Object object, String byParameter, Object byParameterValue);
@@ -25,7 +26,10 @@ public interface Session<E> {
     boolean deleteByParameter(Class theClass, String byParameter, Object byParameterValue);
     boolean deleteByTwoParameters(Class theClass, String byFirstParameter, Object byFirstParameterValue, String bySecondParameter, Object bySecondParameterValue);
 
-    List<Object> queryObjects(String query, Class theClass, List params);
+    List<Object> queryObjects(Class theClass);
+    List<Object> queryObjectsByParameter(Class theClass, String byParameter, Object byParameterValue);
+//    List<Object> ListParamsExample(Class theClass, List params);
+    List<Object> orderObjectsByParameter(Class theClass, String byParameter);
 
     HashMap<Integer, Object> FindAll(Class theClass);
     HashMap<Integer, Object> FindAllByParameter(Class theClass, String byParameter, Object byParameterValue);

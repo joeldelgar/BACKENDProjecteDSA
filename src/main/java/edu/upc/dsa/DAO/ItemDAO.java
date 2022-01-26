@@ -10,7 +10,7 @@ public interface ItemDAO {
 
     boolean create(Item item);
 
-    List<Item> getAll();
+    List<Item> getAllItems();
     Item getItemByName(String name);
     Item getByParameter(String parameter, Object value);
 

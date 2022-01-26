@@ -34,67 +34,17 @@ public class GameDAOImpl implements GameDAO {
     }
 
     @Override
-    public List<Game> getAll() {
-        Session session = null;
-        List<Game> gameList = null;
-
-        try{
-            List<String> params= new LinkedList<>();
-            String query = "SELECT * FROM Game;";
-            session = FactorySession.openSession();
-            gameList = (List) session.queryObjects(query, Game.class, params);
-        } catch(Exception e) {
-            e.printStackTrace();
-
-        }
-        finally {
-            if(session!=null){
-                session.close();
-            }
-        }
-        return gameList;
+    public List<Game> getAllGames() {
+        return ((List) session.queryObjects(Game.class));
     }
 
     @Override
-    public List<Game> getAllByParameter(String parameter, Object value) {
-        Session session = null;
-        List<Game> gameList = null;
-
-        try{
-            List<String> params= new LinkedList<>();
-            String query = "SELECT * FROM Game WHERE userName= '"+ value +"'";
-            session = FactorySession.openSession();
-            gameList = (List) session.queryObjects(query, Game.class, params);
-        } catch(Exception e) {
-            e.printStackTrace();
-        }
-        finally {
-            if(session!=null){
-                session.close();
-            }
-        }
-        return gameList;
+    public List<Game> getAllGamesByUserName(String userName) {
+        return ((List) session.queryObjectsByParameter(Game.class, "userName", userName));
     }
 
-    @Override
-    public List<Game> orderByParameter(String parameter) {
-        Session session = null;
-        List<Game> gameList = null;
-
-        try{
-            List<String> params= new LinkedList<>();
-            String query = "SELECT * FROM Game ORDER BY " + parameter + " DESC";
-            session = FactorySession.openSession();
-            gameList = (List) session.queryObjects(query, Game.class, params);
-        } catch(Exception e) {
-            e.printStackTrace();
-        }
-        finally {
-            if(session!=null){
-                session.close();
-            }
-        }
-        return gameList;
+    public List<Game> orderGamesByPoints() {
+        return ((List) session.orderObjectsByParameter(Game.class,"points"));
     }
 
     @Override

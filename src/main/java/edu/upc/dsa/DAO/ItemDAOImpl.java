@@ -31,27 +31,8 @@ public class ItemDAOImpl implements ItemDAO {
     }
 
     @Override
-    public List<Item> getAll() {
-        Session session = null;
-        List<Item> itemList = null;
-
-        try{
-            List<String> params= new LinkedList<>();
-            String query = "SELECT * FROM Item;";
-            session = FactorySession.openSession();
-            itemList = (List) session.queryObjects(query, Item.class, params);
-            logger.info("itemList: " + itemList);
-        }
-        catch(Exception e) {
-            e.printStackTrace();
-
-        }
-        finally {
-            if(session!=null){
-                session.close();
-            }
-        }
-        return itemList;
+    public List<Item> getAllItems() {
+        return ((List) session.queryObjects(Item.class));
     }
 
     @Override

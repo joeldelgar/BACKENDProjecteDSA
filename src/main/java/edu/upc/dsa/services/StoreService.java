@@ -1,9 +1,6 @@
 package edu.upc.dsa.services;
 import edu.upc.dsa.DAO.*;
-import edu.upc.dsa.managers.GameManager;
-import edu.upc.dsa.managers.GameManagerImpl;
 
-import edu.upc.dsa.managers.InventoryManager;
 import edu.upc.dsa.models.StoreCredentials;
 import edu.upc.dsa.models.Inventory;
 import edu.upc.dsa.models.Item;
@@ -44,7 +41,7 @@ public class StoreService {
     @Produces(MediaType.APPLICATION_JSON)
     public Response getAllItems() {
 
-        List<Item> itemList = itemDAO.getAll();
+        List<Item> itemList = itemDAO.getAllItems();
         GenericEntity<List<Item>> entity = new GenericEntity<List<Item>>(itemList) {};
         return Response.status(200).entity(entity).build();
     }
@@ -154,7 +151,7 @@ public class StoreService {
         if (userDAO.existsName(userName)) {
             List<Inventory> inventoryList = null;
             try {
-                inventoryList = inventoryDAO.getAllByParameter("userName", userName);
+                inventoryList = inventoryDAO.getInventoryListByUserName(userName);
             }
             catch (Throwable t) {
                 t.printStackTrace();

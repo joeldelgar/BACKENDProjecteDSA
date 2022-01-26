@@ -10,9 +10,9 @@ public interface GameDAO {
 
     boolean addGame(Game game);
 
-    List<Game> getAll();
-    List<Game> getAllByParameter(String parameter, Object value);
-    List<Game> orderByParameter(String parameter);
+    List<Game> getAllGames();
+    List<Game> getAllGamesByUserName(String userName);
+    List<Game> orderGamesByPoints();
 
     Game getGameByUserName(String userName);
     Game getByParameter(String parameter, Object value);

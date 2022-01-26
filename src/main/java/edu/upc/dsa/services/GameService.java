@@ -1,19 +1,14 @@
 package edu.upc.dsa.services;
 import edu.upc.dsa.DAO.*;
-import edu.upc.dsa.managers.GameManager;
-import edu.upc.dsa.managers.GameManagerImpl;
 import edu.upc.dsa.models.*;
 
 import io.swagger.annotations.*;
 
-import javax.print.attribute.standard.Media;
 import javax.ws.rs.*;
 import javax.ws.rs.core.GenericEntity;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
-import java.util.HashMap;
 import java.util.List;
-import org.apache.log4j.Logger;
 
 @Api(value = "/game", description = "GameManager")
 @Path("/game")
@@ -94,7 +89,7 @@ public class GameService {
     @Produces(MediaType.APPLICATION_JSON)
     public Response getAllGames() {
 
-        List<Game> gameList = gameDAO.getAll();
+        List<Game> gameList = gameDAO.getAllGames();
 
         GenericEntity<List<Game>> entity = new GenericEntity<List<Game>>(gameList) {};
         return Response.status(200).entity(entity).build();
@@ -110,7 +105,7 @@ public class GameService {
     @Produces(MediaType.APPLICATION_JSON)
     public Response getGamesByPoints() {
 
-        List<Game> gameList = gameDAO.orderByParameter("points");
+        List<Game> gameList = gameDAO.orderGamesByPoints();
 
         GenericEntity<List<Game>> entity = new GenericEntity<List<Game>>(gameList) {};
         return Response.status(200).entity(entity).build();

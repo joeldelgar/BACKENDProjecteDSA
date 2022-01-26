@@ -12,7 +12,7 @@ public interface InventoryDAO {
 
     boolean createInventory(Inventory inventory);
 
-    List<Inventory> getAllByParameter(String parameter, Object value);
+    List<Inventory> getInventoryListByUserName(String userName);
 
     //Inventory getInventoryByUserName(String userName);
     Inventory getByParameter(String parameter, Object value);

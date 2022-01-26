@@ -47,24 +47,7 @@ public class UserDAOImpl implements UserDAO{
 
     @Override
     public List<User> getAllUsers() {
-        Session session = null;
-        List<User> userList = null;
-        List<String> params= new LinkedList<>();
-
-        try {
-            String query = "SELECT * FROM User;";
-            session = FactorySession.openSession();
-            userList = (List) session.queryObjects(query, User.class, params);
-        }
-        catch(Exception e) {
-            e.printStackTrace();
-        }
-        finally {
-            if(session!=null){
-                session.close();
-            }
-        }
-        return userList;
+        return ((List) session.queryObjects(User.class));
     }
 
     @Override

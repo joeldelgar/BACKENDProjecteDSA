@@ -34,24 +34,8 @@ public class InventoryDAOImpl implements InventoryDAO{
     }
 
     @Override
-    public List<Inventory> getAllByParameter(String parameter, Object value) {
-        Session session = null;
-        List<Inventory> inventoryList = null;
-
-        try{
-            List<String> params = new LinkedList<>();
-            String query = "SELECT * FROM Inventory WHERE userName= '"+ value +"'";
-            session = FactorySession.openSession();
-            inventoryList = (List) session.queryObjects(query, Inventory.class, params);
-        } catch(Exception e) {
-            e.printStackTrace();
-        }
-        finally {
-            if(session!=null){
-                session.close();
-            }
-        }
-        return inventoryList;
+    public List<Inventory> getInventoryListByUserName(String userName) {
+        return ((List) session.queryObjectsByParameter(Inventory.class, "userName", userName));
     }
 
 /*    @Override
